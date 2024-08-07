@@ -1,0 +1,17 @@
+.app-line-holder{
+  padding:0 5px;
+  margin-left: -5px;
+  margin-right: -5px;
+  display:inline-block;
+  white-space:nowrap;
+  position:relative;
+  z-index:1;
+}
+.app-line{
+  position:absolute;
+  left:0;
+  top:100%;
+  transform:translateY(-60%);
+  width:100%;
+  z-index: -1;
+}
