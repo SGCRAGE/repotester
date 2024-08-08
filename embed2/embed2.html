@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Park Rankings | Project Floater</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="embed.css"> <!-- Optional: Page-specific styles -->
+    <script src="../scripts.js" defer></script>
+    <style>
+        /* Optional: Add some styles to center the iframe or adjust its size */
+        body {
+            margin: 0;
+            background-color: #f4f4f4; /* Change background color if desired */
+            font-family: Arial, sans-serif;
+        }
+        header {
+            width: 100%;
+            background: #333; /* Dark background for the header */
+            color: #fff; /* White text color */
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        header h1 {
+            margin: 0;
+            text-align: center;
+        }
+        nav {
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        main {
+            padding: 60px 20px 20px; /* Top padding to avoid overlap with the fixed header */
+            text-align: center;
+        }
+        iframe {
+            border: none;
+            width: 100%;
+            max-width: 1800px;
+            height: 600px;
+            margin: 0 auto;
+            display: block;
+        }
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background: #333; /* Dark background for the footer */
+            color: #fff; /* White text color */
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Project Floater</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about/about.html">About</a></li>
+                <li><a href="../contact/contact.html">Contact</a></li>
+                <li><a href="embed.html">MLB PARK RATINGS</a></li>
+            </ul>
+        </nav>
+    </header>
 
+    <main>
+        <h2>MLB BATTING</h2>
+        <iframe width="1800" height="600" frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQwK9HFmGAcy9qSgcd5vpn9BIhj03gpeuOQugx2osUr4rGiR4hE7wYc-Bw1M2deiwN8PIErgSPXFcmR/pubhtml?gid=1614927119&single=true"></iframe>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Project Floater. All rights reserved.</p>
+    </footer>
+</body>
+</html>
