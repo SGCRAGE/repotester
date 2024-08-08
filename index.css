@@ -1,24 +1,28 @@
 /* Styles specific to the index page */
 
+/* Ensure body styling is consistent */
 body {
     font-family: Arial, sans-serif;
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-    box-sizing: border-box; /* Ensure padding and border are included in element's total width and height */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* Header styling */
 header {
     background-color: #f0f0f0;
     padding: 20px;
     text-align: center;
-    position: relative; /* Ensure header is positioned correctly */
-    z-index: 1000; /* Keep header above other content */
+    position: relative;
+    z-index: 1000;
 }
 
+/* Navigation styling */
 nav ul {
     list-style-type: none;
     padding: 0;
-    margin: 0; /* Remove default margin */
+    margin: 0;
+    text-align: center; /* Center-align the nav items */
 }
 
 nav ul li {
@@ -30,13 +34,16 @@ nav ul li a {
     text-decoration: none;
     color: #333;
     font-weight: bold;
+    padding: 5px 10px; /* Add padding for better click area */
 }
 
+/* Main content styling */
 main {
     padding: 20px;
-    margin-top: 60px; /* Space from the top of the page to avoid overlap with fixed header */
+    margin-top: 60px; /* Adjust for fixed header */
 }
 
+/* Footer styling */
 footer {
     background-color: #f0f0f0;
     padding: 10px;
@@ -44,14 +51,14 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0;
-    left: 0; /* Ensure footer spans the full width */
-    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Add subtle shadow for separation */
+    left: 0;
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Additional styles to handle responsive design or layout issues */
+/* Responsive design adjustments */
 @media (max-width: 600px) {
     nav ul li {
         display: block;
-        margin-bottom: 10px; /* Stack navigation items on smaller screens */
+        margin-bottom: 10px; /* Stack items on smaller screens */
     }
 }
