@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Busta Central</title>
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="contact.css"> <!-- Optional: Page-specific styles -->
+    <link rel="stylesheet" href="../styles.css"> <!-- General styles for the site -->
+    <link rel="stylesheet" href="contact.css"> <!-- Page-specific styles for the contact page -->
     <script src="../scripts.js" defer></script>
 </head>
 <body>
@@ -25,14 +25,20 @@
         <h2>Contact Us</h2>
         <p>If you have any questions, please reach out to us through the contact form below.</p>
         <form action="mailto:busta@bustacentral.site" method="post" enctype="text/plain">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
             
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
             
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" rows="4" required></textarea>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+            </div>
             
             <button type="submit">Send</button>
         </form>
