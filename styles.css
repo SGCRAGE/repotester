@@ -1,7 +1,12 @@
-/* Global Styles */
+/* Include custom font */
+@font-face {
+    font-family: 'Messy Drip BC';
+    src: url('fonts/MessyDripBC.ttf') format('truetype'); /* Adjust path if necessary */
+}
 
+/* Global Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Messy Drip BC', Arial, sans-serif; /* Use custom font with fallback */
     margin: 0;
     padding: 0;
     background-color: #f4f4f4; /* Default background color */
