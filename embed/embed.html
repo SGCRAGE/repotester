@@ -3,26 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embedded Content</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Optional: Link to your CSS file if you have one -->
+    <title>Embedded Content | Busta Central</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your general CSS file -->
+    <link rel="stylesheet" href="embed.css"> <!-- Optional: Link to a specific CSS file for this page -->
+    <script src="scripts.js" defer></script> <!-- Link to your JavaScript file -->
     <style>
         /* Optional: Add some styles to center the iframe or adjust its size */
         body {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
             margin: 0;
             background-color: #f4f4f4; /* Change background color if desired */
+        }
+        header {
+            width: 100%;
+            background: #333; /* Dark background for the header */
+            color: #fff; /* White text color */
+            padding: 10px 0;
+        }
+        header h1 {
+            margin: 0;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
         }
         iframe {
             border: none;
         }
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background: #333; /* Dark background for the footer */
+            color: #fff; /* White text color */
+            text-align: center;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
-    <h1>Embedded Content</h1>
-    <iframe width="1800" height="600" frameborder="0" scrolling="no" src="https://onedrive.live.com/embed?resid=D685B286C09F6263%21791&authkey=%21AP3K141AEASAF9w&em=2&AllowTyping=True&ActiveCell='Ballparking Rankings'!A1&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&waccluster=PUS10"></iframe>
+    <header>
+        <h1>Busta Central</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about/about.html">About</a></li>
+                <li><a href="contact/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Embedded Content</h2>
+        <iframe width="1800" height="600" frameborder="0" scrolling="no" src="https://onedrive.live.com/embed?resid=D685B286C09F6263%21791&authkey=%21AP3K141AEASAF9w&em=2&AllowTyping=True&ActiveCell='Ballparking Rankings'!A1&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&waccluster=PUS10"></iframe>
+    </main>
+
     <footer>
         <p>&copy; 2024 Busta Central. All rights reserved.</p>
     </footer>
