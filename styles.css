@@ -1,37 +1,69 @@
-/* Global Styles */
+/* General Body Styles */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    color: #333;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Light background color for the whole site */
 }
 
+/* Header Styles */
 header {
-    background-color: #f8f8f8;
-    padding: 10px;
+    width: 100%;
+    background: #333; /* Dark background for the header */
+    color: #fff; /* White text color */
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    margin: 0;
+    text-align: center;
+}
+
+nav {
+    text-align: center;
 }
 
 nav ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 nav ul li {
     display: inline;
-    margin-right: 10px;
+    margin: 0 10px;
 }
 
-a {
+nav ul li a {
+    color: #fff;
     text-decoration: none;
-    color: #007bff;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
-footer {
-    background-color: #f8f8f8;
-    padding: 10px;
+/* Main Content Styles */
+main {
+    padding: 60px 20px 20px; /* Top padding to avoid overlap with the fixed header */
     text-align: center;
+}
+
+/* Footer Styles */
+footer {
+    margin-top: 20px;
+    padding: 10px;
+    background: #333; /* Dark background for the footer */
+    color: #fff; /* White text color */
+    text-align: center;
+    width: 100%;
+}
+
+/* Iframe Styles */
+iframe {
+    border: none;
+    width: 100%;
+    max-width: 1800px;
+    height: 600px;
+    margin: 0 auto;
+    display: block;
 }
