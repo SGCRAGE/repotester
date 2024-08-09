@@ -4,13 +4,13 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4; /* Ensure background color matches global styles */
 }
 
 /* Header styling */
 header {
-    background-color: #333;
-    padding: 10px 0;
+    background-color: #333; /* Consistent dark background with global styles */
+    padding: 10px 0; /* Adjust padding to match global styles */
     text-align: center;
     position: fixed;
     width: 100%;
@@ -28,30 +28,61 @@ nav ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    text-align: center;
+    text-align: center; /* Center-align the nav items */
 }
 
 nav ul li {
     display: inline;
-    margin: 0 10px;
+    margin: 0 10px; /* Adjust margin to match global styles */
 }
 
 nav ul li a {
     text-decoration: none;
-    color: #fff;
+    color: #fff; /* Ensure text color matches global styles */
     font-weight: bold;
-    padding: 5px 10px;
+    padding: 5px 10px; /* Add padding for better click area */
+}
+
+/* Style for the sign-in button in navigation */
+nav ul li button {
+    background-color: #4285F4; /* Google Blue */
+    color: white;
+    border: none;
+    padding: 15px 30px; /* Larger padding for a bigger button */
+    font-size: 16px; /* Larger text */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+}
+
+nav ul li button:hover {
+    background-color: #357ae8; /* Darker blue on hover */
 }
 
 /* Main content styling */
 main {
-    padding: 60px 20px 20px;
-    text-align: center;
+    padding: 60px 20px 20px; /* Adjust top padding to avoid overlap with fixed header */
+    text-align: center; /* Center-align text if desired */
 }
 
 /* Footer styling */
 footer {
-    background-color: #333;
+    background-color: #333; /* Consistent dark background with global styles */
     padding: 10px;
     text-align: center;
-    position: fixed
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    color: #fff; /* Ensure text color matches global styles */
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design adjustments */
+@media (max-width: 600px) {
+    nav ul li {
+        display: block;
+        margin-bottom: 10px; /* Stack items on smaller screens */
+    }
+}
