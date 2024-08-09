@@ -27,7 +27,7 @@ header {
 header h1 {
     margin: 0;
     text-align: center;
-    font-family: 'Messy Drip BC', Arial, sans-serif; /* Custom font for the header */
+    font-family: Arial, sans-serif; /* Fallback font for the header */
 }
 
 /* Navigation styling */
