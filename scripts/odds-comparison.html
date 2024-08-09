@@ -4,35 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Odds Comparison | Project Floater</title>
-    <link rel="stylesheet" href="styles/styles.css"> <!-- Path to your CSS -->
+    <link rel="stylesheet" href="styles/styles.css"> <!-- Updated path -->
 </head>
 <body>
     <header>
-        <h1>Project Floater</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about/about.html">About</a></li>
-                <li><a href="contact/contact.html">Contact</a></li>
-                <li><a href="embed/embed.html">MLB PARK RATINGS</a></li>
-                <li><a href="embed2/embed2.html">MLB BATTING</a></li>
-                <li><a href="odds-comparison.html">Odds Comparison</a></li>
-                <li><button id="login">Sign in with Google</button></li>
-            </ul>
-        </nav>
+        <h1>Odds Comparison</h1>
     </header>
 
     <main>
-        <h2>Odds Comparison</h2>
-        <div id="odds-data">
-            <!-- Odds data will be populated here by JavaScript -->
-        </div>
+        <h2>Compare Odds Across Bookmakers</h2>
+        <table id="odds-table">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Bookmaker</th>
+                    <th>Odds</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Odds data will be inserted here -->
+            </tbody>
+        </table>
     </main>
 
     <footer>
         <p>&copy; 2024 Project Floater. All rights reserved.</p>
     </footer>
 
-    <script src="scripts/odds-comparison.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+            const url = `https://api.example.com/odds?api_key=${apiKey}`; // Replace with your API endpoint
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('odds-table').getElementsByTagName('tbody')[0];
+                    data.odds.forEach(odds => {
+                        const row = tableBody.insertRow();
+                        row.insertCell(0).textContent = odds.event;
+                        row.insertCell(1).textContent = odds.bookmaker;
+                        row.insertCell(2).textContent = odds.odds;
+                    });
+                })
+                .catch(error => console.error('Error fetching odds data:', error));
+        });
+    </script>
 </body>
 </html>
