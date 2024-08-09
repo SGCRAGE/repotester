@@ -16,6 +16,7 @@
                 <li><a href="contact/contact.html">Contact</a></li>
                 <li><a href="embed/embed.html">MLB PARK RATINGS</a></li>
                 <li><a href="embed2/embed2.html">MLB BATTING</a></li>
+                <li><button id="login">Sign in with Google</button></li> <!-- Added button here -->
             </ul>
         </nav>
     </header>
@@ -24,7 +25,6 @@
         <h2>Welcome to Project Floater!</h2>
         <p>This is the homepage of Project Floater.</p>
         <img src="images/Screenshot 2024-08-06 172839.png" alt="Busta Central Banner" class="banner-image">
-        <button id="login">Sign in with Google</button>
     </main>
 
     <footer>
@@ -33,12 +33,10 @@
 
     <!-- Firebase SDKs via CDN -->
     <script type="module">
-      // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
       import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-      // Your web app's Firebase configuration
       const firebaseConfig = {
         apiKey: "AIzaSyBeqodJXU1JpvvZekfTa7hYlHVEiiiFF9w",
         authDomain: "idk-test-70704.firebaseapp.com",
@@ -49,17 +47,14 @@
         measurementId: "G-8YHEHG5C5K"
       };
 
-      // Initialize Firebase
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
       const auth = getAuth();
       const provider = new GoogleAuthProvider();
 
-      // Add sign-in functionality
       document.getElementById('login').addEventListener('click', () => {
         signInWithPopup(auth, provider)
           .then((result) => {
-            // Handle result
             console.log('User signed in:', result.user);
           })
           .catch((error) => {
