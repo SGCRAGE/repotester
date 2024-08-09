@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,3 +17,17 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const auth = getAuth();
+const provider = new GoogleAuthProvider();
+
+// Add sign-in functionality
+document.getElementById('login').addEventListener('click', () => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      // Handle result
+      console.log(result.user);
+    })
+    .catch((error) => {
+      console.error('Error during sign-in:', error);
+    });
+});
