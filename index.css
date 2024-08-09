@@ -1,17 +1,18 @@
-/* Global Styles */
+/* Styles specific to the index page */
+
+/* Ensure body styling is consistent with global styles */
 body {
-    font-family: Arial, sans-serif; /* Use a consistent font across the site */
+    font-family: 'Sister Spray', Arial, sans-serif; /* Ensure custom font is applied */
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #f4f4f4; /* Consistent background color */
+    background-color: #f4f4f4; /* Ensure background color matches global styles */
 }
 
-/* Header Styling */
+/* Header styling */
 header {
-    background-color: #333; /* Dark background consistent with global styles */
-    color: #fff; /* White text color */
-    padding: 20px 0; /* Adjust padding to match other pages */
+    background-color: #333; /* Consistent dark background with global styles */
+    padding: 10px 0; /* Adjust padding to match global styles */
     text-align: center;
     position: fixed;
     width: 100%;
@@ -20,49 +21,61 @@ header {
     z-index: 1000;
 }
 
-/* Navigation Styling */
+/* Navigation styling */
 nav ul {
-    list-style: none; /* Remove default list styling */
+    list-style-type: none;
     padding: 0;
     margin: 0;
-    text-align: center; /* Center-align nav items */
+    text-align: center; /* Center-align the nav items */
 }
 
 nav ul li {
-    display: inline; /* Inline list items */
-    margin: 0 10px; /* Adjust margin to match other pages */
+    display: inline;
+    margin: 0 10px; /* Adjust margin to match global styles */
 }
 
 nav ul li a {
-    color: #fff; /* White text color */
-    text-decoration: none; /* Remove underline from links */
-    font-weight: bold; /* Make text bold */
+    text-decoration: none;
+    color: #fff; /* Ensure text color matches global styles */
+    font-weight: bold;
     padding: 5px 10px; /* Add padding for better click area */
 }
 
-/* Main Content Styling */
+/* Main content styling */
 main {
-    padding: 100px 20px 20px; /* Adjust top padding to avoid overlap with fixed header */
-    text-align: center; /* Center-align text */
+    padding: 60px 20px 20px; /* Adjust top padding to avoid overlap with fixed header */
+    text-align: center; /* Center-align text if desired */
 }
 
-/* Footer Styling */
+/* Centering images */
+.image-container {
+    text-align: center; /* Center-align content within the container */
+    margin: 20px 0; /* Optional: Add margin around the container */
+}
+
+.image-container img {
+    max-width: 100%; /* Ensure the image does not exceed the container width */
+    height: auto; /* Maintain aspect ratio */
+    display: inline-block; /* Ensure the image is treated as an inline element */
+}
+
+/* Footer styling */
 footer {
-    background-color: #333; /* Dark background consistent with global styles */
-    color: #fff; /* White text color */
+    background-color: #333; /* Consistent dark background with global styles */
     padding: 10px;
     text-align: center;
     position: fixed;
     width: 100%;
     bottom: 0;
     left: 0;
-    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    color: #fff; /* Ensure text color matches global styles */
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive Design Adjustments */
+/* Responsive design adjustments */
 @media (max-width: 600px) {
     nav ul li {
-        display: block; /* Stack items vertically on smaller screens */
-        margin-bottom: 10px; /* Add margin between stacked items */
+        display: block;
+        margin-bottom: 10px; /* Stack items on smaller screens */
     }
 }
