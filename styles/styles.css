@@ -1,3 +1,12 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif; /* Fallback font */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Default background color */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
 /* Header styling */
 header {
     width: 100%;
@@ -16,17 +25,17 @@ header {
 
 /* Header logo styling */
 .header-logo {
-    max-height: 50px; /* Adjust based on your image size */
+    max-height: 40px; /* Adjust this value to make the image smaller */
     width: auto; /* Maintain aspect ratio */
+    margin-right: 10px; /* Optional: Adjust spacing between the logo and text */
 }
 
-/* Header h1 and navigation styling */
 header h1 {
     margin: 0;
-    font-size: 24px;
     text-align: center;
 }
 
+/* Navigation styling */
 nav {
     text-align: center;
 }
