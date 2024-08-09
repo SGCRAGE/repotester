@@ -43,7 +43,7 @@ nav ul li a {
 
 /* Main content styling */
 main {
-    padding: 70px 20px 20px; /* Adjust top padding to avoid overlap with fixed header */
+    padding: 60px 20px 20px; /* Adjust top padding to avoid overlap with fixed header */
     text-align: center; /* Center-align text if desired */
 }
 
@@ -75,4 +75,3 @@ footer {
         margin-bottom: 10px; /* Stack items on smaller screens */
     }
 }
-
