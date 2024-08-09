@@ -9,7 +9,7 @@ body {
 header {
     background-color: #333;
     color: #fff;
-    padding: 10px 0;
+    padding: 20px 0; /* Match the padding in your main styles.css */
     text-align: center;
     position: fixed;
     top: 0;
@@ -35,7 +35,7 @@ nav ul li a {
 }
 
 main {
-    padding: 60px 20px 20px; /* Top padding to avoid overlap with the fixed header */
+    padding: 100px 20px 20px; /* Match the top padding to your main styles.css */
     text-align: center;
 }
 
