@@ -3,87 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports Odds</title>
-    <link rel="stylesheet" href="styles/styles.css"> <!-- Updated path -->
-    <link rel="stylesheet" href="index.css">
+    <title>Odds Data</title>
+    <link rel="stylesheet" href="styles/styles.css"> <!-- Update as necessary -->
 </head>
 <body>
     <header>
-        <h1>Sports Odds</h1>
+        <h1>Odds Data</h1>
         <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about/about.html">About</a></li>
-                <li><a href="contact/contact.html">Contact</a></li>
-                <li><a href="embed/embed.html">MLB PARK RATINGS</a></li>
-                <li><a href="embed2/embed2.html">MLB BATTING</a></li>
-                <li><a href="odds.html">Odds Data</a></li>
-            </ul>
+            <!-- Navigation links -->
         </nav>
     </header>
 
     <main>
-        <h2>Odds Data</h2>
-        <div id="odds-container">
-            <!-- Data will be injected here -->
+        <div id="data-container">
+            <!-- Data will be inserted here by JavaScript -->
         </div>
     </main>
 
     <footer>
-        <p>&copy; 2024 Sports Odds. All rights reserved.</p>
+        <p>&copy; 2024 Project Floater. All rights reserved.</p>
     </footer>
 
-    <!-- Include JavaScript to fetch and display data -->
-    <script type="module">
-      async function fetchOdds() {
-        try {
-          const response = await fetch('http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open');
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          const data = await response.json();
-          displayOdds(data);
-        } catch (error) {
-          console.error('There was a problem with the fetch operation:', error);
-        }
-      }
-
-      function displayOdds(data) {
-        const container = document.getElementById('odds-container');
-        const table = document.createElement('table');
-        const thead = document.createElement('thead');
-        const tbody = document.createElement('tbody');
-
-        // Create table headers
-        const headerRow = document.createElement('tr');
-        const headers = ['Event', 'Odds']; // Adjust based on the data structure
-        headers.forEach(headerText => {
-          const th = document.createElement('th');
-          th.textContent = headerText;
-          headerRow.appendChild(th);
-        });
-        thead.appendChild(headerRow);
-        table.appendChild(thead);
-
-        // Create table rows
-        data.forEach(item => {
-          const row = document.createElement('tr');
-          const eventCell = document.createElement('td');
-          const oddsCell = document.createElement('td');
-
-          eventCell.textContent = item.event; // Adjust based on data structure
-          oddsCell.textContent = item.odds;   // Adjust based on data structure
-
-          row.appendChild(eventCell);
-          row.appendChild(oddsCell);
-          tbody.appendChild(row);
-        });
-        table.appendChild(tbody);
-        container.appendChild(table);
-      }
-
-      // Fetch and display odds when the page loads
-      window.onload = fetchOdds;
-    </script>
+    <!-- Link to the new JavaScript file -->
+    <script src="scripts/odds.js"></script> <!-- Update path as necessary -->
 </body>
 </html>
