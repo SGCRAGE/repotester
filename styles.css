@@ -1,7 +1,7 @@
 /* Define the custom font */
 @font-face {
     font-family: 'Sister Spray';
-    src: url('fonts/Sister Spray.ttf') format('truetype'); /* Ensure the path and filename are correct */
+    src: url('fonts/Sister Spray.ttf') format('truetype');
 }
 
 /* Apply global styles */
@@ -26,6 +26,10 @@ header {
 }
 
 /* Navigation styling */
+nav {
+    font-family: Arial, sans-serif; /* Apply fallback font to the navigation bar */
+}
+
 nav ul {
     list-style-type: none;
     padding: 0;
@@ -43,6 +47,7 @@ nav ul li a {
     color: #fff;
     font-weight: bold;
     padding: 5px 10px;
+    font-family: 'Sister Spray', Arial, sans-serif; /* Apply custom font to navigation links */
 }
 
 /* Main content styling */
