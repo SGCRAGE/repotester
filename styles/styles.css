@@ -12,12 +12,17 @@ header {
     width: 100%;
     background: #333; /* Dark background for the header */
     color: #fff; /* White text color */
-    padding: 10px 0; /* Original padding */
+    padding: 10px 0;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Add shadow for better visibility */
+}
+
+header h1 {
+    margin: 0;
+    text-align: center;
 }
 
 /* Navigation styling */
@@ -91,21 +96,6 @@ footer {
     box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
 }
 
-/* Footer logo styling */
-.footer-logo {
-    max-height: 40px; /* Adjust this value to make the image smaller */
-    width: auto; /* Maintain aspect ratio */
-    display: block;
-    margin: 10px auto; /* Center the image and add spacing */
-}
-
-/* Banner image styling */
-.banner-image {
-    max-width: 100%; /* Ensure the image does not exceed container width */
-    height: auto; /* Maintain aspect ratio */
-    margin: 20px 0; /* Add spacing around the image */
-}
-
 /* Responsive design adjustments */
 @media (max-width: 600px) {
     nav ul li {
@@ -113,4 +103,3 @@ footer {
         margin-bottom: 10px; /* Stack items on smaller screens */
     }
 }
-
