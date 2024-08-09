@@ -114,6 +114,23 @@ footer {
     box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
 }
 
+/* Odds table styling */
+#odds-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+#odds-table th, #odds-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#odds-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
 /* Responsive design adjustments */
 @media (max-width: 600px) {
     nav ul li {
@@ -121,3 +138,4 @@ footer {
         margin-bottom: 10px; /* Stack items on smaller screens */
     }
 }
+
