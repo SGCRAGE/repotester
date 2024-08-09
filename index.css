@@ -1,0 +1,85 @@
+/* Include custom font */
+@font-face {
+    font-family: 'Sister Spray';
+    src: url('fonts/Sister Spray.ttf') format('truetype'); /* Adjust path if necessary */
+}
+
+/* Styles specific to the home page */
+body {
+    font-family: 'Sister Spray', Arial, sans-serif; /* Use custom font */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4; /* Ensure background color matches global styles */
+}
+
+/* Header styling */
+header {
+    background-color: #333; /* Consistent dark background with global styles */
+    padding: 10px 0; /* Adjust padding to match global styles */
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Navigation styling */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: center; /* Center-align the nav items */
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px; /* Adjust margin to match global styles */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff; /* Ensure text color matches global styles */
+    font-weight: bold;
+    padding: 5px 10px; /* Add padding for better click area */
+}
+
+/* Main content styling */
+main {
+    padding: 70px 20px 20px; /* Adjust top padding to avoid overlap with fixed header */
+    text-align: center; /* Center-align text if desired */
+}
+
+/* Centering images */
+.image-container {
+    text-align: center; /* Center-align content within the container */
+    margin: 20px 0; /* Optional: Add margin around the container */
+}
+
+.image-container img {
+    max-width: 100%; /* Ensure the image does not exceed the container width */
+    height: auto; /* Maintain aspect ratio */
+    display: inline-block; /* Ensure the image is treated as an inline element */
+}
+
+/* Footer styling */
+footer {
+    background-color: #333; /* Consistent dark background with global styles */
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    color: #fff; /* Ensure text color matches global styles */
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design adjustments */
+@media (max-width: 600px) {
+    nav ul li {
+        display: block;
+        margin-bottom: 10px; /* Stack items on smaller screens */
+    }
+}
