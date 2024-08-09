@@ -1,1 +1,105 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif; /* Fallback font */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Default background color */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
 
+/* Header styling */
+header {
+    width: 100%;
+    background: #333; /* Dark background for the header */
+    color: #fff; /* White text color */
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Add shadow for better visibility */
+}
+
+header h1 {
+    margin: 0;
+    text-align: center;
+}
+
+/* Navigation styling */
+nav {
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Style for the sign-in button in navigation */
+nav ul li button {
+    background-color: #4285F4; /* Google Blue */
+    color: white;
+    border: none;
+    padding: 15px 30px; /* Larger padding for a bigger button */
+    font-size: 16px; /* Larger text */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+}
+
+nav ul li button:hover {
+    background-color: #357ae8; /* Darker blue on hover */
+}
+
+/* Main content styling */
+main {
+    padding: 70px 20px 20px; /* Adjust top padding to avoid overlap with fixed header */
+    text-align: center; /* Center-align text and content */
+}
+
+/* Centering images and iframes */
+.image-container, .iframe-container {
+    text-align: center; /* Center-align content within the container */
+    margin: 20px auto; /* Center the container and add margin */
+}
+
+.image-container img, .iframe-container iframe {
+    max-width: 100%; /* Ensure the image or iframe does not exceed container width */
+    height: auto; /* Maintain aspect ratio */
+    display: inline-block; /* Ensure the image or iframe is treated as an inline element */
+}
+
+/* Footer styling */
+footer {
+    background: #333; /* Dark background for the footer */
+    color: #fff; /* White text color */
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 600px) {
+    nav ul li {
+        display: block;
+        margin-bottom: 10px; /* Stack items on smaller screens */
+    }
+}
