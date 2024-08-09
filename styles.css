@@ -27,7 +27,7 @@ header {
 
 /* Navigation styling */
 nav {
-    font-family: Arial, sans-serif; /* Apply fallback font to the navigation bar */
+    font-family: Arial, sans-serif; /* Use fallback font for navigation */
 }
 
 nav ul {
@@ -47,7 +47,6 @@ nav ul li a {
     color: #fff;
     font-weight: bold;
     padding: 5px 10px;
-    font-family: 'Sister Spray', Arial, sans-serif; /* Apply custom font to navigation links */
 }
 
 /* Main content styling */
@@ -66,13 +65,4 @@ footer {
     bottom: 0;
     left: 0;
     color: #fff;
-    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive design adjustments */
-@media (max-width: 600px) {
-    nav ul li {
-        display: block;
-        margin-bottom: 10px;
-    }
-}
+    box-shadow: 0 -1px 
