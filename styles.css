@@ -1,45 +1,36 @@
 /* Define the custom font */
 @font-face {
     font-family: 'Sister Spray';
-    src: url('fonts/Sister_Spray.ttf') format('truetype'); /* Correct path to the font file */
+    src: url('fonts/Sister Spray.ttf') format('truetype'); /* Ensure the path and filename are correct */
 }
 
-/* Apply the custom font globally */
+/* Apply global styles */
 body {
     font-family: 'Sister Spray', Arial, sans-serif; /* Use custom font with fallback */
-}
-
-/* Additional global styles */
-body {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4; /* Default background color */
+    box-sizing: border-box;
+    background-color: #f4f4f4;
 }
 
+/* Header styling */
 header {
-    width: 100%;
-    background: #333; /* Dark background for the header */
-    color: #fff; /* White text color */
+    background-color: #333;
     padding: 10px 0;
+    text-align: center;
     position: fixed;
+    width: 100%;
     top: 0;
     left: 0;
     z-index: 1000;
 }
 
-header h1 {
-    margin: 0;
-    text-align: center;
-}
-
-nav {
-    text-align: center;
-}
-
+/* Navigation styling */
 nav ul {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
     margin: 0;
+    text-align: center;
 }
 
 nav ul li {
@@ -48,40 +39,35 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #fff;
     text-decoration: none;
+    color: #fff;
     font-weight: bold;
+    padding: 5px 10px;
 }
 
-/* Style for the sign-in button in navigation */
-nav ul li button {
-    background-color: #4285F4; /* Google Blue */
-    color: white;
-    border: none;
-    padding: 15px 30px; /* Larger padding for a bigger button */
-    font-size: 16px; /* Larger text */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer;
-    text-align: center;
-    display: inline-block;
-}
-
-nav ul li button:hover {
-    background-color: #357ae8; /* Darker blue on hover */
-}
-
+/* Main content styling */
 main {
-    padding: 60px 20px 20px; /* Top padding to avoid overlap with the fixed header */
+    padding: 60px 20px 20px;
+    text-align: center;
 }
 
+/* Footer styling */
 footer {
-    background: #333; /* Dark background for the footer */
-    color: #fff; /* White text color */
+    background-color: #333;
     padding: 10px;
     text-align: center;
-    width: 100%;
     position: fixed;
+    width: 100%;
     bottom: 0;
-    margin: 0;
+    left: 0;
+    color: #fff;
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Responsive design adjustments */
+@media (max-width: 600px) {
+    nav ul li {
+        display: block;
+        margin-bottom: 10px;
+    }
+}
