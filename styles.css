@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4; /* Default background color */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
 /* Header styling */
