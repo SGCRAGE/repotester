@@ -17,7 +17,7 @@ header {
     width: 100%;
     background: #333; /* Dark background for the header */
     color: #fff; /* White text color */
-    padding: 10px 0;
+    padding: 20px 0; /* Increased padding for better spacing */
     position: fixed;
     top: 0;
     left: 0;
@@ -72,7 +72,7 @@ nav ul li button:hover {
 
 /* Main content styling */
 main {
-    padding: 60px 20px 20px; /* Top padding to avoid overlap with the fixed header */
+    padding: 100px 20px 20px; /* Increased top padding to account for header */
 }
 
 main h2 {
@@ -94,4 +94,5 @@ footer {
     bottom: 0;
     margin: 0;
 }
+
 
