@@ -1,3 +1,5 @@
+/* Styles specific to the index page */
+
 /* Ensure body styling is consistent with global styles */
 body {
     font-family: 'Sister Spray', Arial, sans-serif; /* Ensure custom font is applied */
@@ -41,8 +43,20 @@ nav ul li a {
 
 /* Main content styling */
 main {
-    padding: 70px 20px 20px; /* Adjust top padding to avoid overlap with fixed header */
+    padding: 60px 20px 20px; /* Adjust top padding to avoid overlap with fixed header */
     text-align: center; /* Center-align text if desired */
+}
+
+/* Centering images */
+.image-container {
+    text-align: center; /* Center-align content within the container */
+    margin: 20px 0; /* Optional: Add margin around the container */
+}
+
+.image-container img {
+    max-width: 100%; /* Ensure the image does not exceed the container width */
+    height: auto; /* Maintain aspect ratio */
+    display: inline-block; /* Ensure the image is treated as an inline element */
 }
 
 /* Footer styling */
@@ -50,12 +64,12 @@ footer {
     background-color: #333; /* Consistent dark background with global styles */
     padding: 10px;
     text-align: center;
-    width: 100%;
     position: fixed;
+    width: 100%;
     bottom: 0;
     left: 0;
     color: #fff; /* Ensure text color matches global styles */
-    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive design adjustments */
