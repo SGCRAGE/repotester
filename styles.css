@@ -1,7 +1,7 @@
 /* Include custom font */
 @font-face {
     font-family: 'Sister Spray';
-    src: url('fonts/Sister_Spray.ttf') format('truetype'); /* Adjust path if necessary */
+    src: url('fonts/Sister_Spray.ttf') format('truetype'); /* Correct path to fonts directory */
 }
 
 /* Global Styles */
