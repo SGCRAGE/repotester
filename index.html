@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Project Floater</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Firebase CDN scripts -->
-    <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js"></script>
-    <script src="firebase-init.js" defer></script>
 </head>
 <body>
     <header>
@@ -35,5 +30,41 @@
     <footer>
         <p>&copy; 2024 Project Floater. All rights reserved.</p>
     </footer>
+
+    <!-- Include Firebase SDKs via CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+    <!-- Firebase initialization and authentication logic -->
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBeqodJXU1JpvvZekfTa7hYlHVEiiiFF9w",
+            authDomain: "idk-test-70704.firebaseapp.com",
+            projectId: "idk-test-70704",
+            storageBucket: "idk-test-70704.appspot.com",
+            messagingSenderId: "575047362576",
+            appId: "1:575047362576:web:9362dd8f4a9581659ac295",
+            measurementId: "G-8YHEHG5C5K"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const analytics = firebase.getAnalytics(app);
+        const auth = firebase.getAuth();
+        const provider = new firebase.GoogleAuthProvider();
+
+        document.getElementById('login').addEventListener('click', () => {
+            firebase.signInWithPopup(auth, provider)
+                .then((result) => {
+                    // Handle result
+                    console.log('User signed in:', result.user);
+                })
+                .catch((error) => {
+                    console.error('Error during sign-in:', error);
+                });
+        });
+    </script>
 </body>
 </html>
