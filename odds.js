@@ -1,31 +1,45 @@
 // odds.js
 
-// Fetch data from the API and display it
-fetch('http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open')
-  .then(response => response.json()) // Parse JSON data
-  .then(data => {
-    console.log(data); // For debugging
-    displayData(data); // Call function to display data
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error); // Handle errors
-  });
+document.addEventListener('DOMContentLoaded', () => {
+  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  const apiUrl = 'http://api.crazyninjaodds.com/api/devigger/v1/sportsbook_devigger.aspx?api=open';
 
-// Function to display data
+  fetch(proxyUrl + apiUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Fetched data:', data); // Inspect the data
+      displayData(data);
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      document.getElementById('data-container').innerHTML = `<p>Error fetching data: ${error.message}</p>`;
+    });
+});
+
 function displayData(data) {
-  const container = document.getElementById('data-container'); // Container element
+  const container = document.getElementById('data-container');
   container.innerHTML = ''; // Clear previous data
 
-  data.forEach(item => {
-    const div = document.createElement('div');
-    div.classList.add('item');
+  // Adjust this code based on the actual structure of the data
+  if (Array.isArray(data)) {
+    data.forEach(item => {
+      const div = document.createElement('div');
+      div.classList.add('item');
 
-    // Example of displaying data
-    div.innerHTML = `
-      <h3>${item.title}</h3>
-      <p>${item.description}</p>
-    `;
+      // Example of displaying data; adjust based on actual data structure
+      div.innerHTML = `
+        <h3>${item.title || 'No Title'}</h3>
+        <p>${item.description || 'No Description'}</p>
+      `;
 
-    container.appendChild(div);
-  });
+      container.appendChild(div);
+    });
+  } else {
+    container.innerHTML = '<p>No data available</p>';
+  }
 }
