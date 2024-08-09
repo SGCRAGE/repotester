@@ -29,11 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .then((result) => {
           // Handle result
           console.log('User signed in:', result.user);
-          // You can access result.user for user details and handle the sign-in result here
         })
         .catch((error) => {
           console.error('Error during sign-in:', error);
-          // Handle errors here
         });
     });
   } else {
