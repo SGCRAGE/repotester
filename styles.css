@@ -66,6 +66,14 @@ main {
     text-align: center; /* Center-align text if desired */
 }
 
+main h2 {
+    margin-top: 0; /* Ensure there is no extra margin above the heading */
+}
+
+main p {
+    margin-bottom: 20px; /* Add space below the paragraph */
+}
+
 /* Footer styling */
 footer {
     background-color: #333; /* Consistent dark background with global styles */
