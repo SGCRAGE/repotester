@@ -11,7 +11,7 @@ header {
     width: 100%;
     background: #333; /* Dark background for the header */
     color: #fff; /* White text color */
-    padding: 20px 0; /* Increased padding to match contact page */
+    padding: 10px 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -63,10 +63,15 @@ nav ul li button:hover {
     background-color: #357ae8; /* Darker blue on hover */
 }
 
-/* Main content styling */
+/* Main content styling with more padding */
 main {
-    padding: 100px 20px 20px; /* Match top padding to align with header and center content */
+    padding: 150px 20px 20px; /* Increased top padding to move content further down */
     text-align: center; /* Center-align text and content */
+    background-color: #fff; /* White background for the main section */
+    max-width: 1200px; /* Max width for large screens */
+    margin: 0 auto; /* Center the main content */
+    border-radius: 10px; /* Rounded corners for the main content */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Light shadow for better separation */
 }
 
 /* Centering images */
