@@ -1,46 +1,55 @@
+/* Include custom font */
+@font-face {
+    font-family: 'Messy Drip BC';
+    src: url('fonts/Sister Spray.ttf') format('truetype'); /* Adjust path if necessary */
+}
+
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif; /* Use fallback font for everything */
+    font-family: 'Messy Drip BC', Arial, sans-serif; /* Use custom font with fallback */
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    background-color: #f4f4f4; /* Ensure background color matches global styles */
+    background-color: #f4f4f4; /* Default background color */
 }
 
 /* Header styling */
 header {
-    background-color: #333; /* Consistent dark background with global styles */
-    padding: 10px 0; /* Adjust padding to match global styles */
-    text-align: center;
-    position: fixed;
     width: 100%;
+    background: #333; /* Dark background for the header */
+    color: #fff; /* White text color */
+    padding: 10px 0;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
 }
 
+header h1 {
+    margin: 0;
+    text-align: center;
+}
+
 /* Navigation styling */
 nav {
-    font-family: Arial, sans-serif; /* Ensure fallback font for navigation */
+    font-family: Arial, sans-serif; /* Use fallback font for navigation items */
+    text-align: center;
 }
 
 nav ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
     margin: 0;
-    text-align: center; /* Center-align the nav items */
 }
 
 nav ul li {
     display: inline;
-    margin: 0 10px; /* Adjust margin to match global styles */
+    margin: 0 10px;
 }
 
 nav ul li a {
+    color: #fff;
     text-decoration: none;
-    color: #fff; /* Ensure text color matches global styles */
     font-weight: bold;
-    padding: 5px 10px; /* Add padding for better click area */
 }
 
 /* Style for the sign-in button in navigation */
@@ -62,8 +71,7 @@ nav ul li button:hover {
 
 /* Main content styling */
 main {
-    padding: 60px 20px 20px; /* Adjust top padding to avoid overlap with fixed header */
-    text-align: center; /* Center-align text if desired */
+    padding: 60px 20px 20px; /* Top padding to avoid overlap with the fixed header */
 }
 
 main h2 {
@@ -76,21 +84,12 @@ main p {
 
 /* Footer styling */
 footer {
-    background-color: #333; /* Consistent dark background with global styles */
+    background: #333; /* Dark background for the footer */
+    color: #fff; /* White text color */
     padding: 10px;
     text-align: center;
-    position: fixed;
     width: 100%;
+    position: fixed;
     bottom: 0;
-    left: 0;
-    color: #fff; /* Ensure text color matches global styles */
-    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive design adjustments */
-@media (max-width: 600px) {
-    nav ul li {
-        display: block;
-        margin-bottom: 10px; /* Stack items on smaller screens */
-    }
+    margin: 0;
 }
