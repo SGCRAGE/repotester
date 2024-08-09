@@ -1,6 +1,6 @@
 /* Ensure body styling is consistent with global styles */
 body {
-    font-family: 'Sister Spray', Arial, sans-serif; /* Ensure custom font is applied */
+    font-family: Arial, sans-serif; /* Ensure fallback font is applied */
     margin: 0;
     padding: 0;
     box-sizing: border-box;
