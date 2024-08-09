@@ -6,7 +6,7 @@
 
 /* Global Styles */
 body {
-    font-family: 'Messy Drip BC', Arial, sans-serif; /* Use custom font with fallback */
+    font-family: Arial, sans-serif; /* Use fallback font */
     margin: 0;
     padding: 0;
     background-color: #f4f4f4; /* Default background color */
