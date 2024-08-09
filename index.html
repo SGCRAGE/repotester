@@ -31,40 +31,41 @@
         <p>&copy; 2024 Project Floater. All rights reserved.</p>
     </footer>
 
-    <!-- Include Firebase SDKs via CDN -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <!-- Firebase SDKs via CDN -->
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
+      import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-    <!-- Firebase initialization and authentication logic -->
-    <script>
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBeqodJXU1JpvvZekfTa7hYlHVEiiiFF9w",
-            authDomain: "idk-test-70704.firebaseapp.com",
-            projectId: "idk-test-70704",
-            storageBucket: "idk-test-70704.appspot.com",
-            messagingSenderId: "575047362576",
-            appId: "1:575047362576:web:9362dd8f4a9581659ac295",
-            measurementId: "G-8YHEHG5C5K"
-        };
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBeqodJXU1JpvvZekfTa7hYlHVEiiiFF9w",
+        authDomain: "idk-test-70704.firebaseapp.com",
+        projectId: "idk-test-70704",
+        storageBucket: "idk-test-70704.appspot.com",
+        messagingSenderId: "575047362576",
+        appId: "1:575047362576:web:9362dd8f4a9581659ac295",
+        measurementId: "G-8YHEHG5C5K"
+      };
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const analytics = firebase.getAnalytics(app);
-        const auth = firebase.getAuth();
-        const provider = new firebase.GoogleAuthProvider();
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth();
+      const provider = new GoogleAuthProvider();
 
-        document.getElementById('login').addEventListener('click', () => {
-            firebase.signInWithPopup(auth, provider)
-                .then((result) => {
-                    // Handle result
-                    console.log('User signed in:', result.user);
-                })
-                .catch((error) => {
-                    console.error('Error during sign-in:', error);
-                });
-        });
+      // Add sign-in functionality
+      document.getElementById('login').addEventListener('click', () => {
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            // Handle result
+            console.log('User signed in:', result.user);
+          })
+          .catch((error) => {
+            console.error('Error during sign-in:', error);
+          });
+      });
     </script>
 </body>
 </html>
