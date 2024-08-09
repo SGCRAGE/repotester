@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,7 +17,8 @@
                 <li><a href="contact/contact.html">Contact</a></li>
                 <li><a href="embed/embed.html">MLB PARK RATINGS</a></li>
                 <li><a href="embed2/embed2.html">MLB BATTING</a></li>
-                <li><button id="login">Sign in with Google</button></li>
+                <li><button id="login-google">Sign in with Google</button></li>
+                <li><button id="login-email">Sign in with Email</button></li>
             </ul>
         </nav>
     </header>
@@ -26,6 +27,19 @@
         <h2>Welcome to Project Floater!</h2>
         <p>This is the homepage of Project Floater.</p>
         <img src="images/Screenshot 2024-08-06 172839.png" alt="Busta Central Banner" class="banner-image">
+
+        <!-- Email Sign-In Form -->
+        <div id="email-signin" style="display:none;">
+            <h2>Email Sign-In</h2>
+            <form id="email-signin-form">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+                <button type="submit">Sign In</button>
+            </form>
+            <p id="error-message" style="color: red;"></p>
+        </div>
     </main>
 
     <footer>
@@ -36,7 +50,7 @@
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
-      import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+      import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
       const firebaseConfig = {
         apiKey: "AIzaSyBeqodJXU1JpvvZekfTa7hYlHVEiiiFF9w",
@@ -51,15 +65,38 @@
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
       const auth = getAuth();
-      const provider = new GoogleAuthProvider();
+      const googleProvider = new GoogleAuthProvider();
 
-      document.getElementById('login').addEventListener('click', () => {
-        signInWithPopup(auth, provider)
+      // Google Sign-In
+      document.getElementById('login-google').addEventListener('click', () => {
+        signInWithPopup(auth, googleProvider)
           .then((result) => {
-            console.log('User signed in:', result.user);
+            console.log('User signed in with Google:', result.user);
           })
           .catch((error) => {
-            console.error('Error during sign-in:', error);
+            console.error('Error during Google sign-in:', error);
+          });
+      });
+
+      // Show Email Sign-In Form
+      document.getElementById('login-email').addEventListener('click', () => {
+        document.getElementById('email-signin').style.display = 'block';
+      });
+
+      // Email Sign-In Form Submission
+      document.getElementById('email-signin-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            console.log('User signed in with Email:', userCredential.user);
+            // Optionally hide the form or redirect the user
+            document.getElementById('email-signin').style.display = 'none';
+          })
+          .catch((error) => {
+            document.getElementById('error-message').textContent = error.message;
           });
       });
     </script>
