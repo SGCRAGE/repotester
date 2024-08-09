@@ -6,7 +6,7 @@
 
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif; /* Use fallback font for body */
+    font-family: Arial, sans-serif; /* Use fallback font */
     margin: 0;
     padding: 0;
     background-color: #f4f4f4; /* Default background color */
@@ -72,7 +72,7 @@ nav ul li button:hover {
 
 /* Main content styling */
 main {
-    padding: 70px 20px 20px; /* Increased top padding to avoid overlap with the fixed header */
+    padding: 60px 20px 20px; /* Top padding to avoid overlap with the fixed header */
 }
 
 main h2 {
@@ -94,3 +94,4 @@ footer {
     bottom: 0;
     margin: 0;
 }
+
