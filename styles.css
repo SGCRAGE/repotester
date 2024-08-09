@@ -1,12 +1,6 @@
-/* Define the custom font */
-@font-face {
-    font-family: 'Sister Spray';
-    src: url('fonts/Sister Spray.ttf') format('truetype');
-}
-
-/* Apply global styles */
+/* Global Styles */
 body {
-    font-family: 'Sister Spray', Arial, sans-serif; /* Use custom font with fallback */
+    font-family: Arial, sans-serif; /* Use fallback font for everything */
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -27,7 +21,7 @@ header {
 
 /* Navigation styling */
 nav {
-    font-family: Arial, sans-serif; /* Use fallback font for navigation */
+    font-family: Arial, sans-serif; /* Ensure fallback font for navigation */
 }
 
 nav ul {
@@ -60,9 +54,4 @@ footer {
     background-color: #333;
     padding: 10px;
     text-align: center;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    color: #fff;
-    box-shadow: 0 -1px 
+    position: fixed
