@@ -12,7 +12,7 @@ header {
     width: 100%;
     background: #333; /* Dark background for the header */
     color: #fff; /* White text color */
-    padding: 10px 20px; /* Adjusted padding */
+    padding: 10px 0; /* Reverted padding */
     position: fixed;
     top: 0;
     left: 0;
@@ -104,6 +104,14 @@ footer {
     left: 0;
     margin: 0;
     box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+}
+
+/* Footer logo styling */
+.footer-logo {
+    max-height: 40px; /* Adjust this value to make the image smaller */
+    width: auto; /* Maintain aspect ratio */
+    display: block;
+    margin: 10px auto; /* Center the image and add spacing */
 }
 
 /* Responsive design adjustments */
