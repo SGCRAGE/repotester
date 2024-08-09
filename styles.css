@@ -6,7 +6,7 @@
 
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif; /* Use fallback font for body text */
+    font-family: Arial, sans-serif; /* Use fallback font */
     margin: 0;
     padding: 0;
     background-color: #f4f4f4; /* Default background color */
@@ -25,7 +25,6 @@ header {
 }
 
 header h1 {
-    font-family: 'Messy Drip BC', Arial, sans-serif; /* Use custom font for header text */
     margin: 0;
     text-align: center;
 }
@@ -94,3 +93,4 @@ footer {
     bottom: 0;
     margin: 0;
 }
+
