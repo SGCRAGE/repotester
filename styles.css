@@ -1,12 +1,12 @@
 /* Include custom font */
 @font-face {
-    font-family: 'Sister Spray';
-    src: url('fonts/Sister_Spray.ttf') format('truetype'); /* Correct path to fonts directory */
+    font-family: 'Sister Spray'; /* Define the custom font family name */
+    src: url('fonts/Sister_Spray.ttf') format('truetype'); /* Path to the font file */
 }
 
 /* Global Styles */
 body {
-    font-family: 'Sister Spray', Arial, sans-serif; /* Use custom font with fallback */
+    font-family: 'Sister Spray', Arial, sans-serif; /* Use custom font with fallbacks */
     margin: 0;
     padding: 0;
     background-color: #f4f4f4; /* Default background color */
