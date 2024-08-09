@@ -21,13 +21,22 @@ const auth = getAuth();
 const provider = new GoogleAuthProvider();
 
 // Add sign-in functionality
-document.getElementById('login').addEventListener('click', () => {
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      // Handle result
-      console.log(result.user);
-    })
-    .catch((error) => {
-      console.error('Error during sign-in:', error);
+document.addEventListener('DOMContentLoaded', () => {
+  const loginButton = document.getElementById('login');
+  if (loginButton) {
+    loginButton.addEventListener('click', () => {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          // Handle result
+          console.log('User signed in:', result.user);
+          // You can access result.user for user details and handle the sign-in result here
+        })
+        .catch((error) => {
+          console.error('Error during sign-in:', error);
+          // Handle errors here
+        });
     });
+  } else {
+    console.error('Login button not found');
+  }
 });
