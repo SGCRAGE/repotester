@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const apiKey = 'a3944d813da67c5b4b07199ecdd4affa';
 
     fetch(apiUrl, {
-        method: 'GET', // or 'POST' depending on the API
+        method: 'GET',
         headers: {
             'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json'
@@ -29,11 +29,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function displayData(data) {
-        if (Array.isArray(data)) {
+        if (Array.isArray(data) && data.length > 0) {
             const list = document.createElement('ul');
             data.forEach(item => {
                 const listItem = document.createElement('li');
-                listItem.textContent = JSON.stringify(item, null, 2);
+                listItem.innerHTML = `
+                    <h2>${item.title}</h2>
+                    <p><strong>Group:</strong> ${item.group}</p>
+                    <p><strong>Description:</strong> ${item.description}</p>
+                    <p><strong>Has Outrights:</strong> ${item.has_outrights ? 'Yes' : 'No'}</p>
+                `;
                 list.appendChild(listItem);
             });
             dataContainer.appendChild(list);
