@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
     const apiUrl = 'https://api.theoddsapi.com/v4/sports/baseball/odds'; // Adjust URL to match the endpoint you need
-    const apiKey = 'a3944d813da67c5b4b07199ecdd4affa'; // Ensure API key is correct
+    const apiKey = '43900254fc7c455464307807da745fd7'; // Ensure API key is correct
 
     fetch(apiUrl, {
         method: 'GET',

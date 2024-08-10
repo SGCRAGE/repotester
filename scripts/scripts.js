@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
     const apiUrl = 'https://ws.openodds.gg/getData'; // Make sure this is the correct API URL
-    const apiKey = 'a3944d813da67c5b4b07199ecdd4affa'; // Your API key
+    const apiKey = '43900254fc7c455464307807da745fd7'; // Your API key
 
     fetch(apiUrl, {
         method: 'GET',

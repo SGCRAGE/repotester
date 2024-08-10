@@ -1,9 +1,10 @@
 import requests
+import json
 
-# Your API key
-API_KEY = '43900254fc7c455464307807da745fd7'
+# Your API key (replace with your actual key)
+API_KEY = 'wk_63c3e4d21a2cf06d7eddcabb616b8200'
 
-# Parameters
+# Correct API endpoint and parameters
 odds_url = 'https://api.the-odds-api.com/v4/sports/baseball_mlb/odds'
 odds_params = {
     'regions': 'us',
@@ -18,6 +19,7 @@ def fetch_data_from_api(url, params):
     try:
         print(f'Fetching data from: {url}')  # Debugging statement
         print(f'Headers: {headers}')  # Debugging statement
+        print(f'Params: {params}')  # Debugging statement
         response = requests.get(url, headers=headers, params=params)
         print(f'Status Code: {response.status_code}')  # Debugging statement
         print(f'Response Text: {response.text}')  # Debugging statement
