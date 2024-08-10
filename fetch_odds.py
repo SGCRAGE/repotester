@@ -1,8 +1,8 @@
-import requests # type: ignore
+import requests  # type: ignore
 import json
 
 # Your API key (replace with your actual key)
-API_KEY = 'wk_63c3e4d21a2cf06d7eddcabb616b8200'
+API_KEY = '43900254fc7c455464307807da745fd7'  # Replace with your actual API key
 
 # Correct API endpoint and parameters
 odds_url = 'https://api.the-odds-api.com/v4/sports/baseball_mlb/odds'
