@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayData(data) {
         // Process and display data here
-        // For example, let's assume the data contains an array of items:
+        // Example assumes data contains an array of items:
         if (Array.isArray(data)) {
             const list = document.createElement('ul');
             data.forEach(item => {
