@@ -6,7 +6,7 @@ import os
 API_KEY = 'a3944d813da67c5b4b07199ecdd4affa'
 
 # Parameters
-SPORT = 'upcoming'  # Replace with a valid sport key if needed
+SPORT = 'baseball_mlb'  # Sport key for MLB
 REGIONS = 'us'
 MARKETS = 'h2h,spreads'
 ODDS_FORMAT = 'decimal'
@@ -21,6 +21,7 @@ def fetch_data_from_api(url, params):
         'Authorization': f'Bearer {API_KEY}'
     }
     try:
+        print(f'Fetching data from: {url}')  # Debugging statement
         response = requests.get(url, headers=headers, params=params)
         response.raise_for_status()  # Raises an HTTPError for bad responses
         return response.json()
