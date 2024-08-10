@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Project Floater</title>
-    <link rel="stylesheet" href="styles/styles.css"> <!-- Updated path -->
+    <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -54,7 +54,7 @@
       import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
       // Fetch Firebase configuration from the server
-      fetch('/firebase-config')
+      fetch('https://sgcrage.github.io/firebase-config.json')
         .then(response => response.json())
         .then(config => {
           const app = initializeApp(config);
@@ -87,7 +87,6 @@
             signInWithEmailAndPassword(auth, email, password)
               .then((userCredential) => {
                 console.log('User signed in with Email:', userCredential.user);
-                // Optionally hide the form or redirect the user
                 document.getElementById('email-signin').style.display = 'none';
               })
               .catch((error) => {
