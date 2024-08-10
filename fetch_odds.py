@@ -1,4 +1,6 @@
 import requests
+import json
+import os
 
 # Your API key
 API_KEY = 'a3944d813da67c5b4b07199ecdd4affa'
@@ -10,34 +12,45 @@ MARKETS = 'h2h,spreads'
 ODDS_FORMAT = 'decimal'
 DATE_FORMAT = 'iso'
 
-# Get a list of in-season sports
-sports_response = requests.get(
-    'https://api.the-odds-api.com/v4/sports',
-    params={'api_key': API_KEY}
-)
+# File to store cached data
+CACHE_FILE_SPORTS = 'cache_sports.json'
+CACHE_FILE_ODDS = 'cache_odds.json'
 
-if sports_response.status_code != 200:
-    print(f'Failed to get sports: status_code {sports_response.status_code}, response body {sports_response.text}')
-else:
-    print('List of in-season sports:', sports_response.json())
+def fetch_data_from_api(url, params):
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        response.raise_for_status()
+
+def get_cached_data(cache_file, url, params):
+    if os.path.exists(cache_file):
+        with open(cache_file, 'r') as cache_file_obj:
+            cached_data = json.load(cache_file_obj)
+            return cached_data
+    else:
+        data = fetch_data_from_api(url, params)
+        with open(cache_file, 'w') as cache_file_obj:
+            json.dump(data, cache_file_obj)
+        return data
+
+# Get a list of in-season sports
+sports_url = 'https://api.the-odds-api.com/v4/sports'
+sports_params = {'api_key': API_KEY}
+sports_data = get_cached_data(CACHE_FILE_SPORTS, sports_url, sports_params)
+
+print('List of in-season sports:', sports_data)
 
 # Get a list of live & upcoming games with odds
-odds_response = requests.get(
-    f'https://api.the-odds-api.com/v4/sports/{SPORT}/odds',
-    params={
-        'api_key': API_KEY,
-        'regions': REGIONS,
-        'markets': MARKETS,
-        'oddsFormat': ODDS_FORMAT,
-        'dateFormat': DATE_FORMAT,
-    }
-)
+odds_url = f'https://api.the-odds-api.com/v4/sports/{SPORT}/odds'
+odds_params = {
+    'api_key': API_KEY,
+    'regions': REGIONS,
+    'markets': MARKETS,
+    'oddsFormat': ODDS_FORMAT,
+    'dateFormat': DATE_FORMAT,
+}
+odds_data = get_cached_data(CACHE_FILE_ODDS, odds_url, odds_params)
 
-if odds_response.status_code != 200:
-    print(f'Failed to get odds: status_code {odds_response.status_code}, response body {odds_response.text}')
-else:
-    odds_json = odds_response.json()
-    print('Number of events:', len(odds_json))
-    print(odds_json)
-    print('Remaining requests:', odds_response.headers.get('x-requests-remaining'))
-    print('Used requests:', odds_response.headers.get('x-requests-used'))
+print('Number of events:', len(odds_data))
+print(odds_data)
