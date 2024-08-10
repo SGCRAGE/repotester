@@ -2,9 +2,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const dataContainer = document.getElementById('data-container');
 
     fetch('https://ws.openodds.gg/getData')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
-            console.log(data); // For debugging purposes
+            console.log('Data received:', data); // For debugging purposes
             displayData(data);
         })
         .catch(error => {
@@ -13,13 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
     function displayData(data) {
-        // Process and display data here
-        // Example assumes data contains an array of items:
         if (Array.isArray(data)) {
             const list = document.createElement('ul');
             data.forEach(item => {
                 const listItem = document.createElement('li');
-                listItem.textContent = JSON.stringify(item); // Modify as needed based on the actual data structure
+                listItem.textContent = JSON.stringify(item, null, 2); // Pretty print JSON
                 list.appendChild(listItem);
             });
             dataContainer.appendChild(list);
