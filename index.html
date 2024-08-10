@@ -53,53 +53,48 @@
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
       import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyBeqodJXU1JpvvZekfTa7hYlHVEiiiFF9w",
-        authDomain: "idk-test-70704.firebaseapp.com",
-        projectId: "idk-test-70704",
-        storageBucket: "idk-test-70704.appspot.com",
-        messagingSenderId: "575047362576",
-        appId: "1:575047362576:web:9362dd8f4a9581659ac295",
-        measurementId: "G-8YHEHG5C5K"
-      };
+      // Fetch Firebase configuration from the server
+      fetch('/firebase-config')
+        .then(response => response.json())
+        .then(config => {
+          const app = initializeApp(config);
+          const analytics = getAnalytics(app);
+          const auth = getAuth();
+          const googleProvider = new GoogleAuthProvider();
 
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      const auth = getAuth();
-      const googleProvider = new GoogleAuthProvider();
-
-      // Google Sign-In
-      document.getElementById('login-google').addEventListener('click', () => {
-        signInWithPopup(auth, googleProvider)
-          .then((result) => {
-            console.log('User signed in with Google:', result.user);
-          })
-          .catch((error) => {
-            console.error('Error during Google sign-in:', error);
+          // Google Sign-In
+          document.getElementById('login-google').addEventListener('click', () => {
+            signInWithPopup(auth, googleProvider)
+              .then((result) => {
+                console.log('User signed in with Google:', result.user);
+              })
+              .catch((error) => {
+                console.error('Error during Google sign-in:', error);
+              });
           });
-      });
 
-      // Show Email Sign-In Form
-      document.getElementById('login-email').addEventListener('click', () => {
-        document.getElementById('email-signin').style.display = 'block';
-      });
-
-      // Email Sign-In Form Submission
-      document.getElementById('email-signin-form').addEventListener('submit', (event) => {
-        event.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-
-        signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            console.log('User signed in with Email:', userCredential.user);
-            // Optionally hide the form or redirect the user
-            document.getElementById('email-signin').style.display = 'none';
-          })
-          .catch((error) => {
-            document.getElementById('error-message').textContent = error.message;
+          // Show Email Sign-In Form
+          document.getElementById('login-email').addEventListener('click', () => {
+            document.getElementById('email-signin').style.display = 'block';
           });
-      });
+
+          // Email Sign-In Form Submission
+          document.getElementById('email-signin-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+              .then((userCredential) => {
+                console.log('User signed in with Email:', userCredential.user);
+                // Optionally hide the form or redirect the user
+                document.getElementById('email-signin').style.display = 'none';
+              })
+              .catch((error) => {
+                document.getElementById('error-message').textContent = error.message;
+              });
+          });
+        });
     </script>
 </body>
 </html>
