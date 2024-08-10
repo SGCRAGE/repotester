@@ -88,16 +88,23 @@ main {
     text-align: center; /* Center-align text and content */
 }
 
-/* Centering images and iframes */
-.image-container, .iframe-container {
-    text-align: center; /* Center-align content within the container */
-    margin: 20px auto; /* Center the container and add margin */
+/* Data container styling */
+#data-container ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-.image-container img, .iframe-container iframe {
-    max-width: 100%; /* Ensure the image or iframe does not exceed container width */
-    height: auto; /* Maintain aspect ratio */
-    display: inline-block; /* Ensure the image or iframe is treated as an inline element */
+#data-container li {
+    background: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+#data-container h2 {
+    margin-top: 0;
 }
 
 /* Footer styling */
@@ -121,3 +128,4 @@ footer {
         margin-bottom: 10px; /* Stack items on smaller screens */
     }
 }
+
