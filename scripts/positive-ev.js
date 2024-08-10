@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const dataContainer = document.getElementById('data-container');
-    const apiUrl = 'https://ws.openodds.gg/getData';
-    const apiKey = 'a3944d813da67c5b4b07199ecdd4affa';
+    const oddsContainer = document.getElementById('odds-container');
+    const apiUrl = 'https://api.theoddsapi.com/v4/sports/baseball/odds'; // Adjust URL to match the endpoint you need
+    const apiKey = 'a3944d813da67c5b4b07199ecdd4affa'; // Ensure API key is correct
 
     fetch(apiUrl, {
         method: 'GET',
@@ -20,29 +20,29 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .then(data => {
         console.log('Data received:', data);
-        displayData(data);
+        displayOdds(data);
     })
     .catch(error => {
         console.error('Error fetching data:', error);
-        dataContainer.innerHTML = `<p>Error fetching data: ${error.message}</p>`;
+        oddsContainer.innerHTML = `<p>Error fetching data: ${error.message}</p>`;
     });
 
-    function displayData(data) {
+    function displayOdds(data) {
         if (Array.isArray(data) && data.length > 0) {
-            const list = document.createElement('ul');
-            data.forEach(item => {
-                const listItem = document.createElement('li');
-                listItem.innerHTML = `
-                    <h2>${item.title || 'No Title'}</h2>
-                    <p><strong>Group:</strong> ${item.group || 'No Group'}</p>
-                    <p><strong>Description:</strong> ${item.description || 'No Description'}</p>
-                    <p><strong>Has Outrights:</strong> ${item.has_outrights ? 'Yes' : 'No'}</p>
+            oddsContainer.innerHTML = ''; // Clear previous data
+            data.forEach(event => {
+                const oddsItem = document.createElement('div');
+                oddsItem.className = 'odds-item';
+                oddsItem.innerHTML = `
+                    <h3>${event.home_team} vs ${event.away_team}</h3>
+                    <p><strong>Home Odds:</strong> ${event.odds.home}</p>
+                    <p><strong>Away Odds:</strong> ${event.odds.away}</p>
+                    <p><strong>Draw Odds:</strong> ${event.odds.draw || 'N/A'}</p>
                 `;
-                list.appendChild(listItem);
+                oddsContainer.appendChild(oddsItem);
             });
-            dataContainer.appendChild(list);
         } else {
-            dataContainer.innerHTML = '<p>No data available.</p>';
+            oddsContainer.innerHTML = '<p>No data available.</p>';
         }
     }
 });

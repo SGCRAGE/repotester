@@ -88,23 +88,24 @@ main {
     text-align: center; /* Center-align text and content */
 }
 
-/* Data container styling */
-#data-container ul {
-    list-style-type: none;
-    padding: 0;
+/* Odds container styling */
+#odds-container {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#data-container li {
-    background: white;
+/* Odds item styling */
+.odds-item {
+    margin-bottom: 10px;
     padding: 15px;
-    margin: 10px 0;
+    background: #fff;
+    border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     text-align: left;
-}
-
-#data-container h2 {
-    margin-top: 0;
 }
 
 /* Footer styling */
@@ -128,4 +129,3 @@ footer {
         margin-bottom: 10px; /* Stack items on smaller screens */
     }
 }
-
