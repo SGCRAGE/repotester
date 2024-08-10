@@ -1,0 +1,11 @@
+[
+    {
+        "key": "americanfootball_cfl",
+        "group": "American Football",
+        "title": "CFL",
+        "description": "Canadian Football League",
+        "active": true,
+        "has_outrights": false
+    },
+    ...
+]
