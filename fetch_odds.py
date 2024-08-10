@@ -1,4 +1,4 @@
-import requests
+import requests # type: ignore
 import json
 
 # Your API key (replace with your actual key)
