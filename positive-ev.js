@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const dataContainer = document.getElementById('data-container');
-
-    // URL of the API endpoint (replace with the correct endpoint)
     const apiUrl = 'https://ws.openodds.gg/getData';
-    // Your API key
     const apiKey = 'a3944d813da67c5b4b07199ecdd4affa';
 
     fetch(apiUrl, {
@@ -15,7 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            return response.text().then(text => {
+                throw new Error(`Network response was not ok: ${response.statusText}. Details: ${text}`);
+            });
         }
         return response.json();
     })
@@ -25,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .catch(error => {
         console.error('Error fetching data:', error);
-        dataContainer.innerHTML = '<p>Error fetching data.</p>';
+        dataContainer.innerHTML = `<p>Error fetching data: ${error.message}</p>`;
     });
 
     function displayData(data) {
@@ -34,9 +33,9 @@ document.addEventListener('DOMContentLoaded', function() {
             data.forEach(item => {
                 const listItem = document.createElement('li');
                 listItem.innerHTML = `
-                    <h2>${item.title}</h2>
-                    <p><strong>Group:</strong> ${item.group}</p>
-                    <p><strong>Description:</strong> ${item.description}</p>
+                    <h2>${item.title || 'No Title'}</h2>
+                    <p><strong>Group:</strong> ${item.group || 'No Group'}</p>
+                    <p><strong>Description:</strong> ${item.description || 'No Description'}</p>
                     <p><strong>Has Outrights:</strong> ${item.has_outrights ? 'Yes' : 'No'}</p>
                 `;
                 list.appendChild(listItem);
