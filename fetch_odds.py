@@ -1,4 +1,4 @@
-import requests  # type: ignore
+import requests
 import json
 
 # Your API key (replace with your actual key)
@@ -21,6 +21,10 @@ def fetch_data_from_api(url, params):
         print(f'Headers: {headers}')  # Debugging statement
         print(f'Params: {params}')  # Debugging statement
         response = requests.get(url, headers=headers, params=params)
+        
+        if response.status_code == 405:
+            print(f'Method Not Allowed: Check if the HTTP method is correct for this endpoint.')
+        
         print(f'Status Code: {response.status_code}')  # Debugging statement
         print(f'Response Text: {response.text}')  # Debugging statement
         response.raise_for_status()  # Raises an HTTPError for bad responses
