@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="wrapper">
-        <h2>Sign In</h2>
+        <h2 id="form-title">Sign In</h2>
         <form id="sign-in-form">
             <div class="input-group">
                 <input type="email" id="email" placeholder="Email" required>
@@ -20,11 +20,83 @@
                 <span class="icon">🔒</span>
             </div>
             <button type="submit" class="btn">Sign In</button>
-            <p class="forgot-pass"><a href="#">Forgot Password?</a></p>
+            <p class="forgot-pass"><a href="#" id="toggle-form">Forgot Password?</a></p>
         </form>
         <div class="sign-link">
-            <p>Don't have an account? <a href="#">Sign up here</a></p>
+            <p>Don't have an account? <a href="#" id="sign-up-toggle">Sign up here</a></p>
         </div>
     </div>
+    
+    <!-- Firebase SDKs via CDN -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+        // Fetch Firebase configuration from the server
+        fetch('https://sgcrage.github.io/firebase-config.json')
+            .then(response => response.json())
+            .then(config => {
+                const app = initializeApp(config);
+                const auth = getAuth(app);
+
+                // Sign-In functionality
+                document.getElementById('sign-in-form').addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+
+                    signInWithEmailAndPassword(auth, email, password)
+                        .then((userCredential) => {
+                            console.log('User signed in:', userCredential.user);
+                            window.location.href = 'index.html'; // Redirect to home page or another page after successful sign-in
+                        })
+                        .catch((error) => {
+                            console.error('Error signing in:', error);
+                        });
+                });
+
+                // Toggle to Sign-Up Form
+                document.getElementById('sign-up-toggle').addEventListener('click', (event) => {
+                    event.preventDefault();
+                    document.getElementById('form-title').textContent = 'Sign Up';
+                    document.getElementById('sign-in-form').addEventListener('submit', (event) => {
+                        event.preventDefault();
+                        const email = document.getElementById('email').value;
+                        const password = document.getElementById('password').value;
+
+                        createUserWithEmailAndPassword(auth, email, password)
+                            .then((userCredential) => {
+                                console.log('User signed up:', userCredential.user);
+                                window.location.href = 'index.html'; // Redirect after successful sign-up
+                            })
+                            .catch((error) => {
+                                console.error('Error signing up:', error);
+                            });
+                    });
+                });
+
+                // Password Reset functionality
+                document.getElementById('toggle-form').addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const email = document.getElementById('email').value;
+
+                    if (email) {
+                        sendPasswordResetEmail(auth, email)
+                            .then(() => {
+                                console.log('Password reset email sent');
+                                alert('Password reset email sent');
+                            })
+                            .catch((error) => {
+                                console.error('Error sending password reset email:', error);
+                            });
+                    } else {
+                        alert('Please enter your email address');
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching Firebase config:', error);
+            });
+    </script>
 </body>
 </html>
