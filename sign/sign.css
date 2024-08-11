@@ -12,7 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('images/background.png') no-repeat center center/cover; /* Updated path */
+    background: url('../images/Screenshot 2024-08-06 172839.png') no-repeat center center/cover; /* Updated path */
 }
 
 .wrapper {
@@ -23,7 +23,7 @@ body {
     height: 500px;
     box-shadow: 0 0 60px #000;
     border-radius: 10px;
-    background: rgba(0, 0, 0, 0.6); /* Adjust background color if needed */
+    background: rgba(0, 0, 0, 0.6); /* Add background color if needed */
 }
 
 h2 {
