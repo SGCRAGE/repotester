@@ -1,20 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
-    const apiUrl = 'https://api.the-odds-api.com/v4/sports/upcoming/odds'; // Example API URL
+    const sportsApiUrl = 'https://api.the-odds-api.com/v4/sports';
+    const oddsApiUrl = 'https://api.the-odds-api.com/v4/sports/{sport_key}/odds';
     const apiKey = '43900254fc7c455464307807da745fd7'; // Your API key
     const regions = 'us'; // Regions
     const markets = 'h2h,spreads'; // Markets
     const oddsFormat = 'decimal'; // Odds format
     const dateFormat = 'iso'; // Date format
 
-    fetch(`${apiUrl}?api_key=${apiKey}&regions=${regions}&markets=${markets}&oddsFormat=${oddsFormat}&dateFormat=${dateFormat}`, {
+    // Fetch the list of sports
+    fetch(`${sportsApiUrl}?api_key=${apiKey}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
     })
     .then(response => {
-        console.log('Response status:', response.status);
+        console.log('Sports response status:', response.status);
         if (!response.ok) {
             return response.text().then(text => {
                 throw new Error(`Network response was not ok: ${response.statusText}. Details: ${text}`);
@@ -22,14 +24,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return response.json();
     })
-    .then(data => {
-        console.log('Data received:', data);
-        displayOdds(data);
+    .then(sportsData => {
+        console.log('Sports data received:', sportsData);
+        // Use the first sport key for fetching odds
+        const sportKey = sportsData[0].key;
+        fetchOdds(sportKey);
     })
     .catch(error => {
-        console.error('Error fetching data:', error);
-        oddsContainer.innerHTML = `<p>Error fetching data: ${error.message}</p>`;
+        console.error('Error fetching sports data:', error);
+        oddsContainer.innerHTML = `<p>Error fetching sports data: ${error.message}</p>`;
     });
+
+    function fetchOdds(sportKey) {
+        fetch(`${oddsApiUrl.replace('{sport_key}', sportKey)}?api_key=${apiKey}&regions=${regions}&markets=${markets}&oddsFormat=${oddsFormat}&dateFormat=${dateFormat}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            console.log('Odds response status:', response.status);
+            if (!response.ok) {
+                return response.text().then(text => {
+                    throw new Error(`Network response was not ok: ${response.statusText}. Details: ${text}`);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Odds data received:', data);
+            displayOdds(data);
+        })
+        .catch(error => {
+            console.error('Error fetching odds data:', error);
+            oddsContainer.innerHTML = `<p>Error fetching odds data: ${error.message}</p>`;
+        });
+    }
 
     function displayOdds(data) {
         if (Array.isArray(data) && data.length > 0) {
