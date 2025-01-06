@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.text().then(text => {
                     throw new Error(`Network response was not ok: ${response.statusText}. Details: ${text}`);
                 });
-            }
+            });
             return response.json();
         })
         .then(data => {
@@ -62,16 +62,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function displayOdds(data) {
+        console.log('Displaying odds data:', data); // Log the data to inspect its structure
         if (Array.isArray(data) && data.length > 0) {
             const list = document.createElement('ul');
-            data.forEach(odd => {
-                // Adjust this based on the actual structure of the returned data
+            data.forEach(event => {
                 const listItem = document.createElement('li');
                 listItem.innerHTML = `
-                    <h2>${odd.team || 'No Team'}</h2>
-                    <p><strong>Odds:</strong> ${odd.odds || 'No Odds'}</p>
-                    <p><strong>Date:</strong> ${odd.date || 'No Date'}</p>
-                    <p><strong>Type:</strong> ${odd.type || 'No Type'}</p>
+                    <h2>${event.home_team} vs ${event.away_team}</h2>
+                    <p><strong>Commence Time:</strong> ${new Date(event.commence_time).toLocaleString()}</p>
+                    <p><strong>Sport:</strong> ${event.sport_title}</p>
+                    <p><strong>Bookmakers:</strong></p>
+                    <ul>
+                        ${event.bookmakers.map(bookmaker => `
+                            <li>
+                                <strong>${bookmaker.title}</strong>
+                                <ul>
+                                    ${bookmaker.markets.map(market => `
+                                        <li>
+                                            <strong>${market.key.toUpperCase()}</strong>
+                                            <ul>
+                                                ${market.outcomes.map(outcome => `
+                                                    <li>${outcome.name}: ${outcome.price}</li>
+                                                `).join('')}
+                                            </ul>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </li>
+                        `).join('')}
+                    </ul>
                 `;
                 list.appendChild(listItem);
             });
