@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
-    const apiUrl = 'https://api.the-odds-api.com/v4/sports/baseball/odds'; // Example API URL
+    const apiUrl = 'https://api.the-odds-api.com/v4/sports/upcoming/odds'; // Example API URL
     const apiKey = '43900254fc7c455464307807da745fd7'; // Your API key
+    const regions = 'us'; // Regions
+    const markets = 'h2h,spreads'; // Markets
+    const oddsFormat = 'decimal'; // Odds format
+    const dateFormat = 'iso'; // Date format
 
-    fetch(`${apiUrl}?apiKey=${apiKey}`, {
+    fetch(`${apiUrl}?api_key=${apiKey}&regions=${regions}&markets=${markets}&oddsFormat=${oddsFormat}&dateFormat=${dateFormat}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
