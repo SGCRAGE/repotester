@@ -1,16 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
-    const apiUrl = 'https://api.the-odds-api.com'; // Make sure this is the correct API URL
+    const apiUrl = 'https://api.the-odds-api.com/v4/sports/baseball/odds'; // Example API URL
     const apiKey = '43900254fc7c455464307807da745fd7'; // Your API key
 
-    fetch(apiUrl, {
+    fetch(`${apiUrl}?apiKey=${apiKey}`, {
         method: 'GET',
         headers: {
-            'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json'
         }
     })
     .then(response => {
+        console.log('Response status:', response.status);
         if (!response.ok) {
             return response.text().then(text => {
                 throw new Error(`Network response was not ok: ${response.statusText}. Details: ${text}`);
