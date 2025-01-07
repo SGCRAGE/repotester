@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <th>Point</th>
                         <th>Implied Probability</th>
                         <th>Expected Value</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,118 +112,25 @@ document.addEventListener('DOMContentLoaded', function() {
                         const lowestSpread = Math.max(...spreadOutcomes.filter(o => o.price < 0).map(o => o.price));
 
                         return `
-                            <tr class="collapsible-header">
-                                <td colspan="12">
-                                    <button class="collapsible">${event.home_team} vs ${event.away_team} - ${new Date(event.commence_time).toLocaleString()}</button>
-                                    <div class="collapsible-content">
-                                        <div class="market-section">
-                                            <button class="collapsible">H2H Market</button>
-                                            <div class="collapsible-content">
-                                                <table>
-                                                    ${event.bookmakers.map(bookmaker => `
-                                                        ${bookmaker.markets.filter(market => market.key === 'h2h').map(market => `
-                                                            ${market.outcomes.map(outcome => {
-                                                                const impliedProbability = calculateImpliedProbability(outcome.price);
-                                                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
-                                                                const currentTime = new Date();
-                                                                const commenceTime = new Date(event.commence_time);
-                                                                const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
-                                                                const priceClass = outcome.price === highestH2H ? 'highest-price' : outcome.price === lowestH2H ? 'lowest-price' : '';
-                                                                console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
-                                                                return `
-                                                                    <tr>
-                                                                        <td>${event.home_team}</td>
-                                                                        <td>${event.away_team}</td>
-                                                                        <td>${status}</td>
-                                                                        <td>${commenceTime.toLocaleString()}</td>
-                                                                        <td>${event.sport_title}</td>
-                                                                        <td>${bookmaker.title}</td>
-                                                                        <td>${market.key.toUpperCase()}</td>
-                                                                        <td>${outcome.name}</td>
-                                                                        <td class="${priceClass}">${outcome.price}</td>
-                                                                        <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
-                                                                        <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                                        <td>${expectedValue.toFixed(2)}</td>
-                                                                    </tr>
-                                                                `;
-                                                            }).join('')}
-                                                        `).join('')}
-                                                    `).join('')}
-                                                </table>
-                                                <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h">View Chart</button>
-                                                <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h">View Graph</button>
-                                            </div>
-                                        </div>
-                                        <div class="market-section">
-                                            <button class="collapsible">Spreads Market</button>
-                                            <div class="collapsible-content">
-                                                <table>
-                                                    ${event.bookmakers.map(bookmaker => `
-                                                        ${bookmaker.markets.filter(market => market.key === 'spreads').map(market => `
-                                                            ${market.outcomes.map(outcome => {
-                                                                const impliedProbability = calculateImpliedProbability(outcome.price);
-                                                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
-                                                                const currentTime = new Date();
-                                                                const commenceTime = new Date(event.commence_time);
-                                                                const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
-                                                                const priceClass = outcome.price === highestSpread ? 'highest-price' : outcome.price === lowestSpread ? 'lowest-price' : '';
-                                                                console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
-                                                                return `
-                                                                    <tr>
-                                                                        <td>${event.home_team}</td>
-                                                                        <td>${event.away_team}</td>
-                                                                        <td>${status}</td>
-                                                                        <td>${commenceTime.toLocaleString()}</td>
-                                                                        <td>${event.sport_title}</td>
-                                                                        <td>${bookmaker.title}</td>
-                                                                        <td>${market.key.toUpperCase()}</td>
-                                                                        <td>${outcome.name}</td>
-                                                                        <td class="${priceClass}">${outcome.price}</td>
-                                                                        <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
-                                                                        <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                                        <td>${expectedValue.toFixed(2)}</td>
-                                                                    </tr>
-                                                                `;
-                                                            }).join('')}
-                                                        `).join('')}
-                                                    `).join('')}
-                                                </table>
-                                                <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="spreads">View Chart</button>
-                                                <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="spreads">View Graph</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
+                            <tr>
+                                <td>${event.home_team}</td>
+                                <td>${event.away_team}</td>
+                                <td>${new Date(event.commence_time).toLocaleString()}</td>
+                                <td>${event.sport_title}</td>
+                                <td>${event.bookmakers.map(bookmaker => bookmaker.title).join(', ')}</td>
+                                <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.key.toUpperCase()).join(', ')).join(', ')}</td>
+                                <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.outcomes.map(outcome => outcome.name).join(', ')).join(', ')).join(', ')}</td>
+                                <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.outcomes.map(outcome => outcome.price).join(', ')).join(', ')).join(', ')}</td>
+                                <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.outcomes.map(outcome => outcome.point !== undefined ? outcome.point : 'N/A').join(', ')).join(', ')).join(', ')}</td>
+                                <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.outcomes.map(outcome => (calculateImpliedProbability(outcome.price) * 100).toFixed(2) + '%').join(', ')).join(', ')).join(', ')}</td>
+                                <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.outcomes.map(outcome => calculateExpectedValue(outcome.price, calculateImpliedProbability(outcome.price)).toFixed(2)).join(', ')).join(', ')).join(', ')}</td>
+                                <td><button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h">View Graph</button></td>
                             </tr>
                         `;
                     }).join('')}
                 </tbody>
             `;
             oddsContainer.appendChild(table);
-
-            // Add event listeners for collapsible sections
-            const collapsibles = document.querySelectorAll('.collapsible');
-            collapsibles.forEach(collapsible => {
-                collapsible.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    const content = this.nextElementSibling;
-                    if (content.style.display === 'block') {
-                        content.style.display = 'none';
-                    } else {
-                        content.style.display = 'block';
-                    }
-                });
-            });
-
-            // Add event listeners for view chart buttons
-            const viewChartButtons = document.querySelectorAll('.view-chart');
-            viewChartButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const eventTitle = this.getAttribute('data-event');
-                    const market = this.getAttribute('data-market');
-                    showChartModal(eventTitle, market, data);
-                });
-            });
 
             // Add event listeners for view graph buttons
             const viewGraphButtons = document.querySelectorAll('.view-graph');
@@ -236,76 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             oddsContainer.innerHTML = '<p>No odds data available.</p>';
         }
-    }
-
-    function showChartModal(eventTitle, market, data) {
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>${eventTitle} - ${market.toUpperCase()} Market</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Bookmaker</th>
-                            <th>Market</th>
-                            <th>Outcome Name</th>
-                            <th>Price</th>
-                            <th>Point</th>
-                            <th>Implied Probability</th>
-                            <th>Expected Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${data.map(event => {
-                            if (`${event.home_team} vs ${event.away_team}` === eventTitle) {
-                                return event.bookmakers.map(bookmaker => `
-                                    ${bookmaker.markets.filter(m => m.key === market).map(market => `
-                                        ${market.outcomes.map(outcome => {
-                                            const impliedProbability = calculateImpliedProbability(outcome.price);
-                                            const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
-                                            const highestPrice = Math.max(...market.outcomes.map(o => o.price));
-                                            const lowestPrice = Math.max(...market.outcomes.filter(o => o.price < 0).map(o => o.price));
-                                            const priceClass = outcome.price === highestPrice ? 'highest-price' : outcome.price === lowestPrice ? 'lowest-price' : '';
-                                            return `
-                                                <tr>
-                                                    <td>${bookmaker.title}</td>
-                                                    <td>${market.key.toUpperCase()}</td>
-                                                    <td>${outcome.name}</td>
-                                                    <td class="${priceClass}">${outcome.price}</td>
-                                                    <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
-                                                    <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                    <td>${expectedValue.toFixed(2)}</td>
-                                                </tr>
-                                            `;
-                                        }).join('')}
-                                    `).join('')}
-                                `).join('');
-                            }
-                        }).join('')}
-                    </tbody>
-                </table>
-            </div>
-        `;
-        document.body.appendChild(modal);
-
-        // Show the modal
-        modal.style.display = 'block';
-
-        // Close the modal when the close button is clicked
-        modal.querySelector('.close').addEventListener('click', function() {
-            modal.style.display = 'none';
-            document.body.removeChild(modal);
-        });
-
-        // Close the modal when clicking outside of the modal content
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-                document.body.removeChild(modal);
-            }
-        });
     }
 
     function showGraphModal(eventTitle, market, data) {
@@ -349,11 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     bookmaker.markets.filter(m => m.key === market).forEach(market => {
                         market.outcomes.forEach(outcome => {
                             chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
-                            chartData.push({
-                                price: outcome.price,
-                                backgroundColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)',
-                                borderColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 1)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 1)' : 'rgba(201, 203, 207, 1)'
-                            });
+                            chartData.push(outcome.price);
                         });
                     });
                 });
@@ -368,9 +202,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 labels: chartLabels,
                 datasets: [{
                     label: 'Odds',
-                    data: chartData.map(d => d.price),
-                    backgroundColor: chartData.map(d => d.backgroundColor),
-                    borderColor: chartData.map(d => d.borderColor),
+                    data: chartData,
+                    backgroundColor: chartData.map(price => price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)'),
+                    borderColor: chartData.map(price => price === highestPrice ? 'rgba(75, 192, 192, 1)' : price === lowestPrice ? 'rgba(255, 99, 132, 1)' : 'rgba(201, 203, 207, 1)'),
                     borderWidth: 1
                 }]
             },
