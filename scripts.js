@@ -121,9 +121,9 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.key.toUpperCase()).join(', ')).join(', ')}</td>
                                 <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.outcomes.map(outcome => outcome.name).join(', ')).join(', ')).join(', ')}</td>
                                 <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.outcomes.map(outcome => outcome.price).join(', ')).join(', ')).join(', ')}</td>
-                                <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.outcomes.map(outcome => outcome.point !== undefined ? outcome.point : 'N/A').join(', ')).join(', ')).join(', ')}</td>
+                                <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.outcomes.map(outcome => outcome.point !== undefined ? outcome.point : 'N/A').join(', ')).join(', '))}</td>
                                 <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.outcomes.map(outcome => (calculateImpliedProbability(outcome.price) * 100).toFixed(2) + '%').join(', ')).join(', ')).join(', ')}</td>
-                                <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.outcomes.map(outcome => calculateExpectedValue(outcome.price, calculateImpliedProbability(outcome.price)).toFixed(2)).join(', ')).join(', ')).join(', ')}</td>
+                                <td>${event.bookmakers.map(bookmaker => bookmaker.markets.map(market => market.outcomes.map(outcome => calculateExpectedValue(outcome.price, calculateImpliedProbability(outcome.price)).toFixed(2)).join(', ')).join(', '))}</td>
                                 <td><button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h">View Graph</button></td>
                             </tr>
                         `;
