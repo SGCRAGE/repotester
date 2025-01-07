@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const payout = price > 0 ? (price / 100) + 1 : (100 / -price) + 1;
         const probabilityOfWinning = impliedProbability;
         const probabilityOfLosing = 1 - impliedProbability;
-        return (payout * probabilityOfWinning) - probabilityOfLosing;
+        return ((payout * probabilityOfWinning) - probabilityOfLosing) * 100;
     }
 
     function displayOdds(data) {
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <td>${outcome.price}</td>
                                             <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                             <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                            <td>${(expectedValue * 100).toFixed(2)}%</td>
+                                            <td>${expectedValue.toFixed(2)}%</td>
                                         </tr>
                                     `;
                                 }).join('')}
