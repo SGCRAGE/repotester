@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
+    const filterContainer = document.getElementById('filter-container');
 
     // Fetch the API key from the server
     fetch('http://localhost:3000/api-key')
@@ -24,6 +25,12 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             console.log('Odds data received:', data);
             displayOdds(data);
+
+            // Add event listeners to the checkboxes
+            const checkboxes = document.querySelectorAll('.region-filter');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => displayOdds(data));
+            });
         })
         .catch(error => {
             console.error('Error fetching odds data:', error);
@@ -58,6 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayOdds(data) {
         console.log('Displaying odds data:', data); // Log the data to inspect its structure
+        const selectedRegions = Array.from(document.querySelectorAll('.region-filter:checked')).map(input => input.value);
+
         if (Array.isArray(data) && data.length > 0) {
             const table = document.createElement('table');
             table.innerHTML = `
@@ -84,15 +93,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         const spreadOutcomes = [];
 
                         event.bookmakers.forEach(bookmaker => {
-                            bookmaker.markets.forEach(market => {
-                                market.outcomes.forEach(outcome => {
-                                    if (market.key === 'h2h') {
-                                        h2hOutcomes.push(outcome);
-                                    } else if (market.key === 'spreads') {
-                                        spreadOutcomes.push(outcome);
-                                    }
+                            if (selectedRegions.includes(bookmaker.region)) {
+                                bookmaker.markets.forEach(market => {
+                                    market.outcomes.forEach(outcome => {
+                                        if (market.key === 'h2h') {
+                                            h2hOutcomes.push(outcome);
+                                        } else if (market.key === 'spreads') {
+                                            spreadOutcomes.push(outcome);
+                                        }
+                                    });
                                 });
-                            });
+                            }
                         });
 
                         const highestH2H = Math.max(...h2hOutcomes.map(o => o.price));
