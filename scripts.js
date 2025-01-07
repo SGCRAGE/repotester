@@ -34,7 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error fetching odds data:', error);
-            oddsContainer.innerHTML = `<p>${error.message}</p>`;
+            if (error.message === 'fix me') {
+                oddsContainer.style.display = 'none';
+            } else {
+                oddsContainer.innerHTML = `<p>${error.message}</p>`;
+            }
         });
     }
 
