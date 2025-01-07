@@ -29,6 +29,7 @@ export function displayOdds(data, oddsContainer, selectedRegions) {
             </thead>
             <tbody>
                 ${data.map(event => {
+                    console.log('Processing event:', event); // Log each event
                     const h2hOutcomes = [];
                     const spreadOutcomes = [];
 
