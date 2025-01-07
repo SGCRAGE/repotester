@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const apiKey = '43900254fc7c455464307807da745fd7'; // Your API key
     const regions = 'us'; // Regions
     const markets = 'h2h,spreads'; // Markets
-    const oddsFormat = 'decimal'; // Odds format
+    const oddsFormat = 'american'; // Odds format
     const dateFormat = 'iso'; // Date format
 
     function fetchOdds() {
