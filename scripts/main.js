@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             const apiKey = data.apiKey;
+            console.log('API Key:', apiKey); // Log the API key
             const apiUrl = `https://api.the-odds-api.com/v4/sports/basketball_nba/odds?api_key=${apiKey}&regions=us,eu,us2,uk&markets=h2h,spreads&oddsFormat=american&dateFormat=iso`;
 
             return fetch(apiUrl);
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json().then(data => ({ data, requestsRemaining, requestsUsed }));
         })
         .then(({ data, requestsRemaining, requestsUsed }) => {
-            console.log('Odds data received:', data);
+            console.log('Odds data received:', data); // Log the received data
             displayRequestInfo(requestsRemaining, requestsUsed);
             displayOdds(data, oddsContainer, getSelectedRegions());
 
