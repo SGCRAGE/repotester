@@ -34,9 +34,12 @@ export function displayOdds(data, oddsContainer, selectedRegions) {
                     const spreadOutcomes = [];
 
                     event.bookmakers.forEach(bookmaker => {
+                        console.log('Processing bookmaker:', bookmaker); // Log each bookmaker
                         if (selectedRegions.length === 0 || selectedRegions.includes(bookmaker.region)) {
                             bookmaker.markets.forEach(market => {
+                                console.log('Processing market:', market); // Log each market
                                 market.outcomes.forEach(outcome => {
+                                    console.log('Processing outcome:', outcome); // Log each outcome
                                     if (market.key === 'h2h') {
                                         h2hOutcomes.push(outcome);
                                     } else if (market.key === 'spreads') {
