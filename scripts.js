@@ -37,13 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return price > 0 ? 100 / (price + 100) : -price / (-price + 100);
     }
 
-    function calculateExpectedValue(price, impliedProbability) {
-        const payout = price > 0 ? (price / 100) + 1 : (100 / -price) + 1;
-        const probabilityOfWinning = impliedProbability;
-        const probabilityOfLosing = 1 - impliedProbability;
-        return ((payout * probabilityOfWinning) - probabilityOfLosing) * 100;
-    }
-
     function displayOdds(data) {
         console.log('Displaying odds data:', data); // Log the data to inspect its structure
         if (Array.isArray(data) && data.length > 0) {
@@ -61,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <th>Price</th>
                         <th>Point</th>
                         <th>Implied Probability</th>
-                        <th>Expected Value</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,8 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             ${bookmaker.markets.map(market => `
                                 ${market.outcomes.map(outcome => {
                                     const impliedProbability = calculateImpliedProbability(outcome.price);
-                                    const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
-                                    console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
+                                    console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability);
                                     return `
                                         <tr>
                                             <td>${event.home_team}</td>
@@ -84,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <td>${outcome.price}</td>
                                             <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                             <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                            <td>${expectedValue.toFixed(2)}%</td>
                                         </tr>
                                     `;
                                 }).join('')}
