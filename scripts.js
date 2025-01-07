@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
     const oddsApiUrl = 'https://api.the-odds-api.com/v4/sports/basketball_nba/odds';
-    const apiKey = '78d0cc2a802f39548f231132d2faab35'; // Your API key
+    const apiKey = '486a8c225e84ab2b246c4b1b310eea22'; // Your API key
     const regions = 'us,eu,us2,uk'; // Regions (add 'eu' to include European sportsbooks)
     const markets = 'h2h,spreads'; // Markets
     const oddsFormat = 'american'; // Odds format
