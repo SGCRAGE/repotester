@@ -350,7 +350,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     bookmaker.markets.filter(m => m.key === market).forEach(market => {
                         market.outcomes.forEach(outcome => {
                             chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
-                            chartData.push(outcome.price);
+                            chartData.push({
+                                price: outcome.price,
+                                backgroundColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)',
+                                borderColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 1)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 1)' : 'rgba(201, 203, 207, 1)'
+                            });
                         });
                     });
                 });
@@ -365,9 +369,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 labels: chartLabels,
                 datasets: [{
                     label: 'Odds',
-                    data: chartData,
-                    backgroundColor: chartData.map(price => price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)'),
-                    borderColor: chartData.map(price => price === highestPrice ? 'rgba(75, 192, 192, 1)' : price === lowestPrice ? 'rgba(255, 99, 132, 1)' : 'rgba(201, 203, 207, 1)'),
+                    data: chartData.map(d => d.price),
+                    backgroundColor: chartData.map(d => d.backgroundColor),
+                    borderColor: chartData.map(d => d.borderColor),
                     borderWidth: 1
                 }]
             },
