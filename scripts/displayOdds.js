@@ -1,7 +1,7 @@
 import { calculateImpliedProbability, calculateExpectedValue } from './utils.js';
 import { showChartModal, showGraphModal } from './showModals.js';
 
-export function displayOdds(data, oddsContainer, selectedRegions) {
+export function displayOdds(data, oddsContainer) {
     console.log('Displaying odds data:', data); // Log the data to inspect its structure
 
     // Clear existing odds data
@@ -35,19 +35,17 @@ export function displayOdds(data, oddsContainer, selectedRegions) {
 
                     event.bookmakers.forEach(bookmaker => {
                         console.log('Processing bookmaker:', bookmaker); // Log each bookmaker
-                        if (selectedRegions.length === 0 || selectedRegions.includes(bookmaker.region)) {
-                            bookmaker.markets.forEach(market => {
-                                console.log('Processing market:', market); // Log each market
-                                market.outcomes.forEach(outcome => {
-                                    console.log('Processing outcome:', outcome); // Log each outcome
-                                    if (market.key === 'h2h') {
-                                        h2hOutcomes.push(outcome);
-                                    } else if (market.key === 'spreads') {
-                                        spreadOutcomes.push(outcome);
-                                    }
-                                });
+                        bookmaker.markets.forEach(market => {
+                            console.log('Processing market:', market); // Log each market
+                            market.outcomes.forEach(outcome => {
+                                console.log('Processing outcome:', outcome); // Log each outcome
+                                if (market.key === 'h2h') {
+                                    h2hOutcomes.push(outcome);
+                                } else if (market.key === 'spreads') {
+                                    spreadOutcomes.push(outcome);
+                                }
                             });
-                        }
+                        });
                     });
 
                     console.log('H2H Outcomes:', h2hOutcomes); // Log H2H outcomes
@@ -84,7 +82,7 @@ export function displayOdds(data, oddsContainer, selectedRegions) {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    ${event.bookmakers.filter(bookmaker => selectedRegions.length === 0 || selectedRegions.includes(bookmaker.region)).map(bookmaker => `
+                                                    ${event.bookmakers.map(bookmaker => `
                                                         ${bookmaker.markets.filter(market => market.key === 'h2h').map(market => `
                                                             ${market.outcomes.map(outcome => {
                                                                 const impliedProbability = calculateImpliedProbability(outcome.price);
@@ -140,7 +138,7 @@ export function displayOdds(data, oddsContainer, selectedRegions) {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    ${event.bookmakers.filter(bookmaker => selectedRegions.length === 0 || selectedRegions.includes(bookmaker.region)).map(bookmaker => `
+                                                    ${event.bookmakers.map(bookmaker => `
                                                         ${bookmaker.markets.filter(market => market.key === 'spreads').map(market => `
                                                             ${market.outcomes.map(outcome => {
                                                                 const impliedProbability = calculateImpliedProbability(outcome.price);
@@ -204,7 +202,7 @@ export function displayOdds(data, oddsContainer, selectedRegions) {
             button.addEventListener('click', function() {
                 const eventTitle = this.getAttribute('data-event');
                 const market = this.getAttribute('data-market');
-                showChartModal(eventTitle, market, data, selectedRegions);
+                showChartModal(eventTitle, market, data);
             });
         });
 
@@ -214,7 +212,7 @@ export function displayOdds(data, oddsContainer, selectedRegions) {
             button.addEventListener('click', function() {
                 const eventTitle = this.getAttribute('data-event');
                 const market = this.getAttribute('data-market');
-                showGraphModal(eventTitle, market, data, selectedRegions);
+                showGraphModal(eventTitle, market, data);
             });
         });
     } else {
