@@ -333,9 +333,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 event.bookmakers.forEach(bookmaker => {
                     bookmaker.markets.filter(m => m.key === market).forEach(market => {
                         market.outcomes.forEach(outcome => {
+                            const impliedProbability = calculateImpliedProbability(outcome.price);
+                            const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
                             chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
                             chartData.push({
                                 price: outcome.price,
+                                expectedValue: expectedValue,
                                 backgroundColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)',
                                 borderColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 1)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 1)' : 'rgba(201, 203, 207, 1)'
                             });
@@ -356,6 +359,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     data: chartData.map(d => d.price),
                     backgroundColor: chartData.map(d => d.backgroundColor),
                     borderColor: chartData.map(d => d.borderColor),
+                    borderWidth: 1
+                }, {
+                    label: 'Expected Value',
+                    data: chartData.map(d => d.expectedValue),
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
                 }]
             },
