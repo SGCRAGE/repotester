@@ -18,7 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Odds response status:', response.status);
             if (!response.ok) {
                 return response.text().then(text => {
-                    throw new Error(`Network response was not ok: ${response.statusText}. Details: ${text}`);
+                    if (response.status === 403) {
+                        throw new Error('API key has expired or is invalid. Please update your API key.');
+                    } else {
+                        throw new Error(`Network response was not ok: ${response.statusText}. Details: ${text}`);
+                    }
                 });
             }
             return response.json();
@@ -29,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error fetching odds data:', error);
-            oddsContainer.innerHTML = `<p>Error fetching odds data: ${error.message}</p>`;
+            oddsContainer.innerHTML = `<p>${error.message}</p>`;
         });
     }
 
