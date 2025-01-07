@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             apiKey = data.apiKey;
+            console.log('Fetched API key:', apiKey); // Log the fetched API key
+            if (!apiKey) {
+                throw new Error('API key is missing');
+            }
             fetchOdds();
         })
         .catch(error => {
@@ -35,8 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 return response.text().then(text => {
                     const errorData = JSON.parse(text);
-                    if (response.status === 401 && errorData.error_code === 'OUT_OF_USAGE_CREDITS') {
-                        throw new Error('fix me');
+                    if (response.status === 401 && errorData.error_code === 'MISSING_KEY') {
+                        throw new Error('API key is missing');
                     } else {
                         throw new Error(`Network response was not ok: ${response.statusText}. Details: ${text}`);
                     }
@@ -50,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error fetching odds data:', error);
-            if (error.message === 'fix me') {
+            if (error.message === 'API key is missing') {
                 oddsContainer.style.display = 'none';
             } else {
                 oddsContainer.innerHTML = `<p>${error.message}</p>`;
