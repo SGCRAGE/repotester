@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.text().then(text => {
                     const errorData = JSON.parse(text);
                     if (response.status === 403 && errorData.error_code === 'OUT_OF_USAGE_CREDITS') {
-                        throw new Error('API key has run out of usage credits. Please update your API key or check your usage plan.');
+                        throw new Error('fix me');
                     } else {
                         throw new Error(`Network response was not ok: ${response.statusText}. Details: ${text}`);
                     }
