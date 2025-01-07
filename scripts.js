@@ -322,13 +322,20 @@ document.addEventListener('DOMContentLoaded', function() {
         // Prepare data for the chart
         const chartData = [];
         const chartLabels = [];
+        const highestPrice = Math.max(...data.flatMap(event => event.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.map(o => o.price)))));
+        const lowestPrice = Math.max(...data.flatMap(event => event.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price))));
+
         data.forEach(event => {
             if (`${event.home_team} vs ${event.away_team}` === eventTitle) {
                 event.bookmakers.forEach(bookmaker => {
                     bookmaker.markets.filter(m => m.key === market).forEach(market => {
                         market.outcomes.forEach(outcome => {
                             chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
-                            chartData.push(outcome.price);
+                            chartData.push({
+                                price: outcome.price,
+                                backgroundColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)',
+                                borderColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 1)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 1)' : 'rgba(201, 203, 207, 1)'
+                            });
                         });
                     });
                 });
@@ -343,9 +350,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 labels: chartLabels,
                 datasets: [{
                     label: 'Odds',
-                    data: chartData,
-                    backgroundColor: chartData.map(price => price > 0 ? 'rgba(75, 192, 192, 0.2)' : 'rgba(255, 99, 132, 0.2)'),
-                    borderColor: chartData.map(price => price > 0 ? 'rgba(75, 192, 192, 1)' : 'rgba(255, 99, 132, 1)'),
+                    data: chartData.map(d => d.price),
+                    backgroundColor: chartData.map(d => d.backgroundColor),
+                    borderColor: chartData.map(d => d.borderColor),
                     borderWidth: 1
                 }]
             },
