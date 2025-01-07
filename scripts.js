@@ -71,89 +71,113 @@ document.addEventListener('DOMContentLoaded', function() {
                     </tr>
                 </thead>
                 <tbody>
-                    ${data.map(event => `
-                        <tr class="collapsible-header">
-                            <td colspan="12">
-                                <button class="collapsible">${event.home_team} vs ${event.away_team} - ${new Date(event.commence_time).toLocaleString()}</button>
-                                <div class="collapsible-content">
-                                    <div class="market-section">
-                                        <button class="collapsible">H2H Market</button>
-                                        <div class="collapsible-content">
-                                            <table>
-                                                ${event.bookmakers.map(bookmaker => `
-                                                    ${bookmaker.markets.filter(market => market.key === 'h2h').map(market => `
-                                                        ${market.outcomes.map(outcome => {
-                                                            const impliedProbability = calculateImpliedProbability(outcome.price);
-                                                            const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
-                                                            const currentTime = new Date();
-                                                            const commenceTime = new Date(event.commence_time);
-                                                            const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
-                                                            console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
-                                                            return `
-                                                                <tr>
-                                                                    <td>${event.home_team}</td>
-                                                                    <td>${event.away_team}</td>
-                                                                    <td>${status}</td>
-                                                                    <td>${commenceTime.toLocaleString()}</td>
-                                                                    <td>${event.sport_title}</td>
-                                                                    <td>${bookmaker.title}</td>
-                                                                    <td>${market.key.toUpperCase()}</td>
-                                                                    <td>${outcome.name}</td>
-                                                                    <td>${outcome.price}</td>
-                                                                    <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
-                                                                    <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                                    <td>${expectedValue.toFixed(2)}</td>
-                                                                </tr>
-                                                            `;
-                                                        }).join('')}
+                    ${data.map(event => {
+                        const h2hOutcomes = [];
+                        const spreadOutcomes = [];
+
+                        event.bookmakers.forEach(bookmaker => {
+                            bookmaker.markets.forEach(market => {
+                                market.outcomes.forEach(outcome => {
+                                    if (market.key === 'h2h') {
+                                        h2hOutcomes.push(outcome);
+                                    } else if (market.key === 'spreads') {
+                                        spreadOutcomes.push(outcome);
+                                    }
+                                });
+                            });
+                        });
+
+                        const highestH2H = Math.max(...h2hOutcomes.map(o => o.price));
+                        const lowestH2H = Math.min(...h2hOutcomes.map(o => o.price));
+                        const highestSpread = Math.max(...spreadOutcomes.map(o => o.price));
+                        const lowestSpread = Math.min(...spreadOutcomes.map(o => o.price));
+
+                        return `
+                            <tr class="collapsible-header">
+                                <td colspan="12">
+                                    <button class="collapsible">${event.home_team} vs ${event.away_team} - ${new Date(event.commence_time).toLocaleString()}</button>
+                                    <div class="collapsible-content">
+                                        <div class="market-section">
+                                            <button class="collapsible">H2H Market</button>
+                                            <div class="collapsible-content">
+                                                <table>
+                                                    ${event.bookmakers.map(bookmaker => `
+                                                        ${bookmaker.markets.filter(market => market.key === 'h2h').map(market => `
+                                                            ${market.outcomes.map(outcome => {
+                                                                const impliedProbability = calculateImpliedProbability(outcome.price);
+                                                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
+                                                                const currentTime = new Date();
+                                                                const commenceTime = new Date(event.commence_time);
+                                                                const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
+                                                                const priceClass = outcome.price === highestH2H ? 'highest-price' : outcome.price === lowestH2H ? 'lowest-price' : '';
+                                                                console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
+                                                                return `
+                                                                    <tr>
+                                                                        <td>${event.home_team}</td>
+                                                                        <td>${event.away_team}</td>
+                                                                        <td>${status}</td>
+                                                                        <td>${commenceTime.toLocaleString()}</td>
+                                                                        <td>${event.sport_title}</td>
+                                                                        <td>${bookmaker.title}</td>
+                                                                        <td>${market.key.toUpperCase()}</td>
+                                                                        <td>${outcome.name}</td>
+                                                                        <td class="${priceClass}">${outcome.price}</td>
+                                                                        <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
+                                                                        <td>${(impliedProbability * 100).toFixed(2)}%</td>
+                                                                        <td>${expectedValue.toFixed(2)}</td>
+                                                                    </tr>
+                                                                `;
+                                                            }).join('')}
+                                                        `).join('')}
                                                     `).join('')}
-                                                `).join('')}
-                                            </table>
-                                            <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h">View Chart</button>
-                                            <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h">View Graph</button>
+                                                </table>
+                                                <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h">View Chart</button>
+                                                <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h">View Graph</button>
+                                            </div>
+                                        </div>
+                                        <div class="market-section">
+                                            <button class="collapsible">Spreads Market</button>
+                                            <div class="collapsible-content">
+                                                <table>
+                                                    ${event.bookmakers.map(bookmaker => `
+                                                        ${bookmaker.markets.filter(market => market.key === 'spreads').map(market => `
+                                                            ${market.outcomes.map(outcome => {
+                                                                const impliedProbability = calculateImpliedProbability(outcome.price);
+                                                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
+                                                                const currentTime = new Date();
+                                                                const commenceTime = new Date(event.commence_time);
+                                                                const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
+                                                                const priceClass = outcome.price === highestSpread ? 'highest-price' : outcome.price === lowestSpread ? 'lowest-price' : '';
+                                                                console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
+                                                                return `
+                                                                    <tr>
+                                                                        <td>${event.home_team}</td>
+                                                                        <td>${event.away_team}</td>
+                                                                        <td>${status}</td>
+                                                                        <td>${commenceTime.toLocaleString()}</td>
+                                                                        <td>${event.sport_title}</td>
+                                                                        <td>${bookmaker.title}</td>
+                                                                        <td>${market.key.toUpperCase()}</td>
+                                                                        <td>${outcome.name}</td>
+                                                                        <td class="${priceClass}">${outcome.price}</td>
+                                                                        <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
+                                                                        <td>${(impliedProbability * 100).toFixed(2)}%</td>
+                                                                        <td>${expectedValue.toFixed(2)}</td>
+                                                                    </tr>
+                                                                `;
+                                                            }).join('')}
+                                                        `).join('')}
+                                                    `).join('')}
+                                                </table>
+                                                <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="spreads">View Chart</button>
+                                                <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="spreads">View Graph</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="market-section">
-                                        <button class="collapsible">Spreads Market</button>
-                                        <div class="collapsible-content">
-                                            <table>
-                                                ${event.bookmakers.map(bookmaker => `
-                                                    ${bookmaker.markets.filter(market => market.key === 'spreads').map(market => `
-                                                        ${market.outcomes.map(outcome => {
-                                                            const impliedProbability = calculateImpliedProbability(outcome.price);
-                                                            const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
-                                                            const currentTime = new Date();
-                                                            const commenceTime = new Date(event.commence_time);
-                                                            const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
-                                                            console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
-                                                            return `
-                                                                <tr>
-                                                                    <td>${event.home_team}</td>
-                                                                    <td>${event.away_team}</td>
-                                                                    <td>${status}</td>
-                                                                    <td>${commenceTime.toLocaleString()}</td>
-                                                                    <td>${event.sport_title}</td>
-                                                                    <td>${bookmaker.title}</td>
-                                                                    <td>${market.key.toUpperCase()}</td>
-                                                                    <td>${outcome.name}</td>
-                                                                    <td>${outcome.price}</td>
-                                                                    <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
-                                                                    <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                                    <td>${expectedValue.toFixed(2)}</td>
-                                                                </tr>
-                                                            `;
-                                                        }).join('')}
-                                                    `).join('')}
-                                                `).join('')}
-                                            </table>
-                                            <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="spreads">View Chart</button>
-                                            <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="spreads">View Graph</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    `).join('')}
+                                </td>
+                            </tr>
+                        `;
+                    }).join('')}
                 </tbody>
             `;
             oddsContainer.appendChild(table);
@@ -223,12 +247,15 @@ document.addEventListener('DOMContentLoaded', function() {
                                         ${market.outcomes.map(outcome => {
                                             const impliedProbability = calculateImpliedProbability(outcome.price);
                                             const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
+                                            const highestPrice = Math.max(...market.outcomes.map(o => o.price));
+                                            const lowestPrice = Math.min(...market.outcomes.map(o => o.price));
+                                            const priceClass = outcome.price === highestPrice ? 'highest-price' : outcome.price === lowestPrice ? 'lowest-price' : '';
                                             return `
                                                 <tr>
                                                     <td>${bookmaker.title}</td>
                                                     <td>${market.key.toUpperCase()}</td>
                                                     <td>${outcome.name}</td>
-                                                    <td>${outcome.price}</td>
+                                                    <td class="${priceClass}">${outcome.price}</td>
                                                     <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                     <td>${(impliedProbability * 100).toFixed(2)}%</td>
                                                     <td>${expectedValue.toFixed(2)}</td>
@@ -317,8 +344,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 datasets: [{
                     label: 'Odds',
                     data: chartData,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: chartData.map(price => price > 0 ? 'rgba(75, 192, 192, 0.2)' : 'rgba(255, 99, 132, 0.2)'),
+                    borderColor: chartData.map(price => price > 0 ? 'rgba(75, 192, 192, 1)' : 'rgba(255, 99, 132, 1)'),
                     borderWidth: 1
                 }]
             },
