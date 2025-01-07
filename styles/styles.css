@@ -132,6 +132,45 @@ ul {
     margin: 0;
 }
 
+/* Collapsible styling */
+.collapsible {
+    background-color: #f2f2f2;
+    color: #333;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+}
+
+.collapsible.active, .collapsible:hover {
+    background-color: #ddd;
+}
+
+.collapsible-content {
+    display: none;
+    overflow: hidden;
+    padding: 0 10px;
+    background-color: #f9f9f9;
+}
+
+.collapsible-content table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.collapsible-content th, .collapsible-content td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.collapsible-content th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
 /* Footer styling */
 footer {
     background: rgba(51, 51, 51, 0.8); /* Semi-transparent dark background for the footer */
