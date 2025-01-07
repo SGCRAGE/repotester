@@ -49,7 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const fairLossProbability = 1 - impliedProbability;
         const profitIfWin = payout * stake - stake;
         const expectedValue = (fairWinProbability * profitIfWin) - (fairLossProbability * stake);
-        return expectedValue * 100; // Convert to percentage
+        const expectedValuePercentage = expectedValue * 100; // Convert to percentage
+
+        // Handle small floating-point values
+        const threshold = 1e-10;
+        return Math.abs(expectedValuePercentage) < threshold ? 0 : expectedValuePercentage;
     }
 
     function displayOdds(data) {
