@@ -68,38 +68,61 @@ document.addEventListener('DOMContentLoaded', function() {
                 </thead>
                 <tbody>
                     ${data.map(event => `
-                        ${event.bookmakers.map(bookmaker => `
-                            ${bookmaker.markets.map(market => `
-                                ${market.outcomes.map(outcome => {
-                                    const impliedProbability = calculateImpliedProbability(outcome.price);
-                                    const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
-                                    const currentTime = new Date();
-                                    const commenceTime = new Date(event.commence_time);
-                                    const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
-                                    console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
-                                    return `
-                                        <tr>
-                                            <td>${event.home_team}</td>
-                                            <td>${event.away_team}</td>
-                                            <td>${status}</td>
-                                            <td>${commenceTime.toLocaleString()}</td>
-                                            <td>${event.sport_title}</td>
-                                            <td>${bookmaker.title}</td>
-                                            <td>${market.key.toUpperCase()}</td>
-                                            <td>${outcome.name}</td>
-                                            <td>${outcome.price}</td>
-                                            <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
-                                            <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                            <td>${expectedValue.toFixed(2)}</td>
-                                        </tr>
-                                    `;
-                                }).join('')}
-                            `).join('')}
-                        `).join('')}
+                        <tr class="collapsible-header">
+                            <td colspan="12">
+                                <button class="collapsible">${event.home_team} vs ${event.away_team} - ${new Date(event.commence_time).toLocaleString()}</button>
+                                <div class="collapsible-content">
+                                    <table>
+                                        ${event.bookmakers.map(bookmaker => `
+                                            ${bookmaker.markets.map(market => `
+                                                ${market.outcomes.map(outcome => {
+                                                    const impliedProbability = calculateImpliedProbability(outcome.price);
+                                                    const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
+                                                    const currentTime = new Date();
+                                                    const commenceTime = new Date(event.commence_time);
+                                                    const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
+                                                    console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
+                                                    return `
+                                                        <tr>
+                                                            <td>${event.home_team}</td>
+                                                            <td>${event.away_team}</td>
+                                                            <td>${status}</td>
+                                                            <td>${commenceTime.toLocaleString()}</td>
+                                                            <td>${event.sport_title}</td>
+                                                            <td>${bookmaker.title}</td>
+                                                            <td>${market.key.toUpperCase()}</td>
+                                                            <td>${outcome.name}</td>
+                                                            <td>${outcome.price}</td>
+                                                            <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
+                                                            <td>${(impliedProbability * 100).toFixed(2)}%</td>
+                                                            <td>${expectedValue.toFixed(2)}</td>
+                                                        </tr>
+                                                    `;
+                                                }).join('')}
+                                            `).join('')}
+                                        `).join('')}
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
                     `).join('')}
                 </tbody>
             `;
             oddsContainer.appendChild(table);
+
+            // Add event listeners for collapsible sections
+            const collapsibles = document.querySelectorAll('.collapsible');
+            collapsibles.forEach(collapsible => {
+                collapsible.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    if (content.style.display === 'block') {
+                        content.style.display = 'none';
+                    } else {
+                        content.style.display = 'block';
+                    }
+                });
+            });
         } else {
             oddsContainer.innerHTML = '<p>No odds data available.</p>';
         }
