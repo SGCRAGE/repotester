@@ -201,7 +201,7 @@ export function displayOdds(data, oddsContainer, selectedRegions) {
             button.addEventListener('click', function() {
                 const eventTitle = this.getAttribute('data-event');
                 const market = this.getAttribute('data-market');
-                showChartModal(eventTitle, market, data);
+                showChartModal(eventTitle, market, data, selectedRegions);
             });
         });
 
@@ -211,7 +211,7 @@ export function displayOdds(data, oddsContainer, selectedRegions) {
             button.addEventListener('click', function() {
                 const eventTitle = this.getAttribute('data-event');
                 const market = this.getAttribute('data-market');
-                showGraphModal(eventTitle, market, data);
+                showGraphModal(eventTitle, market, data, selectedRegions);
             });
         });
     } else {
