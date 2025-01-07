@@ -1,11 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
     const oddsApiUrl = 'https://api.the-odds-api.com/v4/sports/basketball_nba/odds';
-    const apiKey = process.env.ODDS_API_KEY; // Use the environment variable for the API key
+    let apiKey = '';
     const regions = 'us,eu,us2,uk'; // Regions (add 'eu' to include European sportsbooks)
     const markets = 'h2h,spreads'; // Markets
     const oddsFormat = 'american'; // Odds format
     const dateFormat = 'iso'; // Date format
+
+    // Fetch the API key from the server
+    fetch('/api-key')
+        .then(response => response.json())
+        .then(data => {
+            apiKey = data.apiKey;
+            fetchOdds();
+        })
+        .catch(error => {
+            console.error('Error fetching API key:', error);
+            oddsContainer.innerHTML = `<p>Error fetching API key: ${error.message}</p>`;
+        });
 
     function fetchOdds() {
         fetch(`${oddsApiUrl}?api_key=${apiKey}&regions=${regions}&markets=${markets}&oddsFormat=${oddsFormat}&dateFormat=${dateFormat}`, {
@@ -384,7 +396,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // Fetch NBA odds directly
-    fetchOdds();
 });
