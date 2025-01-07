@@ -7,6 +7,9 @@ body {
     box-sizing: border-box; /* Include padding and border in element's total width and height */
     position: relative; /* Ensure the ::before pseudo-element is positioned correctly */
     overflow: hidden; /* Hide any overflow from the blurred image */
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
 }
 
 /* Background Image */
@@ -84,18 +87,22 @@ nav ul li button:hover {
 
 /* Main content styling */
 main {
+    flex: 1; /* Take up remaining space */
     padding: 70px 20px 20px; /* Adjust top padding to avoid overlap with fixed header */
     text-align: center; /* Center-align text and content */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* Odds container styling */
 #odds-container {
+    flex: 1; /* Take up remaining space */
     margin-top: 20px;
     padding: 20px;
     background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-height: 600px; /* Adjust the height as needed */
     overflow-y: auto;
 }
 
@@ -179,7 +186,7 @@ ul {
     padding: 8px;
 }
 
-collapsible-content th {
+.collapsible-content th {
     background-color: #f2f2f2;
     text-align: left;
 }
