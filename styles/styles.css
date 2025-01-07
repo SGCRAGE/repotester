@@ -110,6 +110,19 @@ main {
     text-align: left;
 }
 
+/* Highlight highest and lowest prices */
+.highest-price {
+    background-color: #d4edda; /* Light green background */
+    color: #155724; /* Dark green text */
+    font-weight: bold;
+}
+
+.lowest-price {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+    font-weight: bold;
+}
+
 /* Table styling */
 table {
     width: 100%;
