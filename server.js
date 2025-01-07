@@ -6,6 +6,11 @@ const port = 3000;
 // Serve static files from the "public" directory
 app.use(express.static('public'));
 
+// Endpoint to serve the API key
+app.get('/api-key', (req, res) => {
+  res.json({ apiKey: process.env.ODDS_API_KEY });
+});
+
 // Firebase configuration endpoint
 app.get('/firebase-config', (req, res) => {
   res.json({
