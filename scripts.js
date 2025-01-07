@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             apiKey = data.apiKey;
+            if (!apiKey) {
+                throw new Error('API key is missing');
+            }
             fetchOdds();
         })
         .catch(error => {
