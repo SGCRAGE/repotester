@@ -38,7 +38,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function calculateExpectedValue(price, impliedProbability) {
-        return (price > 0 ? price / 100 : 100 / -price) * impliedProbability - (1 - impliedProbability);
+        const payout = price > 0 ? price / 100 : 100 / -price;
+        const probabilityOfWinning = impliedProbability;
+        const probabilityOfLosing = 1 - impliedProbability;
+        return (payout * probabilityOfWinning) - probabilityOfLosing;
     }
 
     function displayOdds(data) {
@@ -68,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 ${market.outcomes.map(outcome => {
                                     const impliedProbability = calculateImpliedProbability(outcome.price);
                                     const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
+                                    console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
                                     return `
                                         <tr>
                                             <td>${event.home_team}</td>
