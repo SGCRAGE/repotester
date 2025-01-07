@@ -24,3 +24,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(`Error fetching odds data: ${response.statusText}`);
             }
             const requestsRemaining = response.headers.get('x-requests-remaining');
+            const requestsUsed = response.headers.get('x-requests-used');
+            return response.json().then(data => ({ data, requestsRemaining, requestsUsed }));
+        })
+        .then(({ data, requestsRemaining, requestsUsed }) => {
+            console.log('Odds data received:', data);
+            displayRequestInfo(requestsRemaining, requestsUsed);
+            displayOdds(data, oddsContainer, getSelectedRegions());
+
+            // Add event listeners to the checkboxes
+            const checkboxes = document.querySelectorAll('.region-filter');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => displayOdds(data, oddsContainer, getSelectedRegions()));
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching odds data:', error);
+            oddsContainer.innerHTML = `<p>${error.message}</p>`;
+        });
+
+    function displayRequestInfo(requestsRemaining, requestsUsed) {
+        const requestInfoContainer = document.createElement('div');
+        requestInfoContainer.innerHTML = `
+            <p>Requests Remaining: ${requestsRemaining}</p>
+            <p>Requests Used: ${requestsUsed}</p>
+        `;
+        oddsContainer.parentNode.insertBefore(requestInfoContainer, oddsContainer);
+    }
+
+    function getSelectedRegions() {
+        return Array.from(document.querySelectorAll('.region-filter:checked')).map(input => input.value);
+    }
+});
