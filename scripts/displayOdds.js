@@ -47,6 +47,9 @@ export function displayOdds(data, oddsContainer, selectedRegions) {
                         }
                     });
 
+                    console.log('H2H Outcomes:', h2hOutcomes); // Log H2H outcomes
+                    console.log('Spread Outcomes:', spreadOutcomes); // Log Spread outcomes
+
                     const highestH2H = Math.max(...h2hOutcomes.map(o => o.price));
                     const lowestH2H = Math.max(...h2hOutcomes.filter(o => o.price < 0).map(o => o.price));
                     const highestSpread = Math.max(...spreadOutcomes.map(o => o.price));
