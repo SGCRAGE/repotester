@@ -53,10 +53,10 @@ export function displayOdds(data, oddsContainer, selectedRegions) {
                     console.log('H2H Outcomes:', h2hOutcomes); // Log H2H outcomes
                     console.log('Spread Outcomes:', spreadOutcomes); // Log Spread outcomes
 
-                    const highestH2H = Math.max(...h2hOutcomes.map(o => o.price));
-                    const lowestH2H = Math.max(...h2hOutcomes.filter(o => o.price < 0).map(o => o.price));
-                    const highestSpread = Math.max(...spreadOutcomes.map(o => o.price));
-                    const lowestSpread = Math.max(...spreadOutcomes.filter(o => o.price < 0).map(o => o.price));
+                    const highestH2H = h2hOutcomes.length > 0 ? Math.max(...h2hOutcomes.map(o => o.price)) : null;
+                    const lowestH2H = h2hOutcomes.length > 0 ? Math.min(...h2hOutcomes.map(o => o.price)) : null;
+                    const highestSpread = spreadOutcomes.length > 0 ? Math.max(...spreadOutcomes.map(o => o.price)) : null;
+                    const lowestSpread = spreadOutcomes.length > 0 ? Math.min(...spreadOutcomes.map(o => o.price)) : null;
 
                     return `
                         <tr class="collapsible-header">
