@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const fairLossProbability = 1 - impliedProbability;
         const profitIfWin = payout * stake - stake;
         const expectedValue = (fairWinProbability * profitIfWin) - (fairLossProbability * stake);
-        return parseFloat(expectedValue.toFixed(2)); // Round to two decimal places
+        return parseFloat((expectedValue * 100).toFixed(2)); // Convert to percentage and round to two decimal places
     }
 
     function displayOdds(data) {
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                                             <td class="${priceClass}">${outcome.price}</td>
                                                                             <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                                             <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                                            <td>${expectedValue.toFixed(2)}</td>
+                                                                            <td>${expectedValue.toFixed(2)}%</td>
                                                                         </tr>
                                                                     `;
                                                                 }).join('')}
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                                             <td class="${priceClass}">${outcome.price}</td>
                                                                             <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                                             <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                                            <td>${expectedValue.toFixed(2)}</td>
+                                                                            <td>${expectedValue.toFixed(2)}%</td>
                                                                         </tr>
                                                                     `;
                                                                 }).join('')}
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     <td class="${priceClass}">${outcome.price}</td>
                                                     <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                     <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                    <td>${expectedValue.toFixed(2)}</td>
+                                                    <td>${expectedValue.toFixed(2)}%</td>
                                                 </tr>
                                             `;
                                         }).join('')}
