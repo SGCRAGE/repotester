@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const chartData = [];
         const chartLabels = [];
         const highestPrice = Math.max(...data.flatMap(event => event.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.map(o => o.price)))));
-        const lowestPrice = Math.max(...data.flatMap(event => event.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price))));
+        const lowestPrice = Math.max(...data.flatMap(event => event.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price)))));
 
         data.forEach(event => {
             if (`${event.home_team} vs ${event.away_team}` === eventTitle) {
