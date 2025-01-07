@@ -1,6 +1,6 @@
 import { calculateImpliedProbability, calculateExpectedValue } from './utils.js';
 
-export function showChartModal(eventTitle, market, data) {
+export function showChartModal(eventTitle, market, data, selectedRegions) {
     const modal = document.createElement('div');
     modal.className = 'modal';
     modal.innerHTML = `
@@ -70,7 +70,7 @@ export function showChartModal(eventTitle, market, data) {
     });
 }
 
-export function showGraphModal(eventTitle, market, data) {
+export function showGraphModal(eventTitle, market, data, selectedRegions) {
     const modal = document.createElement('div');
     modal.className = 'modal';
     modal.innerHTML = `
