@@ -107,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         `).join('')}
                                     </table>
                                     <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}">View Chart</button>
+                                    <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}">View Graph</button>
                                 </div>
                             </td>
                         </tr>
@@ -135,6 +136,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 button.addEventListener('click', function() {
                     const eventTitle = this.getAttribute('data-event');
                     showChartModal(eventTitle, data);
+                });
+            });
+
+            // Add event listeners for view graph buttons
+            const viewGraphButtons = document.querySelectorAll('.view-graph');
+            viewGraphButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const eventTitle = this.getAttribute('data-event');
+                    showGraphModal(eventTitle, data);
                 });
             });
         } else {
@@ -205,6 +215,75 @@ document.addEventListener('DOMContentLoaded', function() {
             if (event.target === modal) {
                 modal.style.display = 'none';
                 document.body.removeChild(modal);
+            }
+        });
+    }
+
+    function showGraphModal(eventTitle, data) {
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>${eventTitle}</h2>
+                <canvas id="oddsChart"></canvas>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Show the modal
+        modal.style.display = 'block';
+
+        // Close the modal when the close button is clicked
+        modal.querySelector('.close').addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.removeChild(modal);
+        });
+
+        // Close the modal when clicking outside of the modal content
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                document.body.removeChild(modal);
+            }
+        });
+
+        // Prepare data for the chart
+        const chartData = [];
+        const chartLabels = [];
+        data.forEach(event => {
+            if (`${event.home_team} vs ${event.away_team}` === eventTitle) {
+                event.bookmakers.forEach(bookmaker => {
+                    bookmaker.markets.forEach(market => {
+                        market.outcomes.forEach(outcome => {
+                            chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
+                            chartData.push(outcome.price);
+                        });
+                    });
+                });
+            }
+        });
+
+        // Create the chart
+        const ctx = document.getElementById('oddsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    label: 'Odds',
+                    data: chartData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
         });
     }
