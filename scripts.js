@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function calculateExpectedValue(price, impliedProbability) {
-        const payout = price > 0 ? price / 100 : 100 / -price;
+        const payout = price > 0 ? (price / 100) + 1 : (100 / -price) + 1;
         const probabilityOfWinning = impliedProbability;
         const probabilityOfLosing = 1 - impliedProbability;
         return (payout * probabilityOfWinning) - probabilityOfLosing;
