@@ -33,6 +33,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function calculateImpliedProbability(price) {
+        return price > 0 ? 100 / (price + 100) : -price / (-price + 100);
+    }
+
+    function calculateExpectedValue(price, impliedProbability) {
+        return (price > 0 ? price / 100 : 100 / -price) * impliedProbability - (1 - impliedProbability);
+    }
+
     function displayOdds(data) {
         console.log('Displaying odds data:', data); // Log the data to inspect its structure
         if (Array.isArray(data) && data.length > 0) {
@@ -49,25 +57,33 @@ document.addEventListener('DOMContentLoaded', function() {
                         <th>Outcome Name</th>
                         <th>Price</th>
                         <th>Point</th>
+                        <th>Implied Probability</th>
+                        <th>Expected Value</th>
                     </tr>
                 </thead>
                 <tbody>
                     ${data.map(event => `
                         ${event.bookmakers.map(bookmaker => `
                             ${bookmaker.markets.map(market => `
-                                ${market.outcomes.map(outcome => `
-                                    <tr>
-                                        <td>${event.home_team}</td>
-                                        <td>${event.away_team}</td>
-                                        <td>${new Date(event.commence_time).toLocaleString()}</td>
-                                        <td>${event.sport_title}</td>
-                                        <td>${bookmaker.title}</td>
-                                        <td>${market.key.toUpperCase()}</td>
-                                        <td>${outcome.name}</td>
-                                        <td>${outcome.price}</td>
-                                        <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
-                                    </tr>
-                                `).join('')}
+                                ${market.outcomes.map(outcome => {
+                                    const impliedProbability = calculateImpliedProbability(outcome.price);
+                                    const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
+                                    return `
+                                        <tr>
+                                            <td>${event.home_team}</td>
+                                            <td>${event.away_team}</td>
+                                            <td>${new Date(event.commence_time).toLocaleString()}</td>
+                                            <td>${event.sport_title}</td>
+                                            <td>${bookmaker.title}</td>
+                                            <td>${market.key.toUpperCase()}</td>
+                                            <td>${outcome.name}</td>
+                                            <td>${outcome.price}</td>
+                                            <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
+                                            <td>${(impliedProbability * 100).toFixed(2)}%</td>
+                                            <td>${expectedValue.toFixed(2)}</td>
+                                        </tr>
+                                    `;
+                                }).join('')}
                             `).join('')}
                         `).join('')}
                     `).join('')}
