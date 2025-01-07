@@ -36,37 +36,44 @@ document.addEventListener('DOMContentLoaded', function() {
     function displayOdds(data) {
         console.log('Displaying odds data:', data); // Log the data to inspect its structure
         if (Array.isArray(data) && data.length > 0) {
-            const list = document.createElement('ul');
-            data.forEach(event => {
-                const listItem = document.createElement('li');
-                listItem.innerHTML = `
-                    <h2>${event.home_team} vs ${event.away_team}</h2>
-                    <p><strong>Commence Time:</strong> ${new Date(event.commence_time).toLocaleString()}</p>
-                    <p><strong>Sport:</strong> ${event.sport_title}</p>
-                    <p><strong>Bookmakers:</strong></p>
-                    <ul>
+            const table = document.createElement('table');
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Home Team</th>
+                        <th>Away Team</th>
+                        <th>Commence Time</th>
+                        <th>Sport</th>
+                        <th>Bookmaker</th>
+                        <th>Market</th>
+                        <th>Outcomes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${data.map(event => `
                         ${event.bookmakers.map(bookmaker => `
-                            <li>
-                                <strong>${bookmaker.title}</strong>
-                                <ul>
-                                    ${bookmaker.markets.map(market => `
-                                        <li>
-                                            <strong>${market.key.toUpperCase()}</strong>
-                                            <ul>
-                                                ${market.outcomes.map(outcome => `
-                                                    <li>${outcome.name}: ${outcome.price}</li>
-                                                `).join('')}
-                                            </ul>
-                                        </li>
-                                    `).join('')}
-                                </ul>
-                            </li>
+                            ${bookmaker.markets.map(market => `
+                                <tr>
+                                    <td>${event.home_team}</td>
+                                    <td>${event.away_team}</td>
+                                    <td>${new Date(event.commence_time).toLocaleString()}</td>
+                                    <td>${event.sport_title}</td>
+                                    <td>${bookmaker.title}</td>
+                                    <td>${market.key.toUpperCase()}</td>
+                                    <td>
+                                        <ul>
+                                            ${market.outcomes.map(outcome => `
+                                                <li>${outcome.name}: ${outcome.price}</li>
+                                            `).join('')}
+                                        </ul>
+                                    </td>
+                                </tr>
+                            `).join('')}
                         `).join('')}
-                    </ul>
-                `;
-                list.appendChild(listItem);
-            });
-            oddsContainer.appendChild(list);
+                    `).join('')}
+                </tbody>
+            `;
+            oddsContainer.appendChild(table);
         } else {
             oddsContainer.innerHTML = '<p>No odds data available.</p>';
         }
