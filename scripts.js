@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const fairLossProbability = 1 - impliedProbability;
         const profitIfWin = payout * stake - stake;
         const expectedValue = (fairWinProbability * profitIfWin) - (fairLossProbability * stake);
-        return expectedValue; // Return the expected value directly
+        return parseFloat(expectedValue.toFixed(2)); // Round to two decimal places
     }
 
     function displayOdds(data) {
