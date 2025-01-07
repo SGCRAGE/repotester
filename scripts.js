@@ -20,10 +20,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 throw new Error(`Error fetching odds data: ${response.statusText}`);
             }
-            return response.json();
+            const requestsRemaining = response.headers.get('x-requests-remaining');
+            const requestsUsed = response.headers.get('x-requests-used');
+            return response.json().then(data => ({ data, requestsRemaining, requestsUsed }));
         })
-        .then(data => {
+        .then(({ data, requestsRemaining, requestsUsed }) => {
             console.log('Odds data received:', data);
+            displayRequestInfo(requestsRemaining, requestsUsed);
             displayOdds(data);
 
             // Add event listeners to the checkboxes
@@ -140,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        ${event.bookmakers.map(bookmaker => `
+                                                        ${event.bookmakers.filter(bookmaker => selectedRegions.includes(bookmaker.region)).map(bookmaker => `
                                                             ${bookmaker.markets.filter(market => market.key === 'h2h').map(market => `
                                                                 ${market.outcomes.map(outcome => {
                                                                     const impliedProbability = calculateImpliedProbability(outcome.price);
@@ -196,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        ${event.bookmakers.map(bookmaker => `
+                                                        ${event.bookmakers.filter(bookmaker => selectedRegions.includes(bookmaker.region)).map(bookmaker => `
                                                             ${bookmaker.markets.filter(market => market.key === 'spreads').map(market => `
                                                                 ${market.outcomes.map(outcome => {
                                                                     const impliedProbability = calculateImpliedProbability(outcome.price);
@@ -300,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <tbody>
                         ${data.map(event => {
                             if (`${event.home_team} vs ${event.away_team}` === eventTitle) {
-                                return event.bookmakers.map(bookmaker => `
+                                return event.bookmakers.filter(bookmaker => selectedRegions.includes(bookmaker.region)).map(bookmaker => `
                                     ${bookmaker.markets.filter(m => m.key === market).map(market => `
                                         ${market.outcomes.map(outcome => {
                                             const impliedProbability = calculateImpliedProbability(outcome.price);
@@ -385,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         data.forEach(event => {
             if (`${event.home_team} vs ${event.away_team}` === eventTitle) {
-                event.bookmakers.forEach(bookmaker => {
+                event.bookmakers.filter(bookmaker => selectedRegions.includes(bookmaker.region)).forEach(bookmaker => {
                     bookmaker.markets.filter(m => m.key === market).forEach(market => {
                         market.outcomes.forEach(outcome => {
                             chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
