@@ -93,6 +93,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    overflow: hidden; /* Hide overflow to ensure scrollable container */
 }
 
 /* Odds container styling */
@@ -103,7 +104,8 @@ main {
     background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: calc(100vh - 140px); /* Adjust height to fit within viewport minus header and footer */
 }
 
 /* Odds item styling */
