@@ -88,9 +88,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
 
                         const highestH2H = Math.max(...h2hOutcomes.map(o => o.price));
-                        const lowestH2H = Math.min(...h2hOutcomes.filter(o => o.price < 0).map(o => o.price));
+                        const lowestH2H = Math.max(...h2hOutcomes.filter(o => o.price < 0).map(o => o.price));
                         const highestSpread = Math.max(...spreadOutcomes.map(o => o.price));
-                        const lowestSpread = Math.min(...spreadOutcomes.filter(o => o.price < 0).map(o => o.price));
+                        const lowestSpread = Math.max(...spreadOutcomes.filter(o => o.price < 0).map(o => o.price));
 
                         return `
                             <tr class="collapsible-header">
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             const impliedProbability = calculateImpliedProbability(outcome.price);
                                             const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
                                             const highestPrice = Math.max(...market.outcomes.map(o => o.price));
-                                            const lowestPrice = Math.min(...market.outcomes.filter(o => o.price < 0).map(o => o.price));
+                                            const lowestPrice = Math.max(...market.outcomes.filter(o => o.price < 0).map(o => o.price));
                                             const priceClass = outcome.price === highestPrice ? 'highest-price' : outcome.price === lowestPrice ? 'lowest-price' : '';
                                             return `
                                                 <tr>
