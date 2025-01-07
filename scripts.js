@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <tr>
                         <th>Home Team</th>
                         <th>Away Team</th>
+                        <th>Status</th>
                         <th>Commence Time</th>
                         <th>Sport</th>
                         <th>Bookmaker</th>
@@ -72,12 +73,16 @@ document.addEventListener('DOMContentLoaded', function() {
                                 ${market.outcomes.map(outcome => {
                                     const impliedProbability = calculateImpliedProbability(outcome.price);
                                     const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
+                                    const currentTime = new Date();
+                                    const commenceTime = new Date(event.commence_time);
+                                    const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
                                     console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
                                     return `
                                         <tr>
                                             <td>${event.home_team}</td>
                                             <td>${event.away_team}</td>
-                                            <td>${new Date(event.commence_time).toLocaleString()}</td>
+                                            <td>${status}</td>
+                                            <td>${commenceTime.toLocaleString()}</td>
                                             <td>${event.sport_title}</td>
                                             <td>${bookmaker.title}</td>
                                             <td>${market.key.toUpperCase()}</td>
