@@ -67,6 +67,9 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Displaying odds data:', data); // Log the data to inspect its structure
         const selectedRegions = Array.from(document.querySelectorAll('.region-filter:checked')).map(input => input.value);
 
+        // Clear existing odds data
+        oddsContainer.innerHTML = '';
+
         if (Array.isArray(data) && data.length > 0) {
             const table = document.createElement('table');
             table.innerHTML = `
