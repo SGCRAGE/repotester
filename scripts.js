@@ -46,28 +46,28 @@ document.addEventListener('DOMContentLoaded', function() {
                         <th>Sport</th>
                         <th>Bookmaker</th>
                         <th>Market</th>
-                        <th>Outcomes</th>
+                        <th>Outcome Name</th>
+                        <th>Price</th>
+                        <th>Point</th>
                     </tr>
                 </thead>
                 <tbody>
                     ${data.map(event => `
                         ${event.bookmakers.map(bookmaker => `
                             ${bookmaker.markets.map(market => `
-                                <tr>
-                                    <td>${event.home_team}</td>
-                                    <td>${event.away_team}</td>
-                                    <td>${new Date(event.commence_time).toLocaleString()}</td>
-                                    <td>${event.sport_title}</td>
-                                    <td>${bookmaker.title}</td>
-                                    <td>${market.key.toUpperCase()}</td>
-                                    <td>
-                                        <ul>
-                                            ${market.outcomes.map(outcome => `
-                                                <li>${outcome.name}: ${outcome.price}</li>
-                                            `).join('')}
-                                        </ul>
-                                    </td>
-                                </tr>
+                                ${market.outcomes.map(outcome => `
+                                    <tr>
+                                        <td>${event.home_team}</td>
+                                        <td>${event.away_team}</td>
+                                        <td>${new Date(event.commence_time).toLocaleString()}</td>
+                                        <td>${event.sport_title}</td>
+                                        <td>${bookmaker.title}</td>
+                                        <td>${market.key.toUpperCase()}</td>
+                                        <td>${outcome.name}</td>
+                                        <td>${outcome.price}</td>
+                                        <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
+                                    </tr>
+                                `).join('')}
                             `).join('')}
                         `).join('')}
                     `).join('')}
