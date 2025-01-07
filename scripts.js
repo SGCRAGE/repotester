@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             console.log('Odds response status:', response.status);
+            const requestsRemaining = response.headers.get('x-requests-remaining');
+            const requestsUsed = response.headers.get('x-requests-used');
+            displayRequestInfo(requestsRemaining, requestsUsed);
+
             if (!response.ok) {
                 return response.text().then(text => {
                     const errorData = JSON.parse(text);
@@ -40,6 +44,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 oddsContainer.innerHTML = `<p>${error.message}</p>`;
             }
         });
+    }
+
+    function displayRequestInfo(requestsRemaining, requestsUsed) {
+        const requestInfoContainer = document.createElement('div');
+        requestInfoContainer.innerHTML = `
+            <p>Requests Remaining: ${requestsRemaining}</p>
+            <p>Requests Used: ${requestsUsed}</p>
+        `;
+        oddsContainer.parentNode.insertBefore(requestInfoContainer, oddsContainer);
     }
 
     function calculateImpliedProbability(price) {
