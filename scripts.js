@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const dateFormat = 'iso'; // Date format
 
     // Fetch the API key from the server
-    fetch('/api-key')
+    fetch('http://localhost:3000/api-key')
         .then(response => response.json())
         .then(data => {
             apiKey = data.apiKey;
@@ -396,4 +396,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Fetch NBA odds directly
+    fetchOdds();
 });
