@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const fetch = require('node-fetch'); // Ensure you have node-fetch installed
 const app = express();
 const port = 3000;
 
@@ -37,9 +38,26 @@ app.get('/firebase-config', (req, res) => {
 });
 
 // Endpoint to fetch odds data
-app.get('/odds', (req, res) => {
-  // Your logic to fetch and return odds data
-  res.json({ /* odds data */ });
+app.get('/odds', async (req, res) => {
+  const oddsApiUrl = 'https://api.the-odds-api.com/v4/sports/basketball_nba/odds';
+  const oddsParams = {
+    regions: 'us,eu,us2,uk',
+    markets: 'h2h,spreads',
+    oddsFormat: 'american',
+    dateFormat: 'iso'
+  };
+
+  try {
+    const response = await fetch(`${oddsApiUrl}?${new URLSearchParams(oddsParams)}`, {
+      headers: {
+        'Authorization': `Bearer ${process.env.ODDS_API_KEY}`
+      }
+    });
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch odds data' });
+  }
 });
 
 app.listen(port, () => {
