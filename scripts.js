@@ -106,6 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             `).join('')}
                                         `).join('')}
                                     </table>
+                                    <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}">View Chart</button>
                                 </div>
                             </td>
                         </tr>
@@ -127,9 +128,85 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             });
+
+            // Add event listeners for view chart buttons
+            const viewChartButtons = document.querySelectorAll('.view-chart');
+            viewChartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const eventTitle = this.getAttribute('data-event');
+                    showChartModal(eventTitle, data);
+                });
+            });
         } else {
             oddsContainer.innerHTML = '<p>No odds data available.</p>';
         }
+    }
+
+    function showChartModal(eventTitle, data) {
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>${eventTitle}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bookmaker</th>
+                            <th>Market</th>
+                            <th>Outcome Name</th>
+                            <th>Price</th>
+                            <th>Point</th>
+                            <th>Implied Probability</th>
+                            <th>Expected Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.map(event => {
+                            if (`${event.home_team} vs ${event.away_team}` === eventTitle) {
+                                return event.bookmakers.map(bookmaker => `
+                                    ${bookmaker.markets.map(market => `
+                                        ${market.outcomes.map(outcome => {
+                                            const impliedProbability = calculateImpliedProbability(outcome.price);
+                                            const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
+                                            return `
+                                                <tr>
+                                                    <td>${bookmaker.title}</td>
+                                                    <td>${market.key.toUpperCase()}</td>
+                                                    <td>${outcome.name}</td>
+                                                    <td>${outcome.price}</td>
+                                                    <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
+                                                    <td>${(impliedProbability * 100).toFixed(2)}%</td>
+                                                    <td>${expectedValue.toFixed(2)}</td>
+                                                </tr>
+                                            `;
+                                        }).join('')}
+                                    `).join('')}
+                                `).join('');
+                            }
+                        }).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Show the modal
+        modal.style.display = 'block';
+
+        // Close the modal when the close button is clicked
+        modal.querySelector('.close').addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.removeChild(modal);
+        });
+
+        // Close the modal when clicking outside of the modal content
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                document.body.removeChild(modal);
+            }
+        });
     }
 
     // Fetch NBA odds directly
