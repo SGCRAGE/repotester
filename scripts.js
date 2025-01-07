@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function displayOdds(data) {
-        console.log('Displaying odds data:', data);e // Log the data to inspect its structure
+        console.log('Displaying odds data:', data); // Log the data to inspect its structure
         if (Array.isArray(data) && data.length > 0) {
             const table = document.createElement('table');
             table.innerHTML = `
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <th>Price</th>
                         <th>Point</th>
                         <th>Implied Probability</th>
-                        <th>Expectedd Value</th>
+                        <th>Expected Value</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             bookmaker.markets.forEach(market => {
                                 market.outcomes.forEach(outcome => {
                                     if (market.key === 'h2h') {
-                                        h2hOutcomes.push(outcome); 
+                                        h2hOutcomes.push(outcome);
                                     } else if (market.key === 'spreads') {
                                         spreadOutcomes.push(outcome);
                                     }
