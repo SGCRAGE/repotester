@@ -188,7 +188,7 @@ ul {
     padding: 8px;
 }
 
-.collapsible-content th {
+collapsible-content th {
     background-color: #f2f2f2;
     text-align: left;
 }
