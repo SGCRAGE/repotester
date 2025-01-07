@@ -6,8 +6,13 @@ const port = 3000;
 // Enable CORS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
 });
 
 // Serve static files from the "public" directory
@@ -29,6 +34,12 @@ app.get('/firebase-config', (req, res) => {
     appId: process.env.FIREBASE_APP_ID,
     measurementId: process.env.FIREBASE_MEASUREMENT_ID
   });
+});
+
+// Endpoint to fetch odds data
+app.get('/odds', (req, res) => {
+  // Your logic to fetch and return odds data
+  res.json({ /* odds data */ });
 });
 
 app.listen(port, () => {
