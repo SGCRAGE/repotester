@@ -95,6 +95,8 @@ main {
     background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-height: 600px; /* Adjust the height as needed */
+    overflow-y: auto;
 }
 
 /* Odds item styling */
@@ -106,6 +108,27 @@ main {
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     text-align: left;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 /* Footer styling */
