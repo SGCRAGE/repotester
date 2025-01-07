@@ -54,8 +54,10 @@ app.get('/odds', async (req, res) => {
       }
     });
     const data = await response.json();
+    console.log('Fetched odds data:', data); // Log the fetched data
     res.json(data);
   } catch (error) {
+    console.error('Error fetching odds data:', error); // Log the error
     res.status(500).json({ error: 'Failed to fetch odds data' });
   }
 });
