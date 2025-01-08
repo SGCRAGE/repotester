@@ -98,8 +98,8 @@ export function displayOdds(data, oddsContainer) {
                                                         ${bookmaker.markets.filter(market => market.key === 'h2h').map(market => `
                                                             ${market.outcomes.map(outcome => {
                                                                 const impliedProbability = calculateImpliedProbability(outcome.price);
-                                                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
                                                                 const fairOutcome = fairH2HOutcomes.find(o => o.name === outcome.name);
+                                                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability, fairOutcome.fairOdds);
                                                                 const currentTime = new Date();
                                                                 const commenceTime = new Date(event.commence_time);
                                                                 const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
@@ -158,8 +158,8 @@ export function displayOdds(data, oddsContainer) {
                                                         ${bookmaker.markets.filter(market => market.key === 'spreads').map(market => `
                                                             ${market.outcomes.map(outcome => {
                                                                 const impliedProbability = calculateImpliedProbability(outcome.price);
-                                                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
                                                                 const fairOutcome = fairSpreadOutcomes.find(o => o.name === outcome.name);
+                                                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability, fairOutcome.fairOdds);
                                                                 const currentTime = new Date();
                                                                 const commenceTime = new Date(event.commence_time);
                                                                 const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
@@ -218,8 +218,8 @@ export function displayOdds(data, oddsContainer) {
                                                         ${bookmaker.markets.filter(market => market.key === 'totals').map(market => `
                                                             ${market.outcomes.map(outcome => {
                                                                 const impliedProbability = calculateImpliedProbability(outcome.price);
-                                                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
                                                                 const fairOutcome = fairTotalsOutcomes.find(o => o.name === outcome.name);
+                                                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability, fairOutcome.fairOdds);
                                                                 const currentTime = new Date();
                                                                 const commenceTime = new Date(event.commence_time);
                                                                 const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
