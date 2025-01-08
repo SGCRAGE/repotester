@@ -33,8 +33,9 @@ export function displayOdds(data, oddsContainer, selectedRegions) {
                     const spreadOutcomes = [];
                     const totalsOutcomes = [];
 
-                    event.bookmakers.forEach(bookmaker => {
-                        if (selectedRegions.includes(bookmaker.region)) {
+                    event.bookmakers
+                        .filter(bookmaker => selectedRegions.includes(bookmaker.region)) // Filter bookmakers by selected regions
+                        .forEach(bookmaker => {
                             console.log('Processing bookmaker:', bookmaker); // Log each bookmaker
                             bookmaker.markets.forEach(market => {
                                 console.log('Processing market:', market); // Log each market
@@ -49,8 +50,7 @@ export function displayOdds(data, oddsContainer, selectedRegions) {
                                     }
                                 });
                             });
-                        }
-                    });
+                        });
 
                     console.log('H2H Outcomes:', h2hOutcomes); // Log H2H outcomes
                     console.log('Spread Outcomes:', spreadOutcomes); // Log Spread outcomes
