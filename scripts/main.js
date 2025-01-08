@@ -50,7 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add event listeners to the checkboxes
             const checkboxes = document.querySelectorAll('.region-filter');
             checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', () => displayOdds(mergedData, oddsContainer, getSelectedRegions()));
+                checkbox.addEventListener('change', () => {
+                    const selectedRegions = getSelectedRegions();
+                    console.log('Selected regions:', selectedRegions); // Log selected regions
+                    displayOdds(mergedData, oddsContainer, selectedRegions);
+                });
             });
         })
         .catch(error => {
