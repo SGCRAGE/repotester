@@ -28,14 +28,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const requestsRemaining = oddsResponse.headers.get('x-requests-remaining');
             const requestsUsed = oddsResponse.headers.get('x-requests-used');
+            const requestsLast = oddsResponse.headers.get('x-requests-last');
             const oddsData = await oddsResponse.json();
             const scoresData = await scoresResponse.json();
-            return { oddsData, scoresData, requestsRemaining, requestsUsed };
+            return { oddsData, scoresData, requestsRemaining, requestsUsed, requestsLast };
         })
-        .then(({ oddsData, scoresData, requestsRemaining, requestsUsed }) => {
+        .then(({ oddsData, scoresData, requestsRemaining, requestsUsed, requestsLast }) => {
             console.log('Odds data received:', oddsData); // Log the received data
             console.log('Scores data received:', scoresData); // Log the received data
-            displayRequestInfo(requestsRemaining, requestsUsed);
+            displayRequestInfo(requestsRemaining, requestsUsed, requestsLast);
             const mergedData = mergeOddsAndScores(oddsData, scoresData);
             displayOdds(mergedData, oddsContainer);
         })
@@ -44,11 +45,12 @@ document.addEventListener('DOMContentLoaded', function() {
             oddsContainer.innerHTML = `<p>${error.message}</p>`;
         });
 
-    function displayRequestInfo(requestsRemaining, requestsUsed) {
+    function displayRequestInfo(requestsRemaining, requestsUsed, requestsLast) {
         const requestInfoContainer = document.createElement('div');
         requestInfoContainer.innerHTML = `
             <p>Requests Remaining: ${requestsRemaining}</p>
             <p>Requests Used: ${requestsUsed}</p>
+            <p>Usage Cost of Last API Call: ${requestsLast}</p>
         `;
         oddsContainer.parentNode.insertBefore(requestInfoContainer, oddsContainer);
     }
@@ -56,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function mergeOddsAndScores(oddsData, scoresData) {
         return oddsData.map(event => {
             const score = scoresData.find(score => score.id === event.id);
-            if (score) {
+            if (score && score.scores) {
                 event.home_score = score.scores.find(s => s.name === event.home_team)?.score;
                 event.away_score = score.scores.find(s => s.name === event.away_team)?.score;
             }
