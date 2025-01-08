@@ -113,8 +113,8 @@ export function displayOdds(data, oddsContainer) {
                                                     `).join('')}
                                                 </tbody>
                                             </table>
-                                            <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h">View Chart</button>
-                                            <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h">View Graph</button>
+                                            <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h" data-event-id="${event.id}">View Chart</button>
+                                            <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h" data-event-id="${event.id}">View Graph</button>
                                         </div>
                                     </div>
                                     <div class="market-section">
@@ -169,8 +169,8 @@ export function displayOdds(data, oddsContainer) {
                                                     `).join('')}
                                                 </tbody>
                                             </table>
-                                            <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="spreads">View Chart</button>
-                                            <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="spreads">View Graph</button>
+                                            <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="spreads" data-event-id="${event.id}">View Chart</button>
+                                            <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="spreads" data-event-id="${event.id}">View Graph</button>
                                         </div>
                                     </div>
                                 </div>
@@ -200,9 +200,11 @@ export function displayOdds(data, oddsContainer) {
         const viewChartButtons = document.querySelectorAll('.view-chart');
         viewChartButtons.forEach(button => {
             button.addEventListener('click', function() {
-                const eventTitle = this.getAttribute('data-event');
+                const eventId = this.getAttribute('data-event-id');
                 const market = this.getAttribute('data-market');
-                showChartModal(eventTitle, market, data);
+                const eventTitle = this.getAttribute('data-event');
+                const eventData = data.find(event => event.id === eventId);
+                showChartModal(eventTitle, market, eventData);
             });
         });
 
@@ -210,9 +212,11 @@ export function displayOdds(data, oddsContainer) {
         const viewGraphButtons = document.querySelectorAll('.view-graph');
         viewGraphButtons.forEach(button => {
             button.addEventListener('click', function() {
-                const eventTitle = this.getAttribute('data-event');
+                const eventId = this.getAttribute('data-event-id');
                 const market = this.getAttribute('data-market');
-                showGraphModal(eventTitle, market, data);
+                const eventTitle = this.getAttribute('data-event');
+                const eventData = data.find(event => event.id === eventId);
+                showGraphModal(eventTitle, market, eventData);
             });
         });
     } else {
