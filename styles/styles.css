@@ -85,6 +85,22 @@ nav ul li button:hover {
     background-color: #357ae8; /* Darker blue on hover */
 }
 
+/* Styles for the new "View Expected Values" button */
+.view-expected-values {
+    background-color: #ffcc00; /* Yellow background */
+    color: #333; /* Dark text color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px; /* Add some space between buttons */
+}
+
+.view-expected-values:hover {
+    background-color: #e6b800; /* Darker yellow on hover */
+}
+
 /* Main content styling */
 main {
     flex: 1; /* Take up remaining space */

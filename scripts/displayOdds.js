@@ -1,5 +1,5 @@
 import { calculateImpliedProbability, calculateExpectedValue } from './utils.js';
-import { showChartModal, showGraphModal } from './showModals.js';
+import { showChartModal, showGraphModal, showExpectedValuesModal } from './showModals.js';
 
 export function displayOdds(data, oddsContainer) {
     console.log('Displaying odds data:', data); // Log the data to inspect its structure
@@ -121,6 +121,7 @@ export function displayOdds(data, oddsContainer) {
                                             </table>
                                             <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h" data-event-id="${event.id}">View Chart</button>
                                             <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h" data-event-id="${event.id}">View Graph</button>
+                                            <button class="view-expected-values" data-event="${event.home_team} vs ${event.away_team}" data-market="h2h" data-event-id="${event.id}">View Expected Values</button>
                                         </div>
                                     </div>
                                     <div class="market-section">
@@ -177,6 +178,7 @@ export function displayOdds(data, oddsContainer) {
                                             </table>
                                             <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="spreads" data-event-id="${event.id}">View Chart</button>
                                             <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="spreads" data-event-id="${event.id}">View Graph</button>
+                                            <button class="view-expected-values" data-event="${event.home_team} vs ${event.away_team}" data-market="spreads" data-event-id="${event.id}">View Expected Values</button>
                                         </div>
                                     </div>
                                     <div class="market-section">
@@ -233,6 +235,7 @@ export function displayOdds(data, oddsContainer) {
                                             </table>
                                             <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="totals" data-event-id="${event.id}">View Chart</button>
                                             <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="totals" data-event-id="${event.id}">View Graph</button>
+                                            <button class="view-expected-values" data-event="${event.home_team} vs ${event.away_team}" data-market="totals" data-event-id="${event.id}">View Expected Values</button>
                                         </div>
                                     </div>
                                 </div>
@@ -279,6 +282,18 @@ export function displayOdds(data, oddsContainer) {
                 const eventTitle = this.getAttribute('data-event');
                 const eventData = data.find(event => event.id === eventId);
                 showGraphModal(eventTitle, market, eventData);
+            });
+        });
+
+        // Add event listeners for view expected values buttons
+        const viewExpectedValuesButtons = document.querySelectorAll('.view-expected-values');
+        viewExpectedValuesButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const eventId = this.getAttribute('data-event-id');
+                const market = this.getAttribute('data-market');
+                const eventTitle = this.getAttribute('data-event');
+                const eventData = data.find(event => event.id === eventId);
+                showExpectedValuesModal(eventTitle, market, eventData);
             });
         });
     } else {

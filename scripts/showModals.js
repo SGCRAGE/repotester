@@ -137,3 +137,62 @@ export function showGraphModal(eventTitle, market, eventData) {
         }
     });
 }
+
+export function showExpectedValuesModal(eventTitle, market, eventData) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>${eventTitle} - ${market.toUpperCase()} Market Expected Values</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bookmaker</th>
+                        <th>Market</th>
+                        <th>Outcome Name</th>
+                        <th>Price</th>
+                        <th>Expected Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${eventData.bookmakers.map(bookmaker => `
+                        ${bookmaker.markets.filter(m => m.key === market).map(market => `
+                            ${market.outcomes.map(outcome => {
+                                const impliedProbability = calculateImpliedProbability(outcome.price);
+                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
+                                return `
+                                    <tr>
+                                        <td>${bookmaker.title}</td>
+                                        <td>${market.key.toUpperCase()}</td>
+                                        <td>${outcome.name}</td>
+                                        <td>${outcome.price}</td>
+                                        <td>${expectedValue}%</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        `).join('')}
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    // Show the modal
+    modal.style.display = 'block';
+
+    // Close the modal when the close button is clicked
+    modal.querySelector('.close').addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.removeChild(modal);
+    });
+
+    // Close the modal when clicking outside of the modal content
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.body.removeChild(modal);
+        }
+    });
+}
