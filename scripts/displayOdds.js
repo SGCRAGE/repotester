@@ -99,7 +99,7 @@ export function displayOdds(data, oddsContainer) {
                                                             ${market.outcomes.map(outcome => {
                                                                 const impliedProbability = calculateImpliedProbability(outcome.price);
                                                                 const fairOutcome = fairH2HOutcomes.find(o => o.name === outcome.name);
-                                                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability, fairOutcome.fairOdds);
+                                                                const expectedValue = calculateExpectedValue(outcome.price, fairOutcome.fairOdds);
                                                                 const currentTime = new Date();
                                                                 const commenceTime = new Date(event.commence_time);
                                                                 const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
@@ -118,7 +118,7 @@ export function displayOdds(data, oddsContainer) {
                                                                         <td class="${priceClass}">${outcome.price}</td>
                                                                         <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                                         <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                                        <td>${(expectedValue * 100).toFixed(2)}%</td>
+                                                                        <td>${expectedValue}</td>
                                                                         <td>${fairOutcome.fairOdds}</td>
                                                                     </tr>
                                                                 `;
@@ -159,7 +159,7 @@ export function displayOdds(data, oddsContainer) {
                                                             ${market.outcomes.map(outcome => {
                                                                 const impliedProbability = calculateImpliedProbability(outcome.price);
                                                                 const fairOutcome = fairSpreadOutcomes.find(o => o.name === outcome.name);
-                                                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability, fairOutcome.fairOdds);
+                                                                const expectedValue = calculateExpectedValue(outcome.price, fairOutcome.fairOdds);
                                                                 const currentTime = new Date();
                                                                 const commenceTime = new Date(event.commence_time);
                                                                 const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
@@ -178,7 +178,7 @@ export function displayOdds(data, oddsContainer) {
                                                                         <td class="${priceClass}">${outcome.price}</td>
                                                                         <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                                         <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                                        <td>${(expectedValue * 100).toFixed(2)}%</td>
+                                                                        <td>${expectedValue}</td>
                                                                         <td>${fairOutcome.fairOdds}</td>
                                                                     </tr>
                                                                 `;
@@ -219,7 +219,7 @@ export function displayOdds(data, oddsContainer) {
                                                             ${market.outcomes.map(outcome => {
                                                                 const impliedProbability = calculateImpliedProbability(outcome.price);
                                                                 const fairOutcome = fairTotalsOutcomes.find(o => o.name === outcome.name);
-                                                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability, fairOutcome.fairOdds);
+                                                                const expectedValue = calculateExpectedValue(outcome.price, fairOutcome.fairOdds);
                                                                 const currentTime = new Date();
                                                                 const commenceTime = new Date(event.commence_time);
                                                                 const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
@@ -238,7 +238,7 @@ export function displayOdds(data, oddsContainer) {
                                                                         <td class="${priceClass}">${outcome.price}</td>
                                                                         <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                                         <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                                        <td>${(expectedValue * 100).toFixed(2)}%</td>
+                                                                        <td>${expectedValue}</td>
                                                                         <td>${fairOutcome.fairOdds}</td>
                                                                     </tr>
                                                                 `;

@@ -2,7 +2,7 @@ export function calculateImpliedProbability(price) {
     return price > 0 ? 100 / (price + 100) : -price / (-price + 100);
 }
 
-export function calculateExpectedValue(price, impliedProbability, fairOdds, stake = 100) {
+export function calculateExpectedValue(price, fairOdds, stake = 100) {
     const payout = price > 0 ? (price / 100) + 1 : (100 / -price) + 1;
     const fairWinProbability = calculateImpliedProbability(fairOdds);
     const fairLossProbability = 1 - fairWinProbability;
