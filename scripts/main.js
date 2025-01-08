@@ -4,6 +4,7 @@ import { showChartModal, showGraphModal, showExpectedValuesModal } from './showM
 document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
     const filterContainer = document.getElementById('filter-container');
+    let mergedData = [];
 
     // Fetch the API key from the server
     fetch('http://localhost:3000/api-key')
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Odds data received:', oddsData); // Log the received data
             console.log('Scores data received:', validScoresData); // Log the received data
             displayRequestInfo(requestsRemaining, requestsUsed, requestsLast);
-            const mergedData = mergeOddsAndScores(oddsData, validScoresData);
+            mergedData = mergeOddsAndScores(oddsData, validScoresData);
             displayOdds(mergedData, oddsContainer, getSelectedRegions());
 
             // Add event listeners to the checkboxes
