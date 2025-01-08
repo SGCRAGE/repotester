@@ -31,6 +31,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const requestsLast = oddsResponse.headers.get('x-requests-last');
             const oddsData = await oddsResponse.json();
             const scoresData = await scoresResponse.json();
+
+            // Check if scores data is valid
+            if (scoresData.some(score => score.scores === null)) {
+                throw new Error('Invalid scores data received');
+            }
+
             return { oddsData, scoresData, requestsRemaining, requestsUsed, requestsLast };
         })
         .then(({ oddsData, scoresData, requestsRemaining, requestsUsed, requestsLast }) => {
