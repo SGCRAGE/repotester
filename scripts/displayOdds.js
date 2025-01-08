@@ -1,4 +1,4 @@
-import { calculateImpliedProbability, calculateExpectedValue } from './utils.js';
+import { calculateImpliedProbability, calculateExpectedValue, calculateNoVigFairOdds } from './utils.js';
 import { showChartModal, showGraphModal, showExpectedValuesModal } from './showModals.js';
 
 export function displayOdds(data, oddsContainer) {
@@ -24,6 +24,7 @@ export function displayOdds(data, oddsContainer) {
                     <th>Point</th>
                     <th>Implied Probability</th>
                     <th>Expected Value</th>
+                    <th>Fair Odds</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -62,9 +63,13 @@ export function displayOdds(data, oddsContainer) {
                     const highestTotals = totalsOutcomes.length > 0 ? Math.max(...totalsOutcomes.map(o => o.price)) : null;
                     const lowestTotals = totalsOutcomes.length > 0 ? Math.min(...totalsOutcomes.map(o => o.price)) : null;
 
+                    const fairH2HOutcomes = calculateNoVigFairOdds(h2hOutcomes);
+                    const fairSpreadOutcomes = calculateNoVigFairOdds(spreadOutcomes);
+                    const fairTotalsOutcomes = calculateNoVigFairOdds(totalsOutcomes);
+
                     return `
                         <tr class="collapsible-header">
-                            <td colspan="12">
+                            <td colspan="13">
                                 <button class="collapsible">${event.home_team} vs ${event.away_team} - ${new Date(event.commence_time).toLocaleString()}</button>
                                 <div class="collapsible-content">
                                     <div class="market-section">
@@ -85,6 +90,7 @@ export function displayOdds(data, oddsContainer) {
                                                         <th>Point</th>
                                                         <th>Implied Probability</th>
                                                         <th>Expected Value</th>
+                                                        <th>Fair Odds</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -93,11 +99,12 @@ export function displayOdds(data, oddsContainer) {
                                                             ${market.outcomes.map(outcome => {
                                                                 const impliedProbability = calculateImpliedProbability(outcome.price);
                                                                 const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
+                                                                const fairOutcome = fairH2HOutcomes.find(o => o.name === outcome.name);
                                                                 const currentTime = new Date();
                                                                 const commenceTime = new Date(event.commence_time);
                                                                 const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
                                                                 const priceClass = outcome.price === highestH2H ? 'highest-price' : outcome.price === lowestH2H ? 'lowest-price' : '';
-                                                                console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
+                                                                console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue, 'Fair Odds:', fairOutcome.fairOdds);
                                                                 return `
                                                                     <tr>
                                                                         <td>${event.home_team}</td>
@@ -112,6 +119,7 @@ export function displayOdds(data, oddsContainer) {
                                                                         <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                                         <td>${(impliedProbability * 100).toFixed(2)}%</td>
                                                                         <td>${expectedValue}</td>
+                                                                        <td>${fairOutcome.fairOdds}</td>
                                                                     </tr>
                                                                 `;
                                                             }).join('')}
@@ -142,6 +150,7 @@ export function displayOdds(data, oddsContainer) {
                                                         <th>Point</th>
                                                         <th>Implied Probability</th>
                                                         <th>Expected Value</th>
+                                                        <th>Fair Odds</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -150,11 +159,12 @@ export function displayOdds(data, oddsContainer) {
                                                             ${market.outcomes.map(outcome => {
                                                                 const impliedProbability = calculateImpliedProbability(outcome.price);
                                                                 const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
+                                                                const fairOutcome = fairSpreadOutcomes.find(o => o.name === outcome.name);
                                                                 const currentTime = new Date();
                                                                 const commenceTime = new Date(event.commence_time);
                                                                 const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
                                                                 const priceClass = outcome.price === highestSpread ? 'highest-price' : outcome.price === lowestSpread ? 'lowest-price' : '';
-                                                                console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
+                                                                console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue, 'Fair Odds:', fairOutcome.fairOdds);
                                                                 return `
                                                                     <tr>
                                                                         <td>${event.home_team}</td>
@@ -169,6 +179,7 @@ export function displayOdds(data, oddsContainer) {
                                                                         <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                                         <td>${(impliedProbability * 100).toFixed(2)}%</td>
                                                                         <td>${expectedValue}</td>
+                                                                        <td>${fairOutcome.fairOdds}</td>
                                                                     </tr>
                                                                 `;
                                                             }).join('')}
@@ -199,6 +210,7 @@ export function displayOdds(data, oddsContainer) {
                                                         <th>Point</th>
                                                         <th>Implied Probability</th>
                                                         <th>Expected Value</th>
+                                                        <th>Fair Odds</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -207,11 +219,12 @@ export function displayOdds(data, oddsContainer) {
                                                             ${market.outcomes.map(outcome => {
                                                                 const impliedProbability = calculateImpliedProbability(outcome.price);
                                                                 const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
+                                                                const fairOutcome = fairTotalsOutcomes.find(o => o.name === outcome.name);
                                                                 const currentTime = new Date();
                                                                 const commenceTime = new Date(event.commence_time);
                                                                 const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
                                                                 const priceClass = outcome.price === highestTotals ? 'highest-price' : outcome.price === lowestTotals ? 'lowest-price' : '';
-                                                                console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue);
+                                                                console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability, 'Expected Value:', expectedValue, 'Fair Odds:', fairOutcome.fairOdds);
                                                                 return `
                                                                     <tr>
                                                                         <td>${event.home_team}</td>
@@ -226,6 +239,7 @@ export function displayOdds(data, oddsContainer) {
                                                                         <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                                         <td>${(impliedProbability * 100).toFixed(2)}%</td>
                                                                         <td>${expectedValue}</td>
+                                                                        <td>${fairOutcome.fairOdds}</td>
                                                                     </tr>
                                                                 `;
                                                             }).join('')}
