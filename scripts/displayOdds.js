@@ -67,10 +67,15 @@ export function displayOdds(data, oddsContainer) {
                     const fairSpreadOutcomes = calculateNoVigFairOdds(spreadOutcomes);
                     const fairTotalsOutcomes = calculateNoVigFairOdds(totalsOutcomes);
 
+                    // Assuming event.home_score and event.away_score contain the scores
+                    const eventScore = event.home_score !== undefined && event.away_score !== undefined
+                        ? `(${event.home_score} - ${event.away_score})`
+                        : '';
+
                     return `
                         <tr class="collapsible-header">
                             <td colspan="13">
-                                <button class="collapsible">${event.home_team} vs ${event.away_team} - ${new Date(event.commence_time).toLocaleString()}</button>
+                                <button class="collapsible">${event.home_team} vs ${event.away_team} ${eventScore} - ${new Date(event.commence_time).toLocaleString()}</button>
                                 <div class="collapsible-content">
                                     <div class="market-section">
                                         <button class="collapsible">H2H Market</button>
