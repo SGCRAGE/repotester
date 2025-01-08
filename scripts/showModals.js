@@ -1,6 +1,6 @@
 import { calculateImpliedProbability, calculateExpectedValue } from './utils.js';
 
-export function showChartModal(eventTitle, market, data, selectedRegions) {
+export function showChartModal(eventTitle, market, eventData) {
     const modal = document.createElement('div');
     modal.className = 'modal';
     modal.innerHTML = `
@@ -20,32 +20,28 @@ export function showChartModal(eventTitle, market, data, selectedRegions) {
                     </tr>
                 </thead>
                 <tbody>
-                    ${data.map(event => {
-                        if (`${event.home_team} vs ${event.away_team}` === eventTitle) {
-                            return event.bookmakers.filter(bookmaker => selectedRegions.length === 0 || selectedRegions.includes(bookmaker.region)).map(bookmaker => `
-                                ${bookmaker.markets.filter(m => m.key === market).map(market => `
-                                    ${market.outcomes.map(outcome => {
-                                        const impliedProbability = calculateImpliedProbability(outcome.price);
-                                        const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
-                                        const highestPrice = Math.max(...market.outcomes.map(o => o.price));
-                                        const lowestPrice = Math.max(...market.outcomes.filter(o => o.price < 0).map(o => o.price));
-                                        const priceClass = outcome.price === highestPrice ? 'highest-price' : outcome.price === lowestPrice ? 'lowest-price' : '';
-                                        return `
-                                            <tr>
-                                                <td>${bookmaker.title}</td>
-                                                <td>${market.key.toUpperCase()}</td>
-                                                <td>${outcome.name}</td>
-                                                <td class="${priceClass}">${outcome.price}</td>
-                                                <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
-                                                <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                <td>${expectedValue}%</td>
-                                            </tr>
-                                        `;
-                                    }).join('')}
-                                `).join('')}
-                            `).join('');
-                        }
-                    }).join('')}
+                    ${eventData.bookmakers.map(bookmaker => `
+                        ${bookmaker.markets.filter(m => m.key === market).map(market => `
+                            ${market.outcomes.map(outcome => {
+                                const impliedProbability = calculateImpliedProbability(outcome.price);
+                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
+                                const highestPrice = Math.max(...market.outcomes.map(o => o.price));
+                                const lowestPrice = Math.max(...market.outcomes.filter(o => o.price < 0).map(o => o.price));
+                                const priceClass = outcome.price === highestPrice ? 'highest-price' : outcome.price === lowestPrice ? 'lowest-price' : '';
+                                return `
+                                    <tr>
+                                        <td>${bookmaker.title}</td>
+                                        <td>${market.key.toUpperCase()}</td>
+                                        <td>${outcome.name}</td>
+                                        <td class="${priceClass}">${outcome.price}</td>
+                                        <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
+                                        <td>${(impliedProbability * 100).toFixed(2)}%</td>
+                                        <td>${expectedValue}%</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        `).join('')}
+                    `).join('')}
                 </tbody>
             </table>
         </div>
@@ -70,7 +66,7 @@ export function showChartModal(eventTitle, market, data, selectedRegions) {
     });
 }
 
-export function showGraphModal(eventTitle, market, data, selectedRegions) {
+export function showGraphModal(eventTitle, market, eventData) {
     const modal = document.createElement('div');
     modal.className = 'modal';
     modal.innerHTML = `
@@ -102,24 +98,20 @@ export function showGraphModal(eventTitle, market, data, selectedRegions) {
     // Prepare data for the chart
     const chartData = [];
     const chartLabels = [];
-    const highestPrice = Math.max(...data.flatMap(event => event.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.map(o => o.price)))));
-    const lowestPrice = Math.max(...data.flatMap(event => event.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price)))));
+    const highestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.map(o => o.price))));
+    const lowestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price))));
 
-    data.forEach(event => {
-        if (`${event.home_team} vs ${event.away_team}` === eventTitle) {
-            event.bookmakers.filter(bookmaker => selectedRegions.length === 0 || selectedRegions.includes(bookmaker.region)).forEach(bookmaker => {
-                bookmaker.markets.filter(m => m.key === market).forEach(market => {
-                    market.outcomes.forEach(outcome => {
-                        chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
-                        chartData.push({
-                            price: outcome.price,
-                            backgroundColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)',
-                            borderColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 1)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 1)' : 'rgba(201, 203, 207, 1)'
-                        });
-                    });
+    eventData.bookmakers.forEach(bookmaker => {
+        bookmaker.markets.filter(m => m.key === market).forEach(market => {
+            market.outcomes.forEach(outcome => {
+                chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
+                chartData.push({
+                    price: outcome.price,
+                    backgroundColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)',
+                    borderColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 1)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 1)' : 'rgba(201, 203, 207, 1)'
                 });
             });
-        }
+        });
     });
 
     // Create the chart
