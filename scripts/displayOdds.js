@@ -118,7 +118,7 @@ export function displayOdds(data, oddsContainer) {
                                                                         <td class="${priceClass}">${outcome.price}</td>
                                                                         <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                                         <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                                        <td>${expectedValue}</td>
+                                                                        <td>${(expectedValue * 100).toFixed(2)}%</td>
                                                                         <td>${fairOutcome.fairOdds}</td>
                                                                     </tr>
                                                                 `;
@@ -178,7 +178,7 @@ export function displayOdds(data, oddsContainer) {
                                                                         <td class="${priceClass}">${outcome.price}</td>
                                                                         <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                                         <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                                        <td>${expectedValue}</td>
+                                                                        <td>${(expectedValue * 100).toFixed(2)}%</td>
                                                                         <td>${fairOutcome.fairOdds}</td>
                                                                     </tr>
                                                                 `;
@@ -238,7 +238,7 @@ export function displayOdds(data, oddsContainer) {
                                                                         <td class="${priceClass}">${outcome.price}</td>
                                                                         <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                                         <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                                                        <td>${expectedValue}</td>
+                                                                        <td>${(expectedValue * 100).toFixed(2)}%</td>
                                                                         <td>${fairOutcome.fairOdds}</td>
                                                                     </tr>
                                                                 `;

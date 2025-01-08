@@ -11,7 +11,7 @@ export function calculateExpectedValue(price, impliedProbability, fairOdds, stak
 
     // Handle small floating-point values
     const threshold = 1e-10;
-    return Math.abs(expectedValue) < threshold ? '0.00' : expectedValue.toFixed(2);
+    return Math.abs(expectedValue) < threshold ? '0.00%' : (expectedValue / stake * 100).toFixed(2) + '%';
 }
 
 export function calculateNoVigFairOdds(outcomes) {
@@ -22,7 +22,7 @@ export function calculateNoVigFairOdds(outcomes) {
         const fairOdds = fairProbability > 0.5 ? -(100 / fairProbability - 100) : (100 / (1 - fairProbability) - 100);
         return {
             ...outcome,
-            fairOdds: fairOdds.toFixed(2)
+            fairOdds: fairOdds > 0 ? `+${fairOdds.toFixed(2)}` : fairOdds.toFixed(2)
         };
     });
 }
