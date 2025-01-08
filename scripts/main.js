@@ -1,11 +1,8 @@
 import { displayOdds } from './displayOdds.js';
-import { showChartModal, showGraphModal } from './showModals.js';
+import { showChartModal, showGraphModal, showExpectedValuesModal } from './showModals.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
-    // Remove the filter container reference
-    // const filterContainer = document.getElementById('filter-container');
-
     // Fetch the API key from the server
     fetch('http://localhost:3000/api-key')
         .then(response => {
@@ -33,12 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Odds data received:', data); // Log the received data
             displayRequestInfo(requestsRemaining, requestsUsed);
             displayOdds(data, oddsContainer);
-
-            // Remove the event listeners for the checkboxes
-            // const checkboxes = document.querySelectorAll('.region-filter');
-            // checkboxes.forEach(checkbox => {
-            //     checkbox.addEventListener('change', () => displayOdds(data, oddsContainer, getSelectedRegions()));
-            // });
         })
         .catch(error => {
             console.error('Error fetching odds data:', error);
@@ -53,9 +44,4 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         oddsContainer.parentNode.insertBefore(requestInfoContainer, oddsContainer);
     }
-
-    // Remove the getSelectedRegions function
-    // function getSelectedRegions() {
-    //     return Array.from(document.querySelectorAll('.region-filter:checked')).map(input => input.value);
-    // }
 });
