@@ -66,10 +66,16 @@ export function showChartModal(eventTitle, market, eventData) {
 export function showGraphModal(eventTitle, market, eventData) {
     const modal = document.createElement('div');
     modal.className = 'modal';
+    const homeScore = eventData.home_score !== undefined ? eventData.home_score : 'N/A';
+    const awayScore = eventData.away_score !== undefined ? eventData.away_score : 'N/A';
+    const totalScore = homeScore !== 'N/A' && awayScore !== 'N/A' ? homeScore + awayScore : 'N/A';
+
     modal.innerHTML = `
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>${eventTitle} - ${market.toUpperCase()} Market</h2>
+            <p>Game Score: ${eventData.home_team} ${homeScore} - ${eventData.away_team} ${awayScore}</p>
+            <p>Total Game Score: ${totalScore}</p>
             <canvas id="oddsChart" style="display: block; box-sizing: border-box; height: 400px; width: 800px; background-color: black;" width="800" height="400"></canvas>
             <div id="chartValues"></div>
         </div>
