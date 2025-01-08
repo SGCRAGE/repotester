@@ -136,6 +136,26 @@ export function showGraphModal(eventTitle, market, eventData) {
                 y: {
                     beginAtZero: true
                 }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'white' // Set legend text color to white
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 10,
+                    top: 10,
+                    bottom: 10
+                }
+            },
+            elements: {
+                bar: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)' // Set bar background color to black
+                }
             }
         }
     });
