@@ -1,4 +1,4 @@
-import { calculateImpliedProbability, calculateExpectedValue } from './utils.js';
+import { calculateImpliedProbability } from './utils.js';
 
 export function showChartModal(eventTitle, market, eventData) {
     const modal = document.createElement('div');
@@ -16,7 +16,6 @@ export function showChartModal(eventTitle, market, eventData) {
                         <th>Price</th>
                         <th>Point</th>
                         <th>Implied Probability</th>
-                        <th>Expected Value</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,7 +23,6 @@ export function showChartModal(eventTitle, market, eventData) {
                         ${bookmaker.markets.filter(m => m.key === market).map(market => `
                             ${market.outcomes.map(outcome => {
                                 const impliedProbability = calculateImpliedProbability(outcome.price);
-                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
                                 const highestPrice = Math.max(...market.outcomes.map(o => o.price));
                                 const lowestPrice = Math.max(...market.outcomes.filter(o => o.price < 0).map(o => o.price));
                                 const priceClass = outcome.price === highestPrice ? 'highest-price' : outcome.price === lowestPrice ? 'lowest-price' : '';
@@ -36,7 +34,6 @@ export function showChartModal(eventTitle, market, eventData) {
                                         <td class="${priceClass}">${outcome.price}</td>
                                         <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                         <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                                        <td>${expectedValue}%</td>
                                     </tr>
                                 `;
                             }).join('')}
@@ -184,7 +181,6 @@ export function showExpectedValuesModal(eventTitle, market, eventData) {
                         <th>Market</th>
                         <th>Outcome Name</th>
                         <th>Price</th>
-                        <th>Expected Value</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -192,14 +188,12 @@ export function showExpectedValuesModal(eventTitle, market, eventData) {
                         ${bookmaker.markets.filter(m => m.key === market).map(market => `
                             ${market.outcomes.map(outcome => {
                                 const impliedProbability = calculateImpliedProbability(outcome.price);
-                                const expectedValue = calculateExpectedValue(outcome.price, impliedProbability);
                                 return `
                                     <tr>
                                         <td>${bookmaker.title}</td>
                                         <td>${market.key.toUpperCase()}</td>
                                         <td>${outcome.name}</td>
                                         <td>${outcome.price}</td>
-                                        <td>${expectedValue}%</td>
                                     </tr>
                                 `;
                             }).join('')}
