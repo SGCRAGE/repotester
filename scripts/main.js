@@ -32,18 +32,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const oddsData = await oddsResponse.json();
             const scoresData = await scoresResponse.json();
 
-            // Check if scores data is valid
-            if (scoresData.some(score => score.scores === null)) {
-                throw new Error('Invalid scores data received');
-            }
+            // Filter out invalid scores data
+            const validScoresData = scoresData.filter(score => score.scores !== null);
 
-            return { oddsData, scoresData, requestsRemaining, requestsUsed, requestsLast };
+            return { oddsData, validScoresData, requestsRemaining, requestsUsed, requestsLast };
         })
-        .then(({ oddsData, scoresData, requestsRemaining, requestsUsed, requestsLast }) => {
+        .then(({ oddsData, validScoresData, requestsRemaining, requestsUsed, requestsLast }) => {
             console.log('Odds data received:', oddsData); // Log the received data
-            console.log('Scores data received:', scoresData); // Log the received data
+            console.log('Scores data received:', validScoresData); // Log the received data
             displayRequestInfo(requestsRemaining, requestsUsed, requestsLast);
-            const mergedData = mergeOddsAndScores(oddsData, scoresData);
+            const mergedData = mergeOddsAndScores(oddsData, validScoresData);
             displayOdds(mergedData, oddsContainer);
         })
         .catch(error => {
