@@ -17,7 +17,8 @@ export function calculateNoVigFairOdds(outcomes) {
     return outcomes.map(outcome => {
         const impliedProbability = calculateImpliedProbability(outcome.price);
         const fairProbability = impliedProbability / totalImpliedProbability;
-        const fairOdds = fairProbability > 0.5 ? -(100 / fairProbability - 100) : (100 / (1 - fairProbability) - 100);
+        const decimalFairOdds = 1 / fairProbability;
+        const fairOdds = decimalFairOdds < 2.0 ? -100 / (decimalFairOdds - 1) : (decimalFairOdds - 1) * 100;
         return {
             ...outcome,
             fairOdds: fairOdds > 0 ? `+${fairOdds.toFixed(2)}` : fairOdds.toFixed(2)
