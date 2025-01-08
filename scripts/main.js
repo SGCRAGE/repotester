@@ -14,25 +14,33 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             const apiKey = data.apiKey;
             console.log('API Key:', apiKey); // Log the API key
-            const apiUrl = `https://api.the-odds-api.com/v4/sports/basketball_nba/odds?api_key=${apiKey}&regions=us,eu,us2,uk&markets=h2h,spreads,totals&oddsFormat=american&dateFormat=iso`;
+            const oddsApiUrl = `https://api.the-odds-api.com/v4/sports/basketball_nba/odds?api_key=${apiKey}&regions=us,eu,us2,uk&markets=h2h,spreads,totals&oddsFormat=american&dateFormat=iso`;
+            const scoresApiUrl = `https://api.the-odds-api.com/v4/sports/basketball_nba/scores/?daysFrom=1&apiKey=${apiKey}`;
 
-            return fetch(apiUrl);
+            return Promise.all([fetch(oddsApiUrl), fetch(scoresApiUrl)]);
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error fetching odds data: ${response.statusText}`);
+        .then(async ([oddsResponse, scoresResponse]) => {
+            if (!oddsResponse.ok) {
+                throw new Error(`Error fetching odds data: ${oddsResponse.statusText}`);
             }
-            const requestsRemaining = response.headers.get('x-requests-remaining');
-            const requestsUsed = response.headers.get('x-requests-used');
-            return response.json().then(data => ({ data, requestsRemaining, requestsUsed }));
+            if (!scoresResponse.ok) {
+                throw new Error(`Error fetching scores data: ${scoresResponse.statusText}`);
+            }
+            const requestsRemaining = oddsResponse.headers.get('x-requests-remaining');
+            const requestsUsed = oddsResponse.headers.get('x-requests-used');
+            const oddsData = await oddsResponse.json();
+            const scoresData = await scoresResponse.json();
+            return { oddsData, scoresData, requestsRemaining, requestsUsed };
         })
-        .then(({ data, requestsRemaining, requestsUsed }) => {
-            console.log('Odds data received:', data); // Log the received data
+        .then(({ oddsData, scoresData, requestsRemaining, requestsUsed }) => {
+            console.log('Odds data received:', oddsData); // Log the received data
+            console.log('Scores data received:', scoresData); // Log the received data
             displayRequestInfo(requestsRemaining, requestsUsed);
-            displayOdds(data, oddsContainer);
+            const mergedData = mergeOddsAndScores(oddsData, scoresData);
+            displayOdds(mergedData, oddsContainer);
         })
         .catch(error => {
-            console.error('Error fetching odds data:', error);
+            console.error('Error fetching data:', error);
             oddsContainer.innerHTML = `<p>${error.message}</p>`;
         });
 
@@ -43,5 +51,16 @@ document.addEventListener('DOMContentLoaded', function() {
             <p>Requests Used: ${requestsUsed}</p>
         `;
         oddsContainer.parentNode.insertBefore(requestInfoContainer, oddsContainer);
+    }
+
+    function mergeOddsAndScores(oddsData, scoresData) {
+        return oddsData.map(event => {
+            const score = scoresData.find(score => score.id === event.id);
+            if (score) {
+                event.home_score = score.scores.find(s => s.name === event.home_team)?.score;
+                event.away_score = score.scores.find(s => s.name === event.away_team)?.score;
+            }
+            return event;
+        });
     }
 });
