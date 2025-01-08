@@ -5,17 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
     let mergedData = [];
 
-    // Create and insert filter checkboxes
-    const filterContainer = document.createElement('div');
-    filterContainer.id = 'filter-container';
-    filterContainer.innerHTML = `
-        <label><input type="checkbox" class="region-filter" value="us" checked> US</label>
-        <label><input type="checkbox" class="region-filter" value="eu" checked> EU</label>
-        <label><input type="checkbox" class="region-filter" value="us2" checked> US2</label>
-        <label><input type="checkbox" class="region-filter" value="uk" checked> UK</label>
-    `;
-    oddsContainer.appendChild(filterContainer);
-
     // Fetch the API key from the server
     fetch('http://localhost:3000/api-key')
         .then(response => {
@@ -55,17 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Scores data received:', validScoresData); // Log the received data
             displayRequestInfo(requestsRemaining, requestsUsed, requestsLast);
             mergedData = mergeOddsAndScores(oddsData, validScoresData);
-            displayOdds(mergedData, oddsContainer, getSelectedRegions());
-
-            // Add event listeners to the checkboxes
-            const checkboxes = document.querySelectorAll('.region-filter');
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', () => {
-                    const selectedRegions = getSelectedRegions();
-                    console.log('Selected regions:', selectedRegions); // Log selected regions
-                    displayOdds(mergedData, oddsContainer, selectedRegions);
-                });
-            });
+            displayOdds(mergedData, oddsContainer);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -80,10 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <p>Usage Cost of Last API Call: ${requestsLast}</p>
         `;
         oddsContainer.parentNode.insertBefore(requestInfoContainer, oddsContainer);
-    }
-
-    function getSelectedRegions() {
-        return Array.from(document.querySelectorAll('.region-filter:checked')).map(input => input.value);
     }
 
     function mergeOddsAndScores(oddsData, scoresData) {
