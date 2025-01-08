@@ -42,7 +42,7 @@ app.get('/odds', async (req, res) => {
   const oddsApiUrl = 'https://api.the-odds-api.com/v4/sports/basketball_nba/odds';
   const oddsParams = {
     regions: 'us,eu,us2,uk',
-    markets: 'h2h,spreads',
+    markets: 'h2h,spreads,totals', // Include the "totals" market
     oddsFormat: 'american',
     dateFormat: 'iso'
   };
