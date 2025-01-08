@@ -3,8 +3,18 @@ import { showChartModal, showGraphModal, showExpectedValuesModal } from './showM
 
 document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
-    const filterContainer = document.getElementById('filter-container');
     let mergedData = [];
+
+    // Create and insert filter checkboxes
+    const filterContainer = document.createElement('div');
+    filterContainer.id = 'filter-container';
+    filterContainer.innerHTML = `
+        <label><input type="checkbox" class="region-filter" value="us" checked> US</label>
+        <label><input type="checkbox" class="region-filter" value="eu" checked> EU</label>
+        <label><input type="checkbox" class="region-filter" value="us2" checked> US2</label>
+        <label><input type="checkbox" class="region-filter" value="uk" checked> UK</label>
+    `;
+    oddsContainer.appendChild(filterContainer);
 
     // Fetch the API key from the server
     fetch('http://localhost:3000/api-key')
