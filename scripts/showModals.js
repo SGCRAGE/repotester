@@ -73,7 +73,7 @@ export function showGraphModal(eventTitle, market, eventData) {
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>${eventTitle} - ${market.toUpperCase()} Market</h2>
-            <canvas id="oddsChart"></canvas>
+            <canvas id="oddsChart" style="display: block; box-sizing: border-box; height: 400px; width: 800px; background-color: black;" width="800" height="400"></canvas>
             <div id="chartValues"></div>
         </div>
     `;
@@ -134,7 +134,15 @@ export function showGraphModal(eventTitle, market, eventData) {
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        color: 'white' // Set y-axis text color to white
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: 'white' // Set x-axis text color to white
+                    }
                 }
             },
             plugins: {
@@ -150,11 +158,6 @@ export function showGraphModal(eventTitle, market, eventData) {
                     right: 10,
                     top: 10,
                     bottom: 10
-                }
-            },
-            elements: {
-                bar: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)' // Set bar background color to black
                 }
             }
         }

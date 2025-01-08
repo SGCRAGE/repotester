@@ -254,6 +254,11 @@ collapsible-content th {
     color: #fff; /* White text color for better visibility on black background */
 }
 
+/* Chart.js canvas styling */
+canvas#oddsChart {
+    background-color: black; /* Set the background color of the chart to black */
+}
+
 /* Footer styling */
 footer {
     background: rgba(51, 51, 51, 0.8); /* Semi-transparent dark background for the footer */
