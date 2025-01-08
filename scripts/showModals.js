@@ -74,6 +74,7 @@ export function showGraphModal(eventTitle, market, eventData) {
             <span class="close">&times;</span>
             <h2>${eventTitle} - ${market.toUpperCase()} Market</h2>
             <canvas id="oddsChart"></canvas>
+            <div id="chartValues"></div>
         </div>
     `;
     document.body.appendChild(modal);
@@ -98,6 +99,7 @@ export function showGraphModal(eventTitle, market, eventData) {
     // Prepare data for the chart
     const chartData = [];
     const chartLabels = [];
+    const chartValues = [];
     const highestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.map(o => o.price))));
     const lowestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price))));
 
@@ -105,10 +107,11 @@ export function showGraphModal(eventTitle, market, eventData) {
         bookmaker.markets.filter(m => m.key === market).forEach(market => {
             market.outcomes.forEach(outcome => {
                 chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
-                chartData.push({
-                    price: outcome.price,
-                    backgroundColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)',
-                    borderColor: outcome.price === highestPrice ? 'rgba(75, 192, 192, 1)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 1)' : 'rgba(201, 203, 207, 1)'
+                chartData.push(outcome.price);
+                chartValues.push({
+                    bookmaker: bookmaker.title,
+                    outcome: outcome.name,
+                    price: outcome.price
                 });
             });
         });
@@ -122,9 +125,9 @@ export function showGraphModal(eventTitle, market, eventData) {
             labels: chartLabels,
             datasets: [{
                 label: 'Odds',
-                data: chartData.map(d => d.price),
-                backgroundColor: chartData.map(d => d.backgroundColor),
-                borderColor: chartData.map(d => d.borderColor),
+                data: chartData,
+                backgroundColor: chartData.map(price => price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)'),
+                borderColor: chartData.map(price => price === highestPrice ? 'rgba(75, 192, 192, 1)' : price === lowestPrice ? 'rgba(255, 99, 132, 1)' : 'rgba(201, 203, 207, 1)'),
                 borderWidth: 1
             }]
         },
@@ -136,6 +139,12 @@ export function showGraphModal(eventTitle, market, eventData) {
             }
         }
     });
+
+    // Display values under the chart
+    const chartValuesContainer = document.getElementById('chartValues');
+    chartValuesContainer.innerHTML = chartValues.map(value => `
+        <p>${value.bookmaker} - ${value.outcome}: ${value.price}</p>
+    `).join('');
 }
 
 export function showExpectedValuesModal(eventTitle, market, eventData) {
