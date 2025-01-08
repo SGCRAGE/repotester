@@ -8,9 +8,8 @@ export function calculateExpectedValue(price, impliedProbability, stake = 100) {
     const fairLossProbability = 1 - impliedProbability;
     const profitIfWin = payout * stake - stake;
     const expectedValue = (fairWinProbability * profitIfWin) - (fairLossProbability * stake);
-    const expectedValuePercentage = (expectedValue / stake) * 100; // Convert to percentage
 
     // Handle small floating-point values
     const threshold = 1e-10;
-    return Math.abs(expectedValuePercentage) < threshold ? '0.00' : expectedValuePercentage.toFixed(2);
+    return Math.abs(expectedValue) < threshold ? '0.00' : expectedValue.toFixed(2);
 }
