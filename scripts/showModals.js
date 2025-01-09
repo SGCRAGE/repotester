@@ -77,7 +77,6 @@ export function showGraphModal(eventTitle, market, eventData) {
             <p>Game Score: ${eventData.home_team} ${homeScore} - ${eventData.away_team} ${awayScore}</p>
             <p>Total Game Score: ${totalScore}</p>
             <canvas id="oddsChart" style="display: block; box-sizing: border-box; height: 400px; width: 800px; background-color: black;" width="800" height="400"></canvas>
-            <div id="chartValues" style="color: black;"></div>
             <table id="totalsMarketTable">
                 <thead>
                     <tr>
@@ -133,7 +132,6 @@ export function showGraphModal(eventTitle, market, eventData) {
     // Prepare data for the chart
     const chartData = [];
     const chartLabels = [];
-    const chartValues = [];
     const highestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.map(o => o.price))));
     const lowestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price))));
 
@@ -142,11 +140,6 @@ export function showGraphModal(eventTitle, market, eventData) {
             market.outcomes.forEach(outcome => {
                 chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
                 chartData.push(outcome.price);
-                chartValues.push({
-                    bookmaker: bookmaker.title,
-                    outcome: outcome.name,
-                    price: outcome.price
-                });
             });
         });
     });
@@ -196,12 +189,6 @@ export function showGraphModal(eventTitle, market, eventData) {
             }
         }
     });
-
-    // Display values under the chart
-    const chartValuesContainer = document.getElementById('chartValues');
-    chartValuesContainer.innerHTML = chartValues.map(value => `
-        <p>${value.bookmaker} - ${value.outcome}: ${value.price}</p>
-    `).join('');
 }
 
 export function showExpectedValuesModal(eventTitle, market, eventData) {
