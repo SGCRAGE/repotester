@@ -76,6 +76,11 @@ export function showGraphModal(eventTitle, market, eventData) {
             <h2>${eventTitle} - ${market.toUpperCase()} Market</h2>
             <p>Game Score: ${eventData.home_team} ${homeScore} - ${eventData.away_team} ${awayScore}</p>
             <p>Total Game Score: ${totalScore}</p>
+            <label for="bookmakerFilter">Filter by Bookmaker:</label>
+            <select id="bookmakerFilter">
+                <option value="all">All</option>
+                ${eventData.bookmakers.map(bookmaker => `<option value="${bookmaker.title}">${bookmaker.title}</option>`).join('')}
+            </select>
             <canvas id="oddsChart" style="display: block; box-sizing: border-box; height: 400px; width: 800px; background-color: black;" width="800" height="400"></canvas>
             <table id="totalsMarketTable">
                 <thead>
@@ -133,7 +138,6 @@ export function showGraphModal(eventTitle, market, eventData) {
     const chartData = [];
     const chartLabels = [];
     const chartColors = [];
-    const bookmakers = [];
     const highestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.map(o => o.price))));
     const lowestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price))));
 
@@ -143,33 +147,23 @@ export function showGraphModal(eventTitle, market, eventData) {
                 chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
                 chartData.push(outcome.price);
                 chartColors.push(bookmaker.title === 'Pinnacle' ? 'rgba(128, 0, 128, 0.2)' : outcome.price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)');
-                bookmakers.push(bookmaker.title);
             });
         });
     });
 
     // Create the chart
     const ctx = document.getElementById('oddsChart').getContext('2d');
-    new Chart(ctx, {
+    const oddsChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: chartLabels,
-            datasets: [
-                {
-                    label: 'Odds',
-                    data: chartData,
-                    backgroundColor: chartColors,
-                    borderColor: chartColors.map(color => color.replace('0.2', '1')),
-                    borderWidth: 1
-                },
-                {
-                    label: 'Bookmakers',
-                    data: bookmakers,
-                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-                    borderColor: 'rgba(0, 0, 0, 1)',
-                    borderWidth: 1
-                }
-            ]
+            datasets: [{
+                label: 'Odds',
+                data: chartData,
+                backgroundColor: chartColors,
+                borderColor: chartColors.map(color => color.replace('0.2', '1')),
+                borderWidth: 1
+            }]
         },
         options: {
             scales: {
@@ -201,6 +195,32 @@ export function showGraphModal(eventTitle, market, eventData) {
                 }
             }
         }
+    });
+
+    // Add event listener to the dropdown to filter the chart
+    document.getElementById('bookmakerFilter').addEventListener('change', function() {
+        const selectedBookmaker = this.value;
+        const filteredData = [];
+        const filteredLabels = [];
+        const filteredColors = [];
+
+        eventData.bookmakers.forEach(bookmaker => {
+            if (selectedBookmaker === 'all' || bookmaker.title === selectedBookmaker) {
+                bookmaker.markets.filter(m => m.key === market).forEach(market => {
+                    market.outcomes.forEach(outcome => {
+                        filteredLabels.push(`${bookmaker.title} - ${outcome.name}`);
+                        filteredData.push(outcome.price);
+                        filteredColors.push(bookmaker.title === 'Pinnacle' ? 'rgba(128, 0, 128, 0.2)' : outcome.price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)');
+                    });
+                });
+            }
+        });
+
+        oddsChart.data.labels = filteredLabels;
+        oddsChart.data.datasets[0].data = filteredData;
+        oddsChart.data.datasets[0].backgroundColor = filteredColors;
+        oddsChart.data.datasets[0].borderColor = filteredColors.map(color => color.replace('0.2', '1'));
+        oddsChart.update();
     });
 }
 
