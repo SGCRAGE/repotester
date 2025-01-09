@@ -69,14 +69,6 @@ export function displayOdds(data, oddsContainer) {
                                 <button class="collapsible">${event.home_team} vs ${event.away_team} ${eventScore} - ${new Date(event.commence_time).toLocaleString()}</button>
                                 <div class="collapsible-content">
                                     <div class="market-section">
-                                        <label for="bookmakerFilter-${event.id}">Filter by Bookmaker:</label>
-                                        <div id="bookmakerFilter-${event.id}" class="dropdown">
-                                            <button class="dropbtn">Select Bookmakers</button>
-                                            <div class="dropdown-content">
-                                                <label><input type="checkbox" value="all" checked> All</label>
-                                                ${event.bookmakers.map(bookmaker => `<label><input type="checkbox" value="${bookmaker.title}"> ${bookmaker.title}</label>`).join('')}
-                                            </div>
-                                        </div>
                                         <button class="collapsible">H2H Market</button>
                                         <div class="collapsible-content">
                                             <table>
@@ -87,16 +79,7 @@ export function displayOdds(data, oddsContainer) {
                                                         <th>Status</th>
                                                         <th>Commence Time</th>
                                                         <th>Sport</th>
-                                                        <th>
-                                                            Bookmaker
-                                                            <div id="bookmakerFilterH2H-${event.id}" class="dropdown">
-                                                                <button class="dropbtn">Select Bookmakers</button>
-                                                                <div class="dropdown-content">
-                                                                    <label><input type="checkbox" value="all" checked> All</label>
-                                                                    ${event.bookmakers.map(bookmaker => `<label><input type="checkbox" value="${bookmaker.title}"> ${bookmaker.title}</label>`).join('')}
-                                                                </div>
-                                                            </div>
-                                                        </th>
+                                                        <th>Bookmaker</th>
                                                         <th>Market</th>
                                                         <th>Outcome Name</th>
                                                         <th>Price</th>
@@ -145,16 +128,7 @@ export function displayOdds(data, oddsContainer) {
                                                         <th>Status</th>
                                                         <th>Commence Time</th>
                                                         <th>Sport</th>
-                                                        <th>
-                                                            Bookmaker
-                                                            <div id="bookmakerFilterSpreads-${event.id}" class="dropdown">
-                                                                <button class="dropbtn">Select Bookmakers</button>
-                                                                <div class="dropdown-content">
-                                                                    <label><input type="checkbox" value="all" checked> All</label>
-                                                                    ${event.bookmakers.map(bookmaker => `<label><input type="checkbox" value="${bookmaker.title}"> ${bookmaker.title}</label>`).join('')}
-                                                                </div>
-                                                            </div>
-                                                        </th>
+                                                        <th>Bookmaker</th>
                                                         <th>Market</th>
                                                         <th>Outcome Name</th>
                                                         <th>Price</th>
@@ -203,16 +177,7 @@ export function displayOdds(data, oddsContainer) {
                                                         <th>Status</th>
                                                         <th>Commence Time</th>
                                                         <th>Sport</th>
-                                                        <th>
-                                                            Bookmaker
-                                                            <div id="bookmakerFilterTotals-${event.id}" class="dropdown">
-                                                                <button class="dropbtn">Select Bookmakers</button>
-                                                                <div class="dropdown-content">
-                                                                    <label><input type="checkbox" value="all" checked> All</label>
-                                                                    ${event.bookmakers.map(bookmaker => `<label><input type="checkbox" value="${bookmaker.title}"> ${bookmaker.title}</label>`).join('')}
-                                                                </div>
-                                                            </div>
-                                                        </th>
+                                                        <th>Bookmaker</th>
                                                         <th>Market</th>
                                                         <th>Outcome Name</th>
                                                         <th>Price</th>
