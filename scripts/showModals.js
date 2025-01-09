@@ -71,10 +71,27 @@ export function showGraphModal(eventTitle, market, eventData) {
     const totalScore = homeScore !== 'N/A' && awayScore !== 'N/A' ? Number(homeScore) + Number(awayScore) : 'N/A';
 
     // Add region information to each bookmaker
-    const bookmakersWithRegions = eventData.bookmakers.map(bookmaker => ({
-        ...bookmaker,
-        regions: ['us', 'eu', 'us2', 'uk'] // Example regions, replace with actual regions for each bookmaker
-    }));
+    const bookmakersWithRegions = eventData.bookmakers.map(bookmaker => {
+        let regions = [];
+        switch (bookmaker.title) {
+            case 'Bookmaker1':
+                regions = ['us'];
+                break;
+            case 'Bookmaker2':
+                regions = ['eu'];
+                break;
+            case 'Bookmaker3':
+                regions = ['us2'];
+                break;
+            case 'Bookmaker4':
+                regions = ['uk'];
+                break;
+            // Add more cases for other bookmakers
+            default:
+                regions = ['us', 'eu', 'us2', 'uk']; // Default to all regions if not specified
+        }
+        return { ...bookmaker, regions };
+    });
 
     modal.innerHTML = `
         <div class="modal-content">
