@@ -1,7 +1,10 @@
 const express = require('express');
+const cors = require('cors'); // Add this line
 const { getTeamStats } = require('nba_api'); // Example function from nba_api
 const app = express();
 const port = 3000;
+
+app.use(cors()); // Add this line
 
 app.get('/api/nba_data', async (req, res) => {
     try {

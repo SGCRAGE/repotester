@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const sportsDataContainer = document.getElementById('sports-data-container');
 
-    fetch('/api/nba_data') // Update the endpoint to your backend API
+    fetch('http://localhost:3000/api/nba_data') // Ensure this URL matches your backend server
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error fetching sports data: ${response.statusText}`);
