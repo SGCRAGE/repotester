@@ -77,9 +77,13 @@ export function showGraphModal(eventTitle, market, eventData) {
             <p>Game Score: ${eventData.home_team} ${homeScore} - ${eventData.away_team} ${awayScore}</p>
             <p>Total Game Score: ${totalScore}</p>
             <label for="bookmakerFilter">Filter by Bookmaker:</label>
-            <select id="bookmakerFilter" multiple>
-                ${eventData.bookmakers.map(bookmaker => `<option value="${bookmaker.title}">${bookmaker.title}</option>`).join('')}
-            </select>
+            <div id="bookmakerFilter" class="dropdown">
+                <button class="dropbtn">Select Bookmakers</button>
+                <div class="dropdown-content">
+                    <label><input type="checkbox" value="all" checked> All</label>
+                    ${eventData.bookmakers.map(bookmaker => `<label><input type="checkbox" value="${bookmaker.title}"> ${bookmaker.title}</label>`).join('')}
+                </div>
+            </div>
             <canvas id="oddsChart" style="display: block; box-sizing: border-box; height: 400px; width: 800px; background-color: black;" width="800" height="400"></canvas>
             <table id="totalsMarketTable">
                 <thead>
@@ -196,30 +200,32 @@ export function showGraphModal(eventTitle, market, eventData) {
         }
     });
 
-    // Add event listener to the dropdown to filter the chart
-    document.getElementById('bookmakerFilter').addEventListener('change', function() {
-        const selectedBookmakers = Array.from(this.selectedOptions).map(option => option.value);
-        const filteredData = [];
-        const filteredLabels = [];
-        const filteredColors = [];
+    // Add event listener to the checkboxes to filter the chart
+    document.querySelectorAll('#bookmakerFilter input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const selectedBookmakers = Array.from(document.querySelectorAll('#bookmakerFilter input[type="checkbox"]:checked')).map(input => input.value);
+            const filteredData = [];
+            const filteredLabels = [];
+            const filteredColors = [];
 
-        eventData.bookmakers.forEach(bookmaker => {
-            if (selectedBookmakers.includes('all') || selectedBookmakers.includes(bookmaker.title)) {
-                bookmaker.markets.filter(m => m.key === market).forEach(market => {
-                    market.outcomes.forEach(outcome => {
-                        filteredLabels.push(`${bookmaker.title} - ${outcome.name}`);
-                        filteredData.push(outcome.price);
-                        filteredColors.push(bookmaker.title === 'Pinnacle' ? 'rgba(128, 0, 128, 0.2)' : outcome.price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)');
+            eventData.bookmakers.forEach(bookmaker => {
+                if (selectedBookmakers.includes('all') || selectedBookmakers.includes(bookmaker.title)) {
+                    bookmaker.markets.filter(m => m.key === market).forEach(market => {
+                        market.outcomes.forEach(outcome => {
+                            filteredLabels.push(`${bookmaker.title} - ${outcome.name}`);
+                            filteredData.push(outcome.price);
+                            filteredColors.push(bookmaker.title === 'Pinnacle' ? 'rgba(128, 0, 128, 0.2)' : outcome.price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)');
+                        });
                     });
-                });
-            }
-        });
+                }
+            });
 
-        oddsChart.data.labels = filteredLabels;
-        oddsChart.data.datasets[0].data = filteredData;
-        oddsChart.data.datasets[0].backgroundColor = filteredColors;
-        oddsChart.data.datasets[0].borderColor = filteredColors.map(color => color.replace('0.2', '1'));
-        oddsChart.update();
+            oddsChart.data.labels = filteredLabels;
+            oddsChart.data.datasets[0].data = filteredData;
+            oddsChart.data.datasets[0].backgroundColor = filteredColors;
+            oddsChart.data.datasets[0].borderColor = filteredColors.map(color => color.replace('0.2', '1'));
+            oddsChart.update();
+        });
     });
 }
 
