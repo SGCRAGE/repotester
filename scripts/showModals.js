@@ -133,6 +133,7 @@ export function showGraphModal(eventTitle, market, eventData) {
     const chartData = [];
     const chartLabels = [];
     const chartColors = [];
+    const bookmakers = [];
     const highestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.map(o => o.price))));
     const lowestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price))));
 
@@ -142,6 +143,7 @@ export function showGraphModal(eventTitle, market, eventData) {
                 chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
                 chartData.push(outcome.price);
                 chartColors.push(bookmaker.title === 'Pinnacle' ? 'rgba(128, 0, 128, 0.2)' : outcome.price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)');
+                bookmakers.push(bookmaker.title);
             });
         });
     });
@@ -152,13 +154,22 @@ export function showGraphModal(eventTitle, market, eventData) {
         type: 'bar',
         data: {
             labels: chartLabels,
-            datasets: [{
-                label: 'Odds',
-                data: chartData,
-                backgroundColor: chartColors,
-                borderColor: chartColors.map(color => color.replace('0.2', '1')),
-                borderWidth: 1
-            }]
+            datasets: [
+                {
+                    label: 'Odds',
+                    data: chartData,
+                    backgroundColor: chartColors,
+                    borderColor: chartColors.map(color => color.replace('0.2', '1')),
+                    borderWidth: 1
+                },
+                {
+                    label: 'Bookmakers',
+                    data: bookmakers,
+                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                    borderColor: 'rgba(0, 0, 0, 1)',
+                    borderWidth: 1
+                }
+            ]
         },
         options: {
             scales: {
