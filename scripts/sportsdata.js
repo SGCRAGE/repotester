@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     const sportsDataContainer = document.getElementById('sports-data-container');
+    const apiKey = 'h26558aac-5f34-47c4-b969-55f3cf937a53'; // Replace with your actual NBA API key
+    const apiUrl = `https://api.nba.com/stats/teams?api_key=${apiKey}`; // Example API endpoint
 
-    fetch('http://localhost:3000/api/nba_data') // Ensure this URL matches your backend server
+    fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error fetching sports data: ${response.statusText}`);
