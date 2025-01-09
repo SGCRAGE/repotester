@@ -70,6 +70,12 @@ export function showGraphModal(eventTitle, market, eventData) {
     const awayScore = eventData.away_score !== undefined ? eventData.away_score : 'N/A';
     const totalScore = homeScore !== 'N/A' && awayScore !== 'N/A' ? Number(homeScore) + Number(awayScore) : 'N/A';
 
+    // Add region information to each bookmaker
+    const bookmakersWithRegions = eventData.bookmakers.map(bookmaker => ({
+        ...bookmaker,
+        regions: ['us', 'eu', 'us2', 'uk'] // Example regions, replace with actual regions for each bookmaker
+    }));
+
     modal.innerHTML = `
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -81,7 +87,7 @@ export function showGraphModal(eventTitle, market, eventData) {
                 <button class="dropbtn">Select Bookmakers</button>
                 <div class="dropdown-content">
                     <label><input type="checkbox" value="all" checked> All</label>
-                    ${eventData.bookmakers.map(bookmaker => `<label><input type="checkbox" value="${bookmaker.title}"> ${bookmaker.title}</label>`).join('')}
+                    ${bookmakersWithRegions.map(bookmaker => `<label><input type="checkbox" value="${bookmaker.title}"> ${bookmaker.title}</label>`).join('')}
                 </div>
             </div>
             <label for="regionFilter">Filter by Region:</label>
@@ -105,7 +111,7 @@ export function showGraphModal(eventTitle, market, eventData) {
                     </tr>
                 </thead>
                 <tbody>
-                    ${eventData.bookmakers.map(bookmaker => `
+                    ${bookmakersWithRegions.map(bookmaker => `
                         ${bookmaker.markets.filter(m => m.key === market).map(market => `
                             ${market.outcomes.map(outcome => {
                                 const impliedProbability = calculateImpliedProbability(outcome.price);
@@ -149,10 +155,10 @@ export function showGraphModal(eventTitle, market, eventData) {
     const chartData = [];
     const chartLabels = [];
     const chartColors = [];
-    const highestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.map(o => o.price))));
-    const lowestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price))));
+    const highestPrice = Math.max(...bookmakersWithRegions.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.map(o => o.price))));
+    const lowestPrice = Math.max(...bookmakersWithRegions.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price))));
 
-    eventData.bookmakers.forEach(bookmaker => {
+    bookmakersWithRegions.forEach(bookmaker => {
         bookmaker.markets.filter(m => m.key === market).forEach(market => {
             market.outcomes.forEach(outcome => {
                 chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
@@ -217,7 +223,7 @@ export function showGraphModal(eventTitle, market, eventData) {
             const filteredLabels = [];
             const filteredColors = [];
 
-            eventData.bookmakers.forEach(bookmaker => {
+            bookmakersWithRegions.forEach(bookmaker => {
                 if ((selectedBookmakers.includes('all') || selectedBookmakers.includes(bookmaker.title)) &&
                     (selectedRegions.includes('all') || selectedRegions.some(region => bookmaker.regions.includes(region)))) {
                     bookmaker.markets.filter(m => m.key === market).forEach(market => {
