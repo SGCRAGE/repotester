@@ -69,6 +69,14 @@ export function displayOdds(data, oddsContainer) {
                                 <button class="collapsible">${event.home_team} vs ${event.away_team} ${eventScore} - ${new Date(event.commence_time).toLocaleString()}</button>
                                 <div class="collapsible-content">
                                     <div class="market-section">
+                                        <label for="bookmakerFilter-${event.id}">Filter by Bookmaker:</label>
+                                        <div id="bookmakerFilter-${event.id}" class="dropdown">
+                                            <button class="dropbtn">Select Bookmakers</button>
+                                            <div class="dropdown-content">
+                                                <label><input type="checkbox" value="all" checked> All</label>
+                                                ${event.bookmakers.map(bookmaker => `<label><input type="checkbox" value="${bookmaker.title}"> ${bookmaker.title}</label>`).join('')}
+                                            </div>
+                                        </div>
                                         <button class="collapsible">H2H Market</button>
                                         <div class="collapsible-content">
                                             <table>
@@ -87,7 +95,7 @@ export function displayOdds(data, oddsContainer) {
                                                         <th>Implied Probability</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="h2hOutcomes-${event.id}">
                                                     ${h2hOutcomes.map(outcome => {
                                                         const impliedProbability = calculateImpliedProbability(outcome.price);
                                                         const currentTime = new Date();
@@ -136,7 +144,7 @@ export function displayOdds(data, oddsContainer) {
                                                         <th>Implied Probability</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="spreadOutcomes-${event.id}">
                                                     ${spreadOutcomes.map(outcome => {
                                                         const impliedProbability = calculateImpliedProbability(outcome.price);
                                                         const currentTime = new Date();
@@ -185,7 +193,7 @@ export function displayOdds(data, oddsContainer) {
                                                         <th>Implied Probability</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="totalsOutcomes-${event.id}">
                                                     ${totalsOutcomes.map(outcome => {
                                                         const impliedProbability = calculateImpliedProbability(outcome.price);
                                                         const currentTime = new Date();
@@ -261,6 +269,92 @@ export function displayOdds(data, oddsContainer) {
                 showGraphModal(eventTitle, market, eventData);
             });
         });
+
+        // Add event listeners for bookmaker filters
+        data.forEach(event => {
+            const bookmakerFilter = document.querySelector(`#bookmakerFilter-${event.id} .dropdown-content`);
+            bookmakerFilter.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const selectedBookmakers = Array.from(bookmakerFilter.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
+                    filterOutcomes(event.id, selectedBookmakers);
+                });
+            });
+        });
+
+        function filterOutcomes(eventId, selectedBookmakers) {
+            const h2hOutcomes = document.getElementById(`h2hOutcomes-${eventId}`);
+            const spreadOutcomes = document.getElementById(`spreadOutcomes-${eventId}`);
+            const totalsOutcomes = document.getElementById(`totalsOutcomes-${eventId}`);
+
+            const filterOutcomesByBookmaker = (outcomes) => {
+                return outcomes.filter(outcome => selectedBookmakers.includes('all') || selectedBookmakers.includes(outcome.bookmaker));
+            };
+
+            const event = data.find(event => event.id === eventId);
+
+            h2hOutcomes.innerHTML = filterOutcomesByBookmaker(event.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(market => market.key === 'h2h').flatMap(market => market.outcomes.map(outcome => ({ ...outcome, bookmaker: bookmaker.title })))))
+                .map(outcome => {
+                    const impliedProbability = calculateImpliedProbability(outcome.price);
+                    const priceClass = outcome.price === highestH2H ? 'highest-price' : outcome.price === lowestH2H ? 'lowest-price' : '';
+                    return `
+                        <tr>
+                            <td>${event.home_team}</td>
+                            <td>${event.away_team}</td>
+                            <td>${status}</td>
+                            <td>${commenceTime.toLocaleString()}</td>
+                            <td>${event.sport_title}</td>
+                            <td>${outcome.bookmaker}</td>
+                            <td>${outcome.market}</td>
+                            <td>${outcome.name}</td>
+                            <td class="${priceClass}">${outcome.price}</td>
+                            <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
+                            <td>${(impliedProbability * 100).toFixed(2)}%</td>
+                        </tr>
+                    `;
+                }).join('');
+
+            spreadOutcomes.innerHTML = filterOutcomesByBookmaker(event.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(market => market.key === 'spreads').flatMap(market => market.outcomes.map(outcome => ({ ...outcome, bookmaker: bookmaker.title })))))
+                .map(outcome => {
+                    const impliedProbability = calculateImpliedProbability(outcome.price);
+                    const priceClass = outcome.price === highestSpread ? 'highest-price' : outcome.price === lowestSpread ? 'lowest-price' : '';
+                    return `
+                        <tr>
+                            <td>${event.home_team}</td>
+                            <td>${event.away_team}</td>
+                            <td>${status}</td>
+                            <td>${commenceTime.toLocaleString()}</td>
+                            <td>${event.sport_title}</td>
+                            <td>${outcome.bookmaker}</td>
+                            <td>${outcome.market}</td>
+                            <td>${outcome.name}</td>
+                            <td class="${priceClass}">${outcome.price}</td>
+                            <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
+                            <td>${(impliedProbability * 100).toFixed(2)}%</td>
+                        </tr>
+                    `;
+                }).join('');
+
+            totalsOutcomes.innerHTML = filterOutcomesByBookmaker(event.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(market => market.key === 'totals').flatMap(market => market.outcomes.map(outcome => ({ ...outcome, bookmaker: bookmaker.title })))))
+                .map(outcome => {
+                    const impliedProbability = calculateImpliedProbability(outcome.price);
+                    const priceClass = outcome.price === highestTotals ? 'highest-price' : outcome.price === lowestTotals ? 'lowest-price' : '';
+                    return `
+                        <tr>
+                            <td>${event.home_team}</td>
+                            <td>${event.away_team}</td>
+                            <td>${status}</td>
+                            <td>${commenceTime.toLocaleString()}</td>
+                            <td>${event.sport_title}</td>
+                            <td>${outcome.bookmaker}</td>
+                            <td>${outcome.market}</td>
+                            <td>${outcome.name}</td>
+                            <td class="${priceClass}">${outcome.price}</td>
+                            <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
+                            <td>${(impliedProbability * 100).toFixed(2)}%</td>
+                        </tr>
+                    `;
+                }).join('');
+        }
     } else {
         oddsContainer.innerHTML = '<p>No odds data available.</p>';
     }
