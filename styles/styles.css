@@ -124,6 +124,22 @@ main {
     max-height: calc(100vh - 140px); /* Adjust height to fit within viewport minus header and footer */
 }
 
+/* Ensure the table within the container is responsive */
+#odds-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#odds-container th, #odds-container td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#odds-container th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
 /* Odds item styling */
 .odds-item {
     margin-bottom: 10px;
