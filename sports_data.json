@@ -7,5 +7,12 @@
         "active": true,
         "has_outrights": false
     },
-    ...
+    {
+        "key": "americanfootball_nfl",
+        "group": "American Football",
+        "title": "NFL",
+        "description": "National Football League",
+        "active": true,
+        "has_outrights": true
+    }
 ]
