@@ -261,67 +261,6 @@ export function displayOdds(data, oddsContainer) {
                 showGraphModal(eventTitle, market, eventData);
             });
         });
-
-        // Add event listeners for bookmaker filters
-        data.forEach(event => {
-            const bookmakerFilterH2H = document.querySelector(`#bookmakerFilterH2H-${event.id} .dropdown-content`);
-            const bookmakerFilterSpreads = document.querySelector(`#bookmakerFilterSpreads-${event.id} .dropdown-content`);
-            const bookmakerFilterTotals = document.querySelector(`#bookmakerFilterTotals-${event.id} .dropdown-content`);
-
-            bookmakerFilterH2H.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const selectedBookmakers = Array.from(bookmakerFilterH2H.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
-                    filterOutcomes(event.id, selectedBookmakers, 'h2h');
-                });
-            });
-
-            bookmakerFilterSpreads.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const selectedBookmakers = Array.from(bookmakerFilterSpreads.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
-                    filterOutcomes(event.id, selectedBookmakers, 'spreads');
-                });
-            });
-
-            bookmakerFilterTotals.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const selectedBookmakers = Array.from(bookmakerFilterTotals.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
-                    filterOutcomes(event.id, selectedBookmakers, 'totals');
-                });
-            });
-        });
-
-        function filterOutcomes(eventId, selectedBookmakers, marketKey) {
-            const outcomesElement = document.getElementById(`${marketKey}Outcomes-${eventId}`);
-
-            const filterOutcomesByBookmaker = (outcomes) => {
-                return outcomes.filter(outcome => selectedBookmakers.includes('all') || selectedBookmakers.includes(outcome.bookmaker));
-            };
-
-            const event = data.find(event => event.id === eventId);
-
-            const outcomes = filterOutcomesByBookmaker(event.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(market => market.key === marketKey).flatMap(market => market.outcomes.map(outcome => ({ ...outcome, bookmaker: bookmaker.title })))))
-                .map(outcome => {
-                    const impliedProbability = calculateImpliedProbability(outcome.price);
-                    const priceClass = outcome.price === (marketKey === 'h2h' ? highestH2H : marketKey === 'spreads' ? highestSpread : highestTotals) ? 'highest-price' : outcome.price === (marketKey === 'h2h' ? lowestH2H : marketKey === 'spreads' ? lowestSpread : lowestTotals) ? 'lowest-price' : '';
-                    return `
-                        <tr>
-                            <td>${event.home_team}</td>
-                            <td>${event.away_team}</td>
-                            <td>${status}</td>
-                            <td>${commenceTime.toLocaleString()}</td>
-                            <td>${event.sport_title}</td>
-                            <td>${outcome.bookmaker}</td>
-                            <td>${outcome.market}</td>
-                            <td>${outcome.name}</td>
-                            <td class="${priceClass}">${outcome.price}</td>
-                            <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
-                            <td>${(impliedProbability * 100).toFixed(2)}%</td>
-                        </tr>
-                    `;
-                }).join('');
-
-            outcomesElement.innerHTML = outcomes;
-        }
     } else {
         oddsContainer.innerHTML = '<p>No odds data available.</p>';
     }
