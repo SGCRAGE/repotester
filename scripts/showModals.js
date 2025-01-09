@@ -132,6 +132,7 @@ export function showGraphModal(eventTitle, market, eventData) {
     // Prepare data for the chart
     const chartData = [];
     const chartLabels = [];
+    const chartColors = [];
     const highestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.map(o => o.price))));
     const lowestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price))));
 
@@ -140,6 +141,7 @@ export function showGraphModal(eventTitle, market, eventData) {
             market.outcomes.forEach(outcome => {
                 chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
                 chartData.push(outcome.price);
+                chartColors.push(bookmaker.title === 'Pinnacle' ? 'rgba(128, 0, 128, 0.2)' : outcome.price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : outcome.price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)');
             });
         });
     });
@@ -153,8 +155,8 @@ export function showGraphModal(eventTitle, market, eventData) {
             datasets: [{
                 label: 'Odds',
                 data: chartData,
-                backgroundColor: chartData.map(price => price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)'),
-                borderColor: chartData.map(price => price === highestPrice ? 'rgb(9, 248, 248)' : price === lowestPrice ? 'rgba(255, 99, 132, 1)' : 'rgba(201, 203, 207, 1)'),
+                backgroundColor: chartColors,
+                borderColor: chartColors.map(color => color.replace('0.2', '1')),
                 borderWidth: 1
             }]
         },
