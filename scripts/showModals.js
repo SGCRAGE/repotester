@@ -84,6 +84,14 @@ export function showGraphModal(eventTitle, market, eventData) {
                     ${eventData.bookmakers.map(bookmaker => `<label><input type="checkbox" value="${bookmaker.title}"> ${bookmaker.title}</label>`).join('')}
                 </div>
             </div>
+            <label for="regionFilter">Filter by Region:</label>
+            <div id="regionFilter" class="dropdown">
+                <button class="dropbtn">Select Regions</button>
+                <div class="dropdown-content">
+                    <label><input type="checkbox" value="all" checked> All</label>
+                    ${['us', 'eu', 'us2', 'uk'].map(region => `<label><input type="checkbox" value="${region}"> ${region.toUpperCase()}</label>`).join('')}
+                </div>
+            </div>
             <canvas id="oddsChart" style="display: block; box-sizing: border-box; height: 400px; width: 800px; background-color: black;" width="800" height="400"></canvas>
             <table id="totalsMarketTable">
                 <thead>
@@ -201,15 +209,17 @@ export function showGraphModal(eventTitle, market, eventData) {
     });
 
     // Add event listener to the checkboxes to filter the chart
-    document.querySelectorAll('#bookmakerFilter input[type="checkbox"]').forEach(checkbox => {
+    document.querySelectorAll('#bookmakerFilter input[type="checkbox"], #regionFilter input[type="checkbox"]').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             const selectedBookmakers = Array.from(document.querySelectorAll('#bookmakerFilter input[type="checkbox"]:checked')).map(input => input.value);
+            const selectedRegions = Array.from(document.querySelectorAll('#regionFilter input[type="checkbox"]:checked')).map(input => input.value);
             const filteredData = [];
             const filteredLabels = [];
             const filteredColors = [];
 
             eventData.bookmakers.forEach(bookmaker => {
-                if (selectedBookmakers.includes('all') || selectedBookmakers.includes(bookmaker.title)) {
+                if ((selectedBookmakers.includes('all') || selectedBookmakers.includes(bookmaker.title)) &&
+                    (selectedRegions.includes('all') || selectedRegions.some(region => bookmaker.regions.includes(region)))) {
                     bookmaker.markets.filter(m => m.key === market).forEach(market => {
                         market.outcomes.forEach(outcome => {
                             filteredLabels.push(`${bookmaker.title} - ${outcome.name}`);
