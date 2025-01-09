@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
     let mergedData = [];
 
+    if (!sportsDataContainer) {
+        console.error('sportsDataContainer is null');
+        return;
+    }
+
     fetch('http://localhost:3000/api/nba_data') // Ensure this URL matches your backend server
         .then(response => {
             if (!response.ok) {
