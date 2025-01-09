@@ -78,6 +78,37 @@ export function showGraphModal(eventTitle, market, eventData) {
             <p>Total Game Score: ${totalScore}</p>
             <canvas id="oddsChart" style="display: block; box-sizing: border-box; height: 400px; width: 800px; background-color: black;" width="800" height="400"></canvas>
             <div id="chartValues"></div>
+            <table id="totalsMarketTable">
+                <thead>
+                    <tr>
+                        <th>Bookmaker</th>
+                        <th>Market</th>
+                        <th>Outcome Name</th>
+                        <th>Price</th>
+                        <th>Point</th>
+                        <th>Implied Probability</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${eventData.bookmakers.map(bookmaker => `
+                        ${bookmaker.markets.filter(m => m.key === market).map(market => `
+                            ${market.outcomes.map(outcome => {
+                                const impliedProbability = calculateImpliedProbability(outcome.price);
+                                return `
+                                    <tr>
+                                        <td>${bookmaker.title}</td>
+                                        <td>${market.key.toUpperCase()}</td>
+                                        <td>${outcome.name}</td>
+                                        <td>${outcome.price}</td>
+                                        <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
+                                        <td>${(impliedProbability * 100).toFixed(2)}%</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        `).join('')}
+                    `).join('')}
+                </tbody>
+            </table>
         </div>
     `;
     document.body.appendChild(modal);
