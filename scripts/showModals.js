@@ -77,7 +77,7 @@ export function showGraphModal(eventTitle, market, eventData) {
             <p>Game Score: ${eventData.home_team} ${homeScore} - ${eventData.away_team} ${awayScore}</p>
             <p>Total Game Score: ${totalScore}</p>
             <canvas id="oddsChart" style="display: block; box-sizing: border-box; height: 400px; width: 800px; background-color: black;" width="800" height="400"></canvas>
-            <div id="chartValues"></div>
+            <div id="chartValues" style="color: black;"></div>
             <table id="totalsMarketTable">
                 <thead>
                     <tr>
@@ -161,7 +161,7 @@ export function showGraphModal(eventTitle, market, eventData) {
                 label: 'Odds',
                 data: chartData,
                 backgroundColor: chartData.map(price => price === highestPrice ? 'rgba(75, 192, 192, 0.2)' : price === lowestPrice ? 'rgba(255, 99, 132, 0.2)' : 'rgba(201, 203, 207, 0.2)'),
-                borderColor: chartData.map(price => price === highestPrice ? 'rgba(75, 192, 192, 1)' : price === lowestPrice ? 'rgba(255, 99, 132, 1)' : 'rgba(201, 203, 207, 1)'),
+                borderColor: chartData.map(price => price === highestPrice ? 'rgb(9, 248, 248)' : price === lowestPrice ? 'rgba(255, 99, 132, 1)' : 'rgba(201, 203, 207, 1)'),
                 borderWidth: 1
             }]
         },
