@@ -32,6 +32,7 @@ export function displayOdds(data, oddsContainer) {
                     const h2hOutcomes = [];
                     const spreadOutcomes = [];
                     const totalsOutcomes = [];
+                    const playerThreesOutcomes = [];
 
                     event.bookmakers.forEach(bookmaker => {
                         console.log('Processing bookmaker:', bookmaker); // Log each bookmaker
@@ -45,6 +46,8 @@ export function displayOdds(data, oddsContainer) {
                                     spreadOutcomes.push({ ...outcome, bookmaker: bookmaker.title, market: market.key });
                                 } else if (market.key === 'totals') {
                                     totalsOutcomes.push({ ...outcome, bookmaker: bookmaker.title, market: market.key });
+                                } else if (market.key === 'player_threes') {
+                                    playerThreesOutcomes.push({ ...outcome, bookmaker: bookmaker.title, market: market.key });
                                 }
                             });
                         });
@@ -53,6 +56,7 @@ export function displayOdds(data, oddsContainer) {
                     console.log('H2H Outcomes:', h2hOutcomes); // Log H2H outcomes
                     console.log('Spread Outcomes:', spreadOutcomes); // Log Spread outcomes
                     console.log('Totals Outcomes:', totalsOutcomes); // Log Totals outcomes
+                    console.log('Player Threes Outcomes:', playerThreesOutcomes); // Log Player Threes outcomes
 
                     const highestH2H = h2hOutcomes.length > 0 ? Math.max(...h2hOutcomes.map(o => o.price)) : null;
                     const lowestH2H = h2hOutcomes.length > 0 ? Math.min(...h2hOutcomes.map(o => o.price)) : null;
@@ -60,6 +64,8 @@ export function displayOdds(data, oddsContainer) {
                     const lowestSpread = spreadOutcomes.length > 0 ? Math.min(...spreadOutcomes.map(o => o.price)) : null;
                     const highestTotals = totalsOutcomes.length > 0 ? Math.max(...totalsOutcomes.map(o => o.price)) : null;
                     const lowestTotals = totalsOutcomes.length > 0 ? Math.min(...totalsOutcomes.map(o => o.price)) : null;
+                    const highestPlayerThrees = playerThreesOutcomes.length > 0 ? Math.max(...playerThreesOutcomes.map(o => o.price)) : null;
+                    const lowestPlayerThrees = playerThreesOutcomes.length > 0 ? Math.min(...playerThreesOutcomes.map(o => o.price)) : null;
 
                     // Assuming event.home_score and event.away_score contain the scores
                     const eventScore = event.home_score !== undefined && event.away_score !== undefined
@@ -216,6 +222,55 @@ export function displayOdds(data, oddsContainer) {
                                             </table>
                                             <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="totals" data-event-id="${event.id}">View Chart</button>
                                             <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="totals" data-event-id="${event.id}">View Graph</button>
+                                        </div>
+                                    </div>
+                                    <div class="market-section">
+                                        <button class="collapsible">Player Threes Market</button>
+                                        <div class="collapsible-content">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Home Team</th>
+                                                        <th>Away Team</th>
+                                                        <th>Status</th>
+                                                        <th>Commence Time</th>
+                                                        <th>Sport</th>
+                                                        <th>Bookmaker</th>
+                                                        <th>Market</th>
+                                                        <th>Outcome Name</th>
+                                                        <th>Price</th>
+                                                        <th>Point</th>
+                                                        <th>Implied Probability</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    ${playerThreesOutcomes.map(outcome => {
+                                                        const impliedProbability = calculateImpliedProbability(outcome.price);
+                                                        const currentTime = new Date();
+                                                        const commenceTime = new Date(event.commence_time);
+                                                        const status = currentTime >= commenceTime ? 'Live' : 'Not Started';
+                                                        const priceClass = outcome.price === highestPlayerThrees ? 'highest-price' : outcome.price === lowestPlayerThrees ? 'lowest-price' : '';
+                                                        console.log('Outcome:', outcome.name, 'Price:', outcome.price, 'Implied Probability:', impliedProbability);
+                                                        return `
+                                                            <tr>
+                                                                <td>${event.home_team}</td>
+                                                                <td>${event.away_team}</td>
+                                                                <td>${status}</td>
+                                                                <td>${commenceTime.toLocaleString()}</td>
+                                                                <td>${event.sport_title}</td>
+                                                                <td>${outcome.bookmaker}</td>
+                                                                <td>${outcome.market}</td>
+                                                                <td>${outcome.name}</td>
+                                                                <td class="${priceClass}">${outcome.price}</td>
+                                                                <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
+                                                                <td>${(impliedProbability * 100).toFixed(2)}%</td>
+                                                            </tr>
+                                                        `;
+                                                    }).join('')}
+                                                </tbody>
+                                            </table>
+                                            <button class="view-chart" data-event="${event.home_team} vs ${event.away_team}" data-market="player_threes" data-event-id="${event.id}">View Chart</button>
+                                            <button class="view-graph" data-event="${event.home_team} vs ${event.away_team}" data-market="player_threes" data-event-id="${event.id}">View Graph</button>
                                         </div>
                                     </div>
                                 </div>

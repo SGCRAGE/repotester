@@ -20,7 +20,7 @@ export function showChartModal(eventTitle, market, eventData) {
                 </thead>
                 <tbody>
                     ${eventData.bookmakers.map(bookmaker => `
-                        ${bookmaker.markets.filter(m => m.key === market).map(market => `
+                        ${bookmaker.markets.filter(m => m.key === market || m.key === 'player_threes').map(market => `
                             ${market.outcomes.map(outcome => {
                                 const impliedProbability = calculateImpliedProbability(outcome.price);
                                 const highestPrice = Math.max(...market.outcomes.map(o => o.price));
@@ -90,7 +90,7 @@ export function showGraphModal(eventTitle, market, eventData) {
                 </thead>
                 <tbody>
                     ${eventData.bookmakers.map(bookmaker => `
-                        ${bookmaker.markets.filter(m => m.key === market).map(market => `
+                        ${bookmaker.markets.filter(m => m.key === market || m.key === 'player_threes').map(market => `
                             ${market.outcomes.map(outcome => {
                                 const impliedProbability = calculateImpliedProbability(outcome.price);
                                 return `
@@ -132,11 +132,11 @@ export function showGraphModal(eventTitle, market, eventData) {
     // Prepare data for the chart
     const chartData = [];
     const chartLabels = [];
-    const highestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.map(o => o.price))));
-    const lowestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market).flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price))));
+    const highestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market || m.key === 'player_threes').flatMap(market => market.outcomes.map(o => o.price))));
+    const lowestPrice = Math.max(...eventData.bookmakers.flatMap(bookmaker => bookmaker.markets.filter(m => m.key === market || m.key === 'player_threes').flatMap(market => market.outcomes.filter(o => o.price < 0).map(o => o.price))));
 
     eventData.bookmakers.forEach(bookmaker => {
-        bookmaker.markets.filter(m => m.key === market).forEach(market => {
+        bookmaker.markets.filter(m => m.key === market || m.key === 'player_threes').forEach(market => {
             market.outcomes.forEach(outcome => {
                 chartLabels.push(`${bookmaker.title} - ${outcome.name}`);
                 chartData.push(outcome.price);
@@ -209,7 +209,7 @@ export function showExpectedValuesModal(eventTitle, market, eventData) {
                 </thead>
                 <tbody>
                     ${eventData.bookmakers.map(bookmaker => `
-                        ${bookmaker.markets.filter(m => m.key === market).map(market => `
+                        ${bookmaker.markets.filter(m => m.key === market || m.key === 'player_threes').map(market => `
                             ${market.outcomes.map(outcome => {
                                 const impliedProbability = calculateImpliedProbability(outcome.price);
                                 return `
