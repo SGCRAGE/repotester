@@ -68,7 +68,7 @@ export function showGraphModal(eventTitle, market, eventData) {
     modal.className = 'modal';
     const homeScore = eventData.home_score !== undefined ? eventData.home_score : 'N/A';
     const awayScore = eventData.away_score !== undefined ? eventData.away_score : 'N/A';
-    const totalScore = homeScore !== 'N/A' && awayScore !== 'N/A' ? homeScore + awayScore : 'N/A';
+    const totalScore = homeScore !== 'N/A' && awayScore !== 'N/A' ? Number(homeScore) + Number(awayScore) : 'N/A';
 
     modal.innerHTML = `
         <div class="modal-content">
