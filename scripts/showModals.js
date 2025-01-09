@@ -77,8 +77,7 @@ export function showGraphModal(eventTitle, market, eventData) {
             <p>Game Score: ${eventData.home_team} ${homeScore} - ${eventData.away_team} ${awayScore}</p>
             <p>Total Game Score: ${totalScore}</p>
             <label for="bookmakerFilter">Filter by Bookmaker:</label>
-            <select id="bookmakerFilter">
-                <option value="all">All</option>
+            <select id="bookmakerFilter" multiple>
                 ${eventData.bookmakers.map(bookmaker => `<option value="${bookmaker.title}">${bookmaker.title}</option>`).join('')}
             </select>
             <canvas id="oddsChart" style="display: block; box-sizing: border-box; height: 400px; width: 800px; background-color: black;" width="800" height="400"></canvas>
@@ -199,13 +198,13 @@ export function showGraphModal(eventTitle, market, eventData) {
 
     // Add event listener to the dropdown to filter the chart
     document.getElementById('bookmakerFilter').addEventListener('change', function() {
-        const selectedBookmaker = this.value;
+        const selectedBookmakers = Array.from(this.selectedOptions).map(option => option.value);
         const filteredData = [];
         const filteredLabels = [];
         const filteredColors = [];
 
         eventData.bookmakers.forEach(bookmaker => {
-            if (selectedBookmaker === 'all' || bookmaker.title === selectedBookmaker) {
+            if (selectedBookmakers.includes('all') || selectedBookmakers.includes(bookmaker.title)) {
                 bookmaker.markets.filter(m => m.key === market).forEach(market => {
                     market.outcomes.forEach(outcome => {
                         filteredLabels.push(`${bookmaker.title} - ${outcome.name}`);
