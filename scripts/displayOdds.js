@@ -1,7 +1,7 @@
 import { calculateImpliedProbability } from './utils.js';
 import { showChartModal, showGraphModal } from './showModals.js';
 
-export function displayOdds(data, oddsContainer) {
+export function displayOdds(data, oddsContainer, selectedRegions = ['all']) {
     console.log('Displaying odds data:', data); // Log the data to inspect its structure
 
     // Clear existing odds data
@@ -34,20 +34,22 @@ export function displayOdds(data, oddsContainer) {
                     const totalsOutcomes = [];
 
                     event.bookmakers.forEach(bookmaker => {
-                        console.log('Processing bookmaker:', bookmaker); // Log each bookmaker
-                        bookmaker.markets.forEach(market => {
-                            console.log('Processing market:', market); // Log each market
-                            market.outcomes.forEach(outcome => {
-                                console.log('Processing outcome:', outcome); // Log each outcome
-                                if (market.key === 'h2h') {
-                                    h2hOutcomes.push({ ...outcome, bookmaker: bookmaker.title, market: market.key });
-                                } else if (market.key === 'spreads') {
-                                    spreadOutcomes.push({ ...outcome, bookmaker: bookmaker.title, market: market.key });
-                                } else if (market.key === 'totals') {
-                                    totalsOutcomes.push({ ...outcome, bookmaker: bookmaker.title, market: market.key });
-                                }
+                        if (selectedRegions.includes('all') || selectedRegions.some(region => bookmaker.regions.includes(region))) {
+                            console.log('Processing bookmaker:', bookmaker); // Log each bookmaker
+                            bookmaker.markets.forEach(market => {
+                                console.log('Processing market:', market); // Log each market
+                                market.outcomes.forEach(outcome => {
+                                    console.log('Processing outcome:', outcome); // Log each outcome
+                                    if (market.key === 'h2h') {
+                                        h2hOutcomes.push({ ...outcome, bookmaker: bookmaker.title, market: market.key });
+                                    } else if (market.key === 'spreads') {
+                                        spreadOutcomes.push({ ...outcome, bookmaker: bookmaker.title, market: market.key });
+                                    } else if (market.key === 'totals') {
+                                        totalsOutcomes.push({ ...outcome, bookmaker: bookmaker.title, market: market.key });
+                                    }
+                                });
                             });
-                        });
+                        }
                     });
 
                     console.log('H2H Outcomes:', h2hOutcomes); // Log H2H outcomes
