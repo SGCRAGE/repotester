@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const footballDataContainer = document.getElementById('football-data-container');
 
-    // Fetch the API key from the server
+    // Fetch the football data from the server
     fetch('http://localhost:3000/college-football-data')
         .then(response => {
             if (!response.ok) {

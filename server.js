@@ -31,6 +31,9 @@ app.get('/college-football-data', async (req, res) => {
 
   try {
     const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`Error fetching data: ${response.statusText}`);
+    }
     const data = await response.json();
     res.json(data);
   } catch (error) {
