@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let mergedData = [];
 
     // Fetch the API key from the server
-    fetch('http://localhost:3000/api-key')
+    fetch('http://localhost:3000/odds-api-key')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error fetching API key: ${response.statusText}`);
