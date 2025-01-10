@@ -56,6 +56,11 @@
                     }
                 });
 
+                // Check authentication state when the page loads
+                if (!auth.currentUser) {
+                    window.location.href = '../sign/sign.html';
+                }
+
                 // Google Sign-In functionality
                 document.getElementById('login-google').addEventListener('click', () => {
                     signInWithPopup(auth, googleProvider)
