@@ -27,7 +27,7 @@ app.get('/odds-api-key', (req, res) => {
 // Proxy endpoint to fetch college football data
 app.get('/college-football-data', async (req, res) => {
   const apiKey = process.env.COLLEGE_FOOTBALL_API_KEY;
-  const apiUrl = `https://api.collegefootballdata.com/games?year=2023&seasonType=regular&apiKey=${apiKey}`;
+  const apiUrl = `https://api.collegefootballdata.com/games?year=2024&seasonType=regular&apiKey=${apiKey}`;
 
   try {
     const response = await fetch(apiUrl);
