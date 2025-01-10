@@ -2,26 +2,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const footballDataContainer = document.getElementById('football-data-container');
 
     // Fetch the API key from the server
-    fetch('http://localhost:3000/api-key')
+    fetch('http://localhost:3000/college-football-data')
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Error fetching API key: ${response.statusText}`);
+                throw new Error(`Error fetching football data: ${response.statusText}`);
             }
             return response.json();
         })
         .then(data => {
-            const apiKey = data.apiKey;
-            console.log('API Key:', apiKey); // Log the API key
-            const apiUrl = `https://api.collegefootballdata.com/teams?apiKey=${apiKey}`; // Example API endpoint
-
-            return fetch(apiUrl);
-        })
-        .then(async response => {
-            if (!response.ok) {
-                throw new Error(`Error fetching football data: ${response.statusText}`);
-            }
-            const footballData = await response.json();
-            displayFootballData(footballData, footballDataContainer);
+            displayFootballData(data, footballDataContainer);
         })
         .catch(error => {
             console.error('Error fetching data:', error);

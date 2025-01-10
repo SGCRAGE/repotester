@@ -24,6 +24,21 @@ app.get('/api-key', (req, res) => {
   res.json({ apiKey: process.env.COLLEGE_FOOTBALL_API_KEY });
 });
 
+// Proxy endpoint to fetch college football data
+app.get('/college-football-data', async (req, res) => {
+  const apiKey = process.env.COLLEGE_FOOTBALL_API_KEY;
+  const apiUrl = `https://api.collegefootballdata.com/teams?apiKey=${apiKey}`;
+
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching college football data:', error);
+    res.status(500).json({ error: 'Failed to fetch college football data' });
+  }
+});
+
 // Firebase configuration endpoint
 app.get('/firebase-config', (req, res) => {
   res.json({
