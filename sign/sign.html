@@ -60,21 +60,25 @@
                 document.getElementById('sign-up-toggle').addEventListener('click', (event) => {
                     event.preventDefault();
                     document.getElementById('form-title').textContent = 'Sign Up';
-                    document.getElementById('sign-in-form').addEventListener('submit', (event) => {
-                        event.preventDefault();
-                        const email = document.getElementById('email').value;
-                        const password = document.getElementById('password').value;
-
-                        createUserWithEmailAndPassword(auth, email, password)
-                            .then((userCredential) => {
-                                console.log('User signed up:', userCredential.user);
-                                window.location.href = 'index.html'; // Redirect after successful sign-up
-                            })
-                            .catch((error) => {
-                                console.error('Error signing up:', error);
-                            });
-                    });
+                    document.getElementById('sign-in-form').removeEventListener('submit', signInHandler);
+                    document.getElementById('sign-in-form').addEventListener('submit', signUpHandler);
                 });
+
+                // Sign-Up functionality
+                function signUpHandler(event) {
+                    event.preventDefault();
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+
+                    createUserWithEmailAndPassword(auth, email, password)
+                        .then((userCredential) => {
+                            console.log('User signed up:', userCredential.user);
+                            window.location.href = 'index.html'; // Redirect after successful sign-up
+                        })
+                        .catch((error) => {
+                            console.error('Error signing up:', error);
+                        });
+                }
 
                 // Password Reset functionality
                 document.getElementById('toggle-form').addEventListener('click', (event) => {
