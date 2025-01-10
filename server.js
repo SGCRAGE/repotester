@@ -37,31 +37,6 @@ app.get('/firebase-config', (req, res) => {
   });
 });
 
-// Endpoint to fetch odds data
-app.get('/odds', async (req, res) => {
-  const oddsApiUrl = 'https://api.the-odds-api.com/v4/sports/basketball_nba/odds';
-  const oddsParams = {
-    regions: 'us,eu,us2,uk',
-    markets: 'h2h,spreads,totals', // Remove the "player_threes" market
-    oddsFormat: 'american',
-    dateFormat: 'iso'
-  };
-
-  try {
-    const response = await fetch(`${oddsApiUrl}?${new URLSearchParams(oddsParams)}`, {
-      headers: {
-        'Authorization': `Bearer ${process.env.ODDS_API_KEY}`
-      }
-    });
-    const data = await response.json();
-    console.log('Fetched odds data:', data); // Log the fetched data
-    res.json(data);
-  } catch (error) {
-    console.error('Error fetching odds data:', error); // Log the error
-    res.status(500).json({ error: 'Failed to fetch odds data' });
-  }
-});
-
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
