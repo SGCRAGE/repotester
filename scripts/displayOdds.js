@@ -153,7 +153,6 @@ export function displayOdds(data, oddsContainer) {
                                                                 <td>${event.sport_title}</td>
                                                                 <td>${outcome.bookmaker}</td>
                                                                 <td>${outcome.market}</td>
-                                                                <td>${outcome.name}</td>
                                                                 <td class="${priceClass}">${outcome.price}</td>
                                                                 <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                                 <td>${(impliedProbability * 100).toFixed(2)}%</td>
@@ -202,7 +201,6 @@ export function displayOdds(data, oddsContainer) {
                                                                 <td>${event.sport_title}</td>
                                                                 <td>${outcome.bookmaker}</td>
                                                                 <td>${outcome.market}</td>
-                                                                <td>${outcome.name}</td>
                                                                 <td class="${priceClass}">${outcome.price}</td>
                                                                 <td>${outcome.point !== undefined ? outcome.point : 'N/A'}</td>
                                                                 <td>${(impliedProbability * 100).toFixed(2)}%</td>
