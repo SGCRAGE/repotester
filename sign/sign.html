@@ -32,17 +32,18 @@
     <!-- Firebase SDKs via CDN -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
         // Fetch Firebase configuration from the server
-        fetch('../firebase-config.json') <!-- Corrected URL -->
+        fetch('../firebase-config.json')
             .then(response => response.json())
             .then(config => {
                 const app = initializeApp(config);
                 const auth = getAuth(app);
+                const provider = new GoogleAuthProvider();
 
                 // Sign-In functionality
-                document.getElementById('sign-in-form').addEventListener('submit', (event) => {
+                function signInHandler(event) {
                     event.preventDefault();
                     const email = document.getElementById('email').value;
                     const password = document.getElementById('password').value;
@@ -106,7 +107,6 @@
                 document.getElementById('google-sign-in').addEventListener('click', () => {
                     signInWithPopup(auth, provider)
                         .then((result) => {
-
                             console.log('User signed in with Google:', result.user);
                             window.location.href = 'index.html'; // Redirect after successful sign-in
                         })
