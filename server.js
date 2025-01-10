@@ -24,6 +24,24 @@ app.get('/odds-api-key', (req, res) => {
   res.json({ apiKey: process.env.ODDS_API_KEY });
 });
 
+// Proxy endpoint to fetch college football data
+app.get('/college-football-data', async (req, res) => {
+  const apiKey = process.env.COLLEGE_FOOTBALL_API_KEY;
+  const apiUrl = `https://api.collegefootballdata.com/games?year=2023&seasonType=regular&apiKey=${apiKey}`;
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`Error fetching data: ${response.statusText}`);
+    }
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching college football data:', error);
+    res.status(500).json({ error: 'Failed to fetch college football data' });
+  }
+});
+
 // Firebase configuration endpoint
 app.get('/firebase-config', (req, res) => {
   res.json({
