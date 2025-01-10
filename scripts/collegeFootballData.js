@@ -1,8 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const footballDataContainer = document.getElementById('football-data-container');
 
-    // Fetch the football data from the server
-    fetch('/proxy/college-football-data')
+    // Hardcoded API key
+    const apiKey = 'tQn6hDtnLw9/cFWH5rxFAKD4ufcs4t8537leFenOyysXc74PoQGPEnTj4KtSlyhL';
+    const gamesEndpoint = `https://api.collegefootballdata.com/games?year=2023&seasonType=regular&apiKey=${apiKey}`;
+    const gameBoxAdvancedEndpoint = `https://api.collegefootballdata.com/game/box/advanced?apiKey=${apiKey}`;
+
+    // Fetch the football data from the API
+    fetch(gamesEndpoint)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error fetching football data: ${response.statusText}`);
@@ -55,4 +60,33 @@ document.addEventListener('DOMContentLoaded', function() {
             container.innerHTML = '<p>No football data available.</p>';
         }
     }
+
+    fetch(gamesEndpoint, {
+      headers: {
+        "Authorization": `Bearer ${apiKey}`
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      const gamesList = document.getElementById("games-list");
+      data.forEach(game => {
+        const gameListItem = document.createElement("li");
+        gameListItem.textContent = `${game.home_team} vs. ${game.away_team}`;
+        gamesList.appendChild(gameListItem);
+      });
+    })
+    .catch(error => console.error("Error:", error));
+
+    // Make a separate API request for each game's box score advanced stats
+    fetch(gameBoxAdvancedEndpoint, {
+      headers: {
+        "Authorization": `Bearer ${apiKey}`
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Process the box score advanced stats data
+      console.log(data);
+    })
+    .catch(error => console.error("Error:", error));
 });
