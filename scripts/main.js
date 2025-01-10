@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             const apiKey = data.apiKey;
             console.log('API Key:', apiKey); // Log the API key
-            const oddsApiUrl = `https://api.the-odds-api.com/v4/sports/basketball_nba/odds?apiKey=${apiKey}&regions=us,eu,us2,uk&markets=h2h,spreads,totals&oddsFormat=american&dateFormat=iso`; // Remove the "player_threes" market
+            const oddsApiUrl = `https://api.the-odds-api.com/v4/sports/basketball_nba/odds?apiKey=${apiKey}&regions=us,eu,us2,uk&markets=h2h,spreads,totals&oddsFormat=american&dateFormat=iso`;
             const scoresApiUrl = `https://api.the-odds-api.com/v4/sports/basketball_nba/scores/?daysFrom=1&apiKey=${apiKey}`;
 
             return Promise.all([fetch(oddsApiUrl), fetch(scoresApiUrl)]);

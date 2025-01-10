@@ -19,9 +19,14 @@ app.use((req, res, next) => {
 // Serve static files from the "public" directory
 app.use(express.static('public'));
 
-// Endpoint to serve the API key
-app.get('/api-key', (req, res) => {
+// Endpoint to serve the API key for college football data
+app.get('/college-football-api-key', (req, res) => {
   res.json({ apiKey: process.env.COLLEGE_FOOTBALL_API_KEY });
+});
+
+// Endpoint to serve the API key for odds data
+app.get('/odds-api-key', (req, res) => {
+  res.json({ apiKey: process.env.ODDS_API_KEY });
 });
 
 // Proxy endpoint to fetch college football data
