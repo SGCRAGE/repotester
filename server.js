@@ -13,7 +13,12 @@ app.use(express.static('public'));
 
 // Endpoint to serve the API key
 app.get('/api-key', (req, res) => {
-  res.json({ apiKey: process.env.ODDS_API_KEY });
+  const apiKey = process.env.ODDS_API_KEY;
+  if (apiKey) {
+    res.json({ apiKey });
+  } else {
+    res.status(404).json({ error: 'API key not found' });
+  }
 });
 
 // Firebase configuration endpoint
