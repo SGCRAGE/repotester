@@ -1,24 +1,27 @@
 require('dotenv').config();
 const express = require('express');
-const fetch = require('node-fetch'); // Ensure you have node-fetch installed
-const cors = require('cors'); // Ensure you have cors installed
+const fetch = require('node-fetch');
 const app = express();
 const port = 3000;
 
 // Enable CORS
-app.use(cors());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
 
 // Serve static files from the "public" directory
 app.use(express.static('public'));
 
-// Endpoint to serve the API key
-app.get('/api-key', (req, res) => {
-  const apiKey = process.env.ODDS_API_KEY;
-  if (apiKey) {
-    res.json({ apiKey });
-  } else {
-    res.status(404).json({ error: 'API key not found' });
-  }
+// Endpoint to serve the API key for odds data
+app.get('/odds-api-key', (req, res) => {
+  res.json({ apiKey: process.env.ODDS_API_KEY });
 });
 
 // Firebase configuration endpoint
