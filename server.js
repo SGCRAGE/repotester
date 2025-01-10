@@ -1,20 +1,12 @@
 require('dotenv').config();
 const express = require('express');
 const fetch = require('node-fetch'); // Ensure you have node-fetch installed
+const cors = require('cors'); // Ensure you have cors installed
 const app = express();
 const port = 3000;
 
 // Enable CORS
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-});
+app.use(cors());
 
 // Serve static files from the "public" directory
 app.use(express.static('public'));
