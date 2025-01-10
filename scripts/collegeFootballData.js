@@ -1,21 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     const footballDataContainer = document.getElementById('football-data-container');
 
-    // Fetch the API key from the server
-    fetch('http://localhost:3000/college-football-api-key')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error fetching API key: ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            const apiKey = data.apiKey;
-            console.log('API Key:', apiKey); // Log the API key
-            const apiUrl = `https://api.collegefootballdata.com/games?year=2023&seasonType=regular&apiKey=${apiKey}`;
+    // Hardcoded API key
+    const apiKey = 'tQn6hDtnLw9/cFWH5rxFAKD4ufcs4t8537leFenOyysXc74PoQGPEnTj4KtSlyhL';
+    const apiUrl = `https://api.collegefootballdata.com/games?year=2023&seasonType=regular&apiKey=${apiKey}`;
 
-            return fetch(apiUrl);
-        })
+    // Fetch the football data from the API
+    fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error fetching football data: ${response.statusText}`);
