@@ -23,21 +23,29 @@ document.addEventListener('DOMContentLoaded', function() {
             table.innerHTML = `
                 <thead>
                     <tr>
-                        <th>School</th>
-                        <th>Conference</th>
-                        <th>Division</th>
-                        <th>City</th>
-                        <th>State</th>
+                        <th>Home Team</th>
+                        <th>Away Team</th>
+                        <th>Start Date</th>
+                        <th>Start Time TBD</th>
+                        <th>Completed</th>
+                        <th>Neutral Site</th>
+                        <th>Conference Game</th>
+                        <th>Home Points</th>
+                        <th>Away Points</th>
                     </tr>
                 </thead>
                 <tbody>
-                    ${data.map(team => `
+                    ${data.map(game => `
                         <tr>
-                            <td>${team.school}</td>
-                            <td>${team.conference}</td>
-                            <td>${team.division}</td>
-                            <td>${team.city}</td>
-                            <td>${team.state}</td>
+                            <td>${game.home_team}</td>
+                            <td>${game.away_team}</td>
+                            <td>${game.start_date}</td>
+                            <td>${game.start_time_tbd}</td>
+                            <td>${game.completed}</td>
+                            <td>${game.neutral_site}</td>
+                            <td>${game.conference_game}</td>
+                            <td>${game.home_points}</td>
+                            <td>${game.away_points}</td>
                         </tr>
                     `).join('')}
                 </tbody>
