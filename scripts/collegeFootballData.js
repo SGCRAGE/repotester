@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const footballDataContainer = document.getElementById('football-data-container');
 
     // Fetch the football data from the server
-    fetch('http://localhost:3000/college-football-data')
+    fetch('/proxy/college-football-data')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error fetching football data: ${response.statusText}`);
