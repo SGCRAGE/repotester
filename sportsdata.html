@@ -50,7 +50,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
         // Fetch Firebase configuration from the server
         fetch('firebase-config.json')
@@ -63,11 +63,12 @@
             .then(config => {
                 const app = initializeApp(config);
                 const auth = getAuth(app);
-                const provider = new GoogleAuthProvider();
+                const googleProvider = new GoogleAuthProvider();
+                const emailProvider = new EmailAuthProvider();
 
                 // Google Sign-In functionality
                 document.getElementById('login-google').addEventListener('click', () => {
-                    signInWithPopup(auth, provider)
+                    signInWithPopup(auth, googleProvider)
                         .then((result) => {
                             console.log('User signed in with Google:', result.user);
                             window.location.href = 'index.html'; // Redirect after successful sign-in
@@ -88,7 +89,7 @@
                     const email = document.getElementById('email').value;
                     const password = document.getElementById('password').value;
 
-                    signInWithEmailAndPassword(auth, email, password)
+                    signInWithPopup(auth, emailProvider.credential(email, password))
                         .then((userCredential) => {
                             console.log('User signed in with Email:', userCredential.user);
                             document.getElementById('email-signin').style.display = 'none';
