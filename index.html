@@ -56,12 +56,17 @@
       import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
       // Fetch Firebase configuration from the server
-      fetch('https://sgcrage.github.io/firebase-config.json')
-        .then(response => response.json())
+      fetch('firebase-config.json')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
         .then(config => {
           const app = initializeApp(config);
           const analytics = getAnalytics(app);
-          const auth = getAuth();
+          const auth = getAuth(app);
           const googleProvider = new GoogleAuthProvider();
 
           // Google Sign-In

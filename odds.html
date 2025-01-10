@@ -43,7 +43,12 @@
 
         // Fetch Firebase configuration from the server
         fetch('firebase-config.json')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(config => {
                 const app = initializeApp(config);
                 const auth = getAuth(app);
