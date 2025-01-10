@@ -11,15 +11,15 @@ app.use(cors());
 // Serve static files from the "public" directory
 app.use(express.static('public'));
 
-// Remove the endpoint to serve the API key
-// app.get('/api-key', (req, res) => {
-//   const apiKey = process.env.ODDS_API_KEY;
-//   if (apiKey) {
-//     res.json({ apiKey });
-//   } else {
-//     res.status(404).json({ error: 'API key not found' });
-//   }
-// });
+// Endpoint to serve the API key
+app.get('/api-key', (req, res) => {
+  const apiKey = process.env.ODDS_API_KEY;
+  if (apiKey) {
+    res.json({ apiKey });
+  } else {
+    res.status(404).json({ error: 'API key not found' });
+  }
+});
 
 // Firebase configuration endpoint
 app.get('/firebase-config', (req, res) => {

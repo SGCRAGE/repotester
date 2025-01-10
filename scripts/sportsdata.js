@@ -5,13 +5,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
     let mergedData = [];
 
-    // Hardcoded API key
-    const apiKey = 'your_odds_api_key'; // Replace with your actual API key
-    const oddsApiUrl = `https://api.the-odds-api.com/v4/sports/basketball_ncaab/odds?apiKey=${apiKey}&regions=us,eu,us2,uk&markets=h2h,spreads,totals&oddsFormat=american&dateFormat=iso`;
-    const scoresApiUrl = `https://api.the-odds-api.com/v4/sports/basketball_ncaab/scores/?daysFrom=1&apiKey=${apiKey}`;
+    // Fetch the API key from the server
+    fetch('http://localhost:3000/api-key')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error fetching API key: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const apiKey = data.apiKey;
+            console.log('API Key:', apiKey); // Log the API key
+            const oddsApiUrl = `https://api.the-odds-api.com/v4/sports/basketball_ncaab/odds?apiKey=${apiKey}&regions=us,eu,us2,uk&markets=h2h,spreads,totals&oddsFormat=american&dateFormat=iso`;
+            const scoresApiUrl = `https://api.the-odds-api.com/v4/sports/basketball_ncaab/scores/?daysFrom=1&apiKey=${apiKey}`;
 
-    // Fetch the odds and scores data
-    Promise.all([fetch(oddsApiUrl), fetch(scoresApiUrl)])
+            return Promise.all([fetch(oddsApiUrl), fetch(scoresApiUrl)]);
+        })
         .then(async ([oddsResponse, scoresResponse]) => {
             if (!oddsResponse.ok) {
                 throw new Error(`Error fetching odds data: ${oddsResponse.statusText}`);
