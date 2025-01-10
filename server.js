@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const fetch = require('node-fetch');
+const fetch = require('node-fetch'); // Ensure you have node-fetch installed
 const app = express();
 const port = 3000;
 
@@ -19,8 +19,8 @@ app.use((req, res, next) => {
 // Serve static files from the "public" directory
 app.use(express.static('public'));
 
-// Endpoint to serve the API key for odds data
-app.get('/odds-api-key', (req, res) => {
+// Endpoint to serve the API key
+app.get('/api-key', (req, res) => {
   res.json({ apiKey: process.env.ODDS_API_KEY });
 });
 
