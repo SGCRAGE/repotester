@@ -138,7 +138,8 @@ main {
 /* Specific styles for sportsdata.html */
 .sportsdata-page main {
     justify-content: flex-start; /* Allow content to grow */
-    overflow: visible; /* Allow content to overflow */
+    overflow-y: auto; /* Enable vertical scrolling */
+    height: calc(100vh - 140px); /* Adjust height to fit within viewport minus header and footer */
 }
 
 .sportsdata-page #odds-container {
