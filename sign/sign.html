@@ -32,7 +32,7 @@
     <!-- Firebase SDKs via CDN -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
         // Fetch Firebase configuration from the server
         fetch('../firebase-config.json')
@@ -45,12 +45,9 @@
                 // Sign-In functionality
                 function signInHandler(event) {
                     event.preventDefault();
-                    const email = document.getElementById('email').value;
-                    const password = document.getElementById('password').value;
-
-                    signInWithEmailAndPassword(auth, email, password)
-                        .then((userCredential) => {
-                            console.log('User signed in:', userCredential.user);
+                    signInWithPopup(auth, provider)
+                        .then((result) => {
+                            console.log('User signed in:', result.user);
                             window.location.href = 'index.html'; // Redirect to home page or another page after successful sign-in
                         })
                         .catch((error) => {
@@ -71,12 +68,9 @@
                 // Sign-Up functionality
                 function signUpHandler(event) {
                     event.preventDefault();
-                    const email = document.getElementById('email').value;
-                    const password = document.getElementById('password').value;
-
-                    createUserWithEmailAndPassword(auth, email, password)
-                        .then((userCredential) => {
-                            console.log('User signed up:', userCredential.user);
+                    signInWithPopup(auth, provider)
+                        .then((result) => {
+                            console.log('User signed up:', result.user);
                             window.location.href = 'index.html'; // Redirect after successful sign-up
                         })
                         .catch((error) => {
