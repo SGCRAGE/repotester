@@ -21,7 +21,7 @@ app.use(express.static('public'));
 
 // Endpoint to serve the API key
 app.get('/api-key', (req, res) => {
-  res.json({ apiKey: process.env.ODDS_API_KEY });
+  res.json({ apiKey: process.env.COLLEGE_FOOTBALL_API_KEY });
 });
 
 // Firebase configuration endpoint
