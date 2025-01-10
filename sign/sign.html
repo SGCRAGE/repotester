@@ -6,6 +6,7 @@
     <title>Sign In | Project Floater</title>
     <link rel="stylesheet" href="../styles/styles.css"> <!-- Link to common styles -->
     <link rel="stylesheet" href="sign.css"> <!-- Link to specific sign-in styles -->
+    <link rel="icon" href="../images/favicon.ico"> <!-- Added favicon link -->
 </head>
 <body>
     <div class="wrapper">
@@ -33,7 +34,7 @@
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
         // Fetch Firebase configuration from the server
-        fetch('https://sgcrage.github.io/firebase-config.json')
+        fetch('../firebase-config.json') <!-- Corrected URL -->
             .then(response => response.json())
             .then(config => {
                 const app = initializeApp(config);
