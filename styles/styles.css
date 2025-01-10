@@ -149,7 +149,7 @@ main {
 }
 
 .sportsdata-page #odds-container {
-    overflow-y: visible; /* Allow content to overflow */
+    overflow-y: auto; /* Enable vertical scrolling */
     min-height: 100vh; /* Ensure the container takes at least the full viewport height */
 }
 
