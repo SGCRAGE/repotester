@@ -108,8 +108,8 @@ main {
     text-align: center; /* Center-align text and content */
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Change to flex-start to allow content to grow */
-    overflow: visible; /* Allow content to overflow */
+    justify-content: center; /* Center content */
+    overflow: hidden; /* Hide overflow to ensure scrollable container */
 }
 
 /* Odds container styling */
@@ -120,6 +120,28 @@ main {
     background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Enable vertical scrolling */
+    height: calc(100vh - 140px); /* Adjust height to fit within viewport minus header and footer */
+}
+
+/* Specific styles for odds.html */
+.odds-page main {
+    justify-content: flex-start; /* Change to flex-start to allow content to grow */
+    overflow: visible; /* Allow content to overflow */
+}
+
+.odds-page #odds-container {
+    overflow-y: visible; /* Allow content to overflow */
+    min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+}
+
+/* Specific styles for sportsdata.html */
+.sportsdata-page main {
+    justify-content: flex-start; /* Change to flex-start to allow content to grow */
+    overflow: visible; /* Allow content to overflow */
+}
+
+.sportsdata-page #odds-container {
     overflow-y: visible; /* Allow content to overflow */
     min-height: 100vh; /* Ensure the container takes at least the full viewport height */
 }
