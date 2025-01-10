@@ -32,7 +32,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
         // Fetch Firebase configuration from the server
         fetch('../firebase-config.json')
@@ -56,6 +56,28 @@
                         })
                         .catch((error) => {
                             console.error('Error signing in with Google:', error);
+                        });
+                });
+
+                // Show Email Sign-In Form
+                document.getElementById('login-email').addEventListener('click', () => {
+                    document.getElementById('email-signin').style.display = 'block';
+                });
+
+                // Email Sign-In Form Submission
+                document.getElementById('email-signin-form').addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+
+                    signInWithEmailAndPassword(auth, email, password)
+                        .then((userCredential) => {
+                            console.log('User signed in with Email:', userCredential.user);
+                            document.getElementById('email-signin').style.display = 'none';
+                            window.location.href = '../index.html'; // Redirect after successful sign-in
+                        })
+                        .catch((error) => {
+                            document.getElementById('error-message').textContent = error.message;
                         });
                 });
             })
