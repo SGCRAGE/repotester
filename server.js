@@ -16,8 +16,8 @@ app.use((req, res, next) => {
   }
 });
 
-// Serve static files from the "public" directory
-app.use(express.static('public'));
+// Serve static files from the "dist" directory
+app.use(express.static('dist'));
 
 // Endpoint to serve the API key for odds data
 app.get('/odds-api-key', (req, res) => {
