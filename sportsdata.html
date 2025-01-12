@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="index.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="scripts/sportsdata.js"></script>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
 </head>
 <body class="sportsdata-page">
     <header>
@@ -74,17 +75,12 @@
                     }
                 });
 
-                // Check authentication state when the page loads
-                if (!auth.currentUser) {
-                    window.location.href = 'sign/sign.html';
-                }
-
                 // Google Sign-In functionality
                 document.getElementById('login-google').addEventListener('click', () => {
                     signInWithPopup(auth, googleProvider)
                         .then((result) => {
                             console.log('User signed in with Google:', result.user);
-                            window.location.href = 'index.html'; // Redirect after successful sign-in
+                            window.location.href = 'sportsdata.html'; // Redirect after successful sign-in
                         })
                         .catch((error) => {
                             console.error('Error signing in with Google:', error);
@@ -106,7 +102,7 @@
                         .then((userCredential) => {
                             console.log('User signed in with Email:', userCredential.user);
                             document.getElementById('email-signin').style.display = 'none';
-                            window.location.href = 'index.html'; // Redirect after successful sign-in
+                            window.location.href = 'sportsdata.html'; // Redirect after successful sign-in
                         })
                         .catch((error) => {
                             document.getElementById('error-message').textContent = error.message;

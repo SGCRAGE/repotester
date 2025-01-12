@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="about.css"> <!-- Optional: Page-specific styles -->
     <script src="../scripts.js" defer></script>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
 </head>
 <body>
     <header>
@@ -55,11 +56,6 @@
                         window.location.href = '../sign/sign.html';
                     }
                 });
-
-                // Check authentication state when the page loads
-                if (!auth.currentUser) {
-                    window.location.href = '../sign/sign.html';
-                }
 
                 // Google Sign-In functionality
                 document.getElementById('login-google').addEventListener('click', () => {
