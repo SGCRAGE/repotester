@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             const apiKey = data.apiKey;
             console.log('API Key:', apiKey); // Log the API key
-            const gamesEndpoint = `https://api.collegefootballdata.com/games?year=2023&seasonType=regular&apiKey=${apiKey}`;
+            const gamesEndpoint = `https://api.collegefootballdata.com/games?year=2024&seasonType=regular&apiKey=${apiKey}`;
             const gameBoxAdvancedEndpoint = `https://api.collegefootballdata.com/game/box/advanced?apiKey=${apiKey}`;
 
             // Fetch the football data from the API
