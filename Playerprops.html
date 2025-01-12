@@ -44,8 +44,6 @@
                 <p id="error-message" style="color: red;"></p>
             </form>
         </div>
-        <!-- Add a new container for player props -->
-        <div id="player-props-container" style="overflow-y: auto;"></div>
     </main>
 
     <footer>
@@ -103,33 +101,6 @@
                             document.getElementById('error-message').textContent = error.message;
                         });
                 });
-
-                // Fetch and display NBA player props
-                fetch('http://localhost:3000/api/nba/playerprops')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        const container = document.getElementById('player-props-container');
-                        data.forEach(prop => {
-                            const propElement = document.createElement('div');
-                            propElement.className = 'prop-item';
-                            propElement.innerHTML = `
-                                <h3>${prop.player}</h3>
-                                <p><strong>Team:</strong> ${prop.team}</p>
-                                <p><strong>Prop:</strong> ${prop.prop}</p>
-                                <p><strong>Value:</strong> ${prop.value}</p>
-                            `;
-                            container.appendChild(propElement);
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error fetching player props:', error);
-                        document.getElementById('player-props-container').innerHTML = `<p>${error.message}</p>`;
-                    });
             })
             .catch(error => {
                 console.error('Error fetching Firebase config:', error);
