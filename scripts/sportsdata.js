@@ -1,5 +1,6 @@
 import { displayOdds } from './displayOdds.js';
 import { showChartModal, showGraphModal, showExpectedValuesModal } from './showModals.js';
+import { calculateImpliedProbability, calculateExpectedValuePercent } from './utils.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
@@ -45,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
             displayRequestInfo(requestsRemaining, requestsUsed, requestsLast);
             mergedData = mergeOddsAndScores(oddsData, validScoresData);
             displayOdds(mergedData, oddsContainer);
+            displayExpectedValue(mergedData, oddsContainer);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -69,6 +71,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 event.away_score = score.scores.find(s => s.name === event.away_team)?.score;
             }
             return event;
+        });
+    }
+
+    function displayExpectedValue(mergedData, oddsContainer) {
+        mergedData.forEach(event => {
+            event.bookmakers.forEach(bookmaker => {
+                bookmaker.markets.forEach(market => {
+                    market.outcomes.forEach(outcome => {
+                        const probability = calculateImpliedProbability(outcome.price);
+                        const expectedValuePercent = calculateExpectedValuePercent(probability, outcome.price, 100); // Assuming amount bet is 100
+
+                        const oddsElement = document.createElement('div');
+                        oddsElement.className = 'odds-item';
+                        oddsElement.innerHTML = `
+                            <h3>${event.home_team} vs ${event.away_team}</h3>
+                            <p><strong>Market:</strong> ${market.key}</p>
+                            <p><strong>Outcome:</strong> ${outcome.name}</p>
+                            <p><strong>Price:</strong> ${outcome.price}</p>
+                            <p><strong>Expected Value Percent:</strong> ${expectedValuePercent.toFixed(2)}%</p>
+                        `;
+                        oddsContainer.appendChild(oddsElement);
+                    });
+                });
+            });
         });
     }
 });
