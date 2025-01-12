@@ -49,7 +49,7 @@
     <script type="module" src="scripts/main.js"></script> <!-- Ensure this path is correct and load as module -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
         // Fetch Firebase configuration from the server
         fetch('firebase-config.json')
@@ -64,6 +64,19 @@
                 const auth = getAuth(app);
                 const googleProvider = new GoogleAuthProvider();
                 const emailProvider = new EmailAuthProvider();
+
+                // Check authentication state
+                onAuthStateChanged(auth, (user) => {
+                    if (!user) {
+                        // Redirect to sign-in page if not authenticated
+                        window.location.href = 'sign/sign.html';
+                    }
+                });
+
+                // Check authentication state when the page loads
+                if (!auth.currentUser) {
+                    window.location.href = 'sign/sign.html';
+                }
 
                 // Google Sign-In functionality
                 document.getElementById('login-google').addEventListener('click', () => {
