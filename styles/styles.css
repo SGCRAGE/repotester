@@ -160,39 +160,6 @@ main {
     min-height: 100vh; /* Ensure the container takes at least the full viewport height */
 }
 
-/* Specific styles for CollegeFootballData.html */
-.college-football-data-page {
-    overflow-y: auto; /* Enable vertical scrolling */
-    height: 100vh; /* Full viewport height */
-}
-
-.college-football-data-page main {
-    justify-content: flex-start; /* Allow content to grow */
-    overflow-y: auto; /* Enable vertical scrolling */
-    flex: 1; /* Take up remaining space */
-    padding-bottom: 60px; /* Ensure footer is visible */
-}
-
-.college-football-data-page #football-data-container {
-    overflow-y: auto; /* Enable vertical scrolling */
-    min-height: 100vh; /* Ensure the container takes at least the full viewport height */
-}
-
-#games-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#games-list li {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-}
-
-#games-list li:hover {
-  background-color: #f0f0f0;
-}
-
 /* Ensure the table within the container is responsive */
 #odds-container table {
     width: 100%;
