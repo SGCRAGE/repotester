@@ -1,3 +1,5 @@
+import { ApiClient, GamesApi } from 'cfb.js';
+
 document.addEventListener('DOMContentLoaded', async function() {
     const footballDataContainer = document.getElementById('football-data-container');
 
@@ -13,13 +15,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log('API Key:', apiKey); // Log the API key
 
     // Set up the cfb.js client
-    const cfb = require('cfb.js');
-    const defaultClient = cfb.ApiClient.instance;
+    const defaultClient = ApiClient.instance;
     const ApiKeyAuth = defaultClient.authentications['ApiKeyAuth'];
     ApiKeyAuth.apiKey = apiKey;
     ApiKeyAuth.apiKeyPrefix = "Bearer";
 
-    const api = new cfb.GamesApi();
+    const api = new GamesApi();
     const year = 2024;
 
     try {
