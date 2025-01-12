@@ -1,8 +1,7 @@
-// filepath: /c:/Users/chanc/Documents/repotester/webpack.config.js
 const path = require('path');
 
 module.exports = {
-  entry: './scripts/collegeFootballData.js',
+  entry: './scripts/main.js', // Update the entry point to your main script
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
