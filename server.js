@@ -48,6 +48,17 @@ app.get('/api/data', async (req, res) => {
   }
 });
 
+// Endpoint to fetch NBA player props data
+app.get('/api/nba/playerprops', async (req, res) => {
+  try {
+    const response = await fetch('https://api.the-odds-api.com/v4/sports/basketball_nba/props?apiKey=' + process.env.ODDS_API_KEY);
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch NBA player props data' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
