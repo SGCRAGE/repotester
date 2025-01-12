@@ -1,69 +1,34 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     const footballDataContainer = document.getElementById('football-data-container');
 
     // Fetch the API key from the server
-    fetch('http://localhost:3000/college-football-data-api-key')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error fetching API key: ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            const apiKey = data.apiKey;
-            console.log('API Key:', apiKey); // Log the API key
-            const gamesEndpoint = `https://api.collegefootballdata.com/games?year=2024&seasonType=regular&apiKey=${apiKey}`;
-            const gameBoxAdvancedEndpoint = `https://api.collegefootballdata.com/game/box/advanced?apiKey=${apiKey}`;
+    const response = await fetch('http://localhost:3000/college-football-data-api-key');
+    if (!response.ok) {
+        console.error(`Error fetching API key: ${response.statusText}`);
+        footballDataContainer.innerHTML = `<p>${response.statusText}</p>`;
+        return;
+    }
+    const data = await response.json();
+    const apiKey = data.apiKey;
+    console.log('API Key:', apiKey); // Log the API key
 
-            // Fetch the football data from the API
-            fetch(gamesEndpoint)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Error fetching football data: ${response.statusText}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    displayFootballData(data, footballDataContainer);
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    footballDataContainer.innerHTML = `<p>${error.message}</p>`;
-                });
+    // Set up the cfb.js client
+    const cfb = require('cfb.js');
+    const defaultClient = cfb.ApiClient.instance;
+    const ApiKeyAuth = defaultClient.authentications['ApiKeyAuth'];
+    ApiKeyAuth.apiKey = apiKey;
+    ApiKeyAuth.apiKeyPrefix = "Bearer";
 
-            fetch(gamesEndpoint, {
-              headers: {
-                "Authorization": `Bearer ${apiKey}`
-              }
-            })
-            .then(response => response.json())
-            .then(data => {
-              const gamesList = document.getElementById("games-list");
-              data.forEach(game => {
-                const gameListItem = document.createElement("li");
-                gameListItem.textContent = `${game.home_team} vs. ${game.away_team}`;
-                gamesList.appendChild(gameListItem);
-              });
-            })
-            .catch(error => console.error("Error:", error));
+    const api = new cfb.GamesApi();
+    const year = 2024;
 
-            // Make a separate API request for each game's box score advanced stats
-            fetch(gameBoxAdvancedEndpoint, {
-              headers: {
-                "Authorization": `Bearer ${apiKey}`
-              }
-            })
-            .then(response => response.json())
-            .then(data => {
-              // Process the box score advanced stats data
-              console.log(data);
-            })
-            .catch(error => console.error("Error:", error));
-        })
-        .catch(error => {
-            console.error('Error fetching API key:', error);
-            footballDataContainer.innerHTML = `<p>${error.message}</p>`;
-        });
+    try {
+        const games = await api.getGames(year);
+        displayFootballData(games, footballDataContainer);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        footballDataContainer.innerHTML = `<p>${error.message}</p>`;
+    }
 
     function displayFootballData(data, container) {
         if (Array.isArray(data) && data.length > 0) {
