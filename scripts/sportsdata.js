@@ -5,19 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const oddsContainer = document.getElementById('odds-container');
     let mergedData = [];
 
-    const apiKey = process.env.SPORTS_API_KEY;
-
-    async function fetchData() {
-        try {
-            const response = await fetch(`https://api.sportsdata.io/v3/sports/scores/json/Games?key=${apiKey}`);
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            throw error;
-        }
-    }
-
     // Fetch the API key from the server
     fetch('http://localhost:3000/odds-api-key')
         .then(response => {
