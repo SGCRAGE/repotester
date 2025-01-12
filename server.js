@@ -24,6 +24,11 @@ app.get('/odds-api-key', (req, res) => {
   res.json({ apiKey: process.env.ODDS_API_KEY });
 });
 
+// Endpoint to serve the API key for College Football Data
+app.get('/college-football-data-api-key', (req, res) => {
+  res.json({ apiKey: process.env.COLLEGE_FOOTBALL_DATA_API_KEY });
+});
+
 // Firebase configuration endpoint
 app.get('/firebase-config', (req, res) => {
   res.json({
