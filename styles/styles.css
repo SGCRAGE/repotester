@@ -375,3 +375,10 @@ footer {
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
 }
+
+/* Container styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}

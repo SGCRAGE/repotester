@@ -16,8 +16,8 @@ app.use((req, res, next) => {
   }
 });
 
-// Serve static files from the "dist" directory
-app.use(express.static('dist'));
+// Serve static files from the "public" directory
+app.use(express.static('public'));
 
 // Endpoint to serve the API key for odds data
 app.get('/odds-api-key', (req, res) => {
@@ -35,6 +35,17 @@ app.get('/firebase-config', (req, res) => {
     appId: process.env.FIREBASE_APP_ID,
     measurementId: process.env.FIREBASE_MEASUREMENT_ID
   });
+});
+
+// Endpoint to fetch data from external API
+app.get('/api/data', async (req, res) => {
+  try {
+    const response = await fetch('https://api.example.com/data');
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch data' });
+  }
 });
 
 app.listen(port, () => {
