@@ -65,8 +65,10 @@ app.get('/api/ttm-squeeze-stocks', async (req, res) => {
   const apiUrl = `https://tradestie.com/api/v1/apps/ttm-squeeze-stocks?date=${date}`;
 
   try {
+    console.log(`Fetching data from URL: ${apiUrl}`);
     const response = await fetch(apiUrl);
     if (!response.ok) {
+      console.error(`Error response from API: ${response.statusText}`);
       throw new Error(`Error fetching stocks data: ${response.statusText}`);
     }
     const data = await response.json();
