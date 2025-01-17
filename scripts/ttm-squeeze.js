@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function fetchStocksData() {
         const selectedDate = datePicker.value;
-        const apiUrl = `https://tradestie.com/api/v1/apps/ttm-squeeze-stocks?date=${selectedDate}`;
+        const apiUrl = `http://localhost:3000/api/ttm-squeeze-stocks?date=${selectedDate}`;
 
         fetch(apiUrl)
             .then(response => {

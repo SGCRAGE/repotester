@@ -59,6 +59,24 @@ app.get('/api/nba/playerprops', async (req, res) => {
   }
 });
 
+// Endpoint to fetch TTM Squeeze Stocks data
+app.get('/api/ttm-squeeze-stocks', async (req, res) => {
+  const { date } = req.query;
+  const apiUrl = `https://tradestie.com/api/v1/apps/ttm-squeeze-stocks?date=${date}`;
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`Error fetching stocks data: ${response.statusText}`);
+    }
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
