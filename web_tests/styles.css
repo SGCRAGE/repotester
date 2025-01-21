@@ -1,0 +1,15 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif; /* Fallback font */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Default background color */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    position: relative; /* Ensure the ::before pseudo-element is positioned correctly */
+    overflow: hidden; /* Hide any overflow from the blurred image */
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
+/* ... rest of the styles ... */
