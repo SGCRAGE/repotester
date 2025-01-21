@@ -30,21 +30,23 @@
         <h2>TTM Squeeze Stocks</h2>
         <input type="date" id="date">
         <button onclick="fetchAndDisplayData()">Fetch Data</button>
-        <table id="stocksTable">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Ticker</th>
-                    <th>In Squeeze</th>
-                    <th>Out of Squeeze</th>
-                    <th>Days in Squeeze</th>
-                    <th>Days Out of Squeeze</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Data will be inserted here -->
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table id="stocksTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Ticker</th>
+                        <th>In Squeeze</th>
+                        <th>Out of Squeeze</th>
+                        <th>Days in Squeeze</th>
+                        <th>Days Out of Squeeze</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <footer>
