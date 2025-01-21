@@ -1,3 +1,17 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif; /* Fallback font */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Default background color */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    position: relative; /* Ensure the ::before pseudo-element is positioned correctly */
+    overflow: hidden; /* Hide any overflow from the blurred image */
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -25,4 +39,390 @@ th {
 
 tr:nth-child(even) {
     background-color: #f9f9f9;
+}
+
+/* Background Image */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/Screenshot 2024-08-06 173404.png') no-repeat center center;
+    background-size: cover; /* Ensure the image covers the entire viewport */
+    filter: blur(8px); /* Adjust the blur intensity */
+    z-index: -1; /* Place the image behind all other content */
+    opacity: 0.5; /* Adjust the opacity to make the content more readable */
+}
+
+/* Header styling */
+header {
+    width: 100%;
+    background: rgba(51, 51, 51, 0.8); /* Semi-transparent dark background for the header */
+    color: #fff; /* White text color */
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Add shadow for better visibility */
+}
+
+header h1 {
+    margin: 0;
+    text-align: center;
+}
+
+/* Navigation styling */
+nav {
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li button {
+    background-color: #4285F4; /* Google Blue */
+    color: white;
+    border: none;
+    padding: 15px 30px; /* Larger padding for a bigger button */
+    font-size: 16px; /* Larger text */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+}
+
+nav ul li button:hover {
+    background-color: #357ae8; /* Darker blue on hover */
+}
+
+/* Styles for the new "View Expected Values" button */
+.view-expected-values {
+    background-color: #ffcc00; /* Yellow background */
+    color: #333; /* Dark text color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px; /* Add some space between buttons */
+}
+
+.view-expected-values:hover {
+    background-color: #e6b800; /* Darker yellow on hover */
+}
+
+/* Main content styling */
+main {
+    flex: 1; /* Take up remaining space */
+    padding: 70px 20px 20px; /* Adjust top padding to avoid overlap with fixed header */
+    text-align: center; /* Center-align text and content */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Allow content to grow */
+    overflow: visible; /* Allow content to overflow */
+}
+
+/* Odds container styling */
+#odds-container {
+    flex: 1; /* Take up remaining space */
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: visible; /* Allow content to overflow */
+    min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+}
+
+/* Specific styles for odds.html */
+.odds-page {
+    overflow-y: auto; /* Enable vertical scrolling */
+    height: 100vh; /* Full viewport height */
+}
+
+.odds-page main {
+    justify-content: flex-start; /* Allow content to grow */
+    overflow-y: auto; /* Enable vertical scrolling */
+    flex: 1; /* Take up remaining space */
+    padding-bottom: 60px; /* Ensure footer is visible */
+}
+
+.odds-page #odds-container {
+    overflow-y: auto; /* Enable vertical scrolling */
+    min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+}
+
+/* Specific styles for sportsdata.html */
+.sportsdata-page {
+    overflow-y: auto; /* Enable vertical scrolling */
+    height: 100vh; /* Full viewport height */
+}
+
+.sportsdata-page main {
+    justify-content: flex-start; /* Allow content to grow */
+    overflow-y: auto; /* Enable vertical scrolling */
+    flex: 1; /* Take up remaining space */
+    padding-bottom: 60px; /* Ensure footer is visible */
+}
+
+.sportsdata-page #odds-container {
+    overflow-y: auto; /* Enable vertical scrolling */
+    min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+}
+
+/* Ensure the table within the container is responsive */
+#odds-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#odds-container th, #odds-container td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#odds-container th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+/* Odds item styling */
+.odds-item {
+    margin-bottom: 10px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+/* Highlight highest and lowest prices */
+.highest-price {
+    background-color: #d4edda; /* Light green background */
+    color: #155724; /* Dark green text */
+    font-weight: bold;
+}
+
+.lowest-price {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+    font-weight: bold;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Button styling */
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Collapsible styling */
+.collapsible {
+    background-color: #f2f2f2;
+    color: #333;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+}
+
+.collapsible.active, .collapsible:hover {
+    background-color: #ddd;
+}
+
+.collapsible-content {
+    display: none;
+    overflow: hidden;
+    padding: 0 10px;
+    background-color: #f9f9f9;
+}
+
+.collapsible-content table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.collapsible-content th, .collapsible-content td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+collapsible-content th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+/* Modal styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9); /* Black background with opacity */
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Chart values styling */
+#chartValues {
+    margin-top: 20px;
+    color: #fff; /* White text color for better visibility on black background */
+}
+
+/* Chart.js canvas styling */
+canvas#oddsChart {
+    background-color: black; /* Set the background color of the chart to black */
+}
+
+/* Footer styling */
+footer {
+    background: rgba(51, 51, 51, 0.8); /* Semi-transparent dark background for the footer */
+    color: #fff; /* White text color */
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 600px) {
+    nav ul li {
+        display: block;
+        margin-bottom: 10px; /* Stack items on smaller screens */
+    }
+}
+
+/* Custom dropdown styling */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content label {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content label:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+/* Container styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
