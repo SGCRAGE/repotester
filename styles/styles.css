@@ -204,16 +204,33 @@ main {
 table {
     width: 100%;
     border-collapse: collapse;
+    margin: 20px auto;
 }
 
 th, td {
     border: 1px solid #ddd;
     padding: 8px;
+    text-align: left;
 }
 
 th {
     background-color: #f2f2f2;
-    text-align: left;
+}
+
+/* Button styling */
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
 
 ul {
