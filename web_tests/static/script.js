@@ -1,6 +1,8 @@
 // Function to fetch and display data
 async function fetchAndDisplayData(date) {
-    const url = `http://localhost:5000/api/ttm-squeeze-stocks?date=${date}`;
+    const isLocal = window.location.hostname === 'localhost';
+    const baseUrl = isLocal ? 'http://localhost:5000' : 'https://your-remote-server.com';
+    const url = `${baseUrl}/api/ttm-squeeze-stocks?date=${date}`;
 
     try {
         const response = await fetch(url);
