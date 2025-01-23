@@ -67,6 +67,8 @@ function openModal(ticker, daysInSqueeze, daysOutSqueeze, inSqueeze, outSqueeze)
         "enable_publishing": false,
         "hide_side_toolbar": false,
         "allow_symbol_change": true,
+        "details": true,
+        "studies": ["STD;Vortex%1Indicator"],
         "autosize": true,
     });
 
