@@ -1,28 +1,74 @@
+/* ttmstyles.css */
+
+/* General Body Styling */
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-}
-
-h1 {
+    background-color: #f8f9fa; 
+    color: #333; 
+  }
+  
+  /* Header Styling */
+  h1 {
     text-align: center;
-}
-
-table {
+    color: #444; 
+    margin-bottom: 20px;
+  }
+  
+  /* Table Styling */
+  table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-}
-
-th, td {
-    padding: 8px 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  }
+  
+  th, td {
+    padding: 10px 15px; 
     border: 1px solid #ddd;
     text-align: left;
-}
-
-th {
-    background-color: #f4f4f4;
-}
-
-tr:nth-child(even) {
+    font-size: 14px; 
+  }
+  
+  th {
+    background-color: #007bff; 
+    color: #fff; 
+  }
+  
+  tr:nth-child(even) {
     background-color: #f9f9f9;
-}
+  }
+  
+  tr:hover {
+    background-color: #f1f1f1; 
+  }
+  
+  /* Button Styling */
+  button {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff; 
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #0056b3; 
+  }
+  
+  button:active {
+    background-color: #004085; 
+  }
+  
+  /* Modal Dialog Styling */
+  .modal-dialog {
+    max-width: 90%; 
+  }
+  
+  .modal-body p {
+    margin: 10px 0;
+  }
+  
