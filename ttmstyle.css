@@ -102,6 +102,7 @@ button:active {
 /* Modal Body */
 .modal-body {
     padding: 20px;
+    width: 400px;
 }
 
 /* Modal Footer */
