@@ -85,12 +85,19 @@
                     </button>
                 </div>
                 <div class="modal-body" id="modalContent">
-                    <p><strong>Ticker:</strong> <span id="modalTicker"></span></p>
-                    <p><strong>Days in Squeeze:</strong> <span id="modalDaysInSqueeze"></span></p>
-                    <p><strong>Days Out of Squeeze:</strong> <span id="modalDaysOutSqueeze"></span></p>
-                    <p><strong>In Squeeze:</strong> <span id="modalInSqueeze"></span></p>
-                    <p><strong>Out of Squeeze:</strong> <span id="modalOutSqueeze"></span></p>
-
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Ticker:</strong> <span id="modalTicker"></span></p>
+                            <p><strong>Days in Squeeze:</strong> <span id="modalDaysInSqueeze"></span></p>
+                            <p><strong>Days Out of Squeeze:</strong> <span id="modalDaysOutSqueeze"></span></p>
+                            <p><strong>In Squeeze:</strong> <span id="modalInSqueeze"></span></p>
+                            <p><strong>Out of Squeeze:</strong> <span id="modalOutSqueeze"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- TradingView Technical Analysis Widget -->
+                            <div id="tradingview-widget-container__widget"></div>
+                        </div>
+                    </div>
                     <!-- TradingView Chart Widget -->
                     <div id="tradingview-widget-container" style="height: 400px; margin-bottom: 20px;"></div>
 

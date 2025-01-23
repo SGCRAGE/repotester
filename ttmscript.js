@@ -86,6 +86,26 @@ function openModal(ticker, daysInSqueeze, daysOutSqueeze, inSqueeze, outSqueeze)
     });
     fundamentalContainer.appendChild(script);
 
+    // Initialize TradingView Technical Analysis Widget
+    const technicalAnalysisContainer = document.getElementById('tradingview-widget-container__widget');
+    technicalAnalysisContainer.innerHTML = ''; // Clear any existing widget
+
+    const technicalScript = document.createElement('script');
+    technicalScript.type = 'text/javascript';
+    technicalScript.src = 'https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js';
+    technicalScript.async = true;
+    technicalScript.innerHTML = JSON.stringify({
+        "interval": "1m",
+        "width": "100%",
+        "isTransparent": false,
+        "height": "450",
+        "symbol": ticker,
+        "showIntervalTabs": true,
+        "locale": "en",
+        "colorTheme": "dark"
+    });
+    technicalAnalysisContainer.appendChild(technicalScript);
+
     // Show modal
     $('#chartModal').modal('show');
 }
