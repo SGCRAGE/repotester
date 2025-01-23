@@ -5,11 +5,12 @@ import requests
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-# Proxy endpoint
 @app.route('/api/ttm-squeeze-stocks', methods=['GET'])
 def proxy():
-    date = request.args.get('date', '2025-1-20')  # Default date if none provided
-    api_url = f'https://tradestie.com/api/v1/apps/ttm-squeeze-stocks?date={date}'
+    ticker = request.args.get('ticker')
+    date = request.args.get('date', '2025-1-20')
+
+    api_url = f'https://tradestie.com/api/v1/apps/ttm-squeeze-stocks?ticker={ticker}&date={date}'
     try:
         response = requests.get(api_url)
         response.raise_for_status()
