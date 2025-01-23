@@ -90,20 +90,6 @@ function openModal(ticker, daysInSqueeze, daysOutSqueeze, inSqueeze, outSqueeze)
     $('#chartModal').modal('show');
 }
 
-// Function to close the modal and remove stuck backdrops
-function closeModal() {
-    $('#chartModal').modal('hide'); // Hide modal
-    $('.modal-backdrop').remove(); // Remove any stuck backdrop
-    $('body').removeClass('modal-open'); // Prevent scrolling issue
-}
-
-// Ensure modal closes when clicking outside of it
-$(document).ready(function() {
-    $(document).on('click', '.modal-backdrop', function () {
-        closeModal();
-    });
-});
-
 // Automatically fetch data when the page loads
 document.addEventListener("DOMContentLoaded", () => {
     fetchAndDisplayData();

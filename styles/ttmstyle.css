@@ -1,90 +1,39 @@
-/* ttmstyles.css */
-
-/* General Body Styling */
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f8f9fa; 
-    color: #333; 
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    box-sizing: border-box;
+    height: 100vh;
+    overflow-y: auto; /* Make the entire page scrollable */
 }
 
-/* Header Styling */
 h1 {
     text-align: center;
-    color: #444; 
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
-/* Table Styling */
+.table-container {
+    max-height: 70vh; /* Adjust the height as needed */
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 }
 
 th, td {
-    padding: 10px 15px; 
+    padding: 8px 12px;
     border: 1px solid #ddd;
     text-align: left;
-    font-size: 14px; 
 }
 
 th {
-    background-color: #007bff; 
-    color: #fff; 
+    background-color: #f4f4f4;
 }
 
 tr:nth-child(even) {
     background-color: #f9f9f9;
-}
-
-tr:hover {
-    background-color: #f1f1f1; 
-}
-
-/* Button Styling */
-button {
-    padding: 8px 12px;
-    font-size: 14px;
-    color: #fff;
-    background-color: #007bff; 
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #0056b3; 
-}
-
-button:active {
-    background-color: #004085; 
-}
-
-/* Modal Dialog Styling */
-.modal {
-    z-index: 1050;
-    display: block;
-}
-
-.modal-backdrop {
-    z-index: 1040;
-    background-color: rgba(0, 0, 0, 0.5) !important;
-}
-
-.modal-backdrop.show {
-    opacity: 0.5 !important;
-}
-
-/* Ensure modal close button is visible */
-.modal-header {
-    background: #007bff;
-    color: white;
-}
-
-.modal-header .close {
-    color: white;
-    font-size: 24px;
 }
