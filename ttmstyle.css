@@ -69,6 +69,16 @@ button:active {
     display: block;
 }
 
+/* Ensure the modal is wider */
+.modal-dialog {
+    max-width: 90% !important; /* Matches the second set of code */
+}
+
+.modal-content {
+    border-radius: 8px;
+}
+
+/* Ensure modal backdrop visibility */
 .modal-backdrop {
     z-index: 1040;
     background-color: rgba(0, 0, 0, 0.5) !important;
@@ -78,7 +88,7 @@ button:active {
     opacity: 0.5 !important;
 }
 
-/* Ensure modal close button is visible */
+/* Modal Header */
 .modal-header {
     background: #007bff;
     color: white;
@@ -87,4 +97,14 @@ button:active {
 .modal-header .close {
     color: white;
     font-size: 24px;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 20px;
+}
+
+/* Modal Footer */
+.modal-footer {
+    text-align: center;
 }
