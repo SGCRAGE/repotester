@@ -3,27 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Park Rankings | Project Floater</title>
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="embed.css"> <!-- Optional: Page-specific styles -->
-    <script src="../scripts.js" defer></script>
+    <!-- Fixed relative paths -->
+    <link rel="stylesheet" href="/repotester/styles.css">
+    <link rel="stylesheet" href="/repotester/embed.css">
+    <!-- Set script type to module for compatibility -->
+    <script type="module" src="/repotester/scripts.js" defer></script>
 </head>
 <body>
     <header>
         <h1>Project Floater</h1>
         <nav>
             <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="../about/about.html">About</a></li>
-                <li><a href="../contact/contact.html">Contact</a></li>
-                <li><a href="embed.html">MLB PARK RATINGS</a></li>
+                <li><a href="/repotester/index.html">Home</a></li>
+                <li><a href="/repotester/about/about.html">About</a></li>
+                <li><a href="/repotester/contact/contact.html">Contact</a></li>
+                <li><a href="/repotester/embed.html">MLB Park Ratings</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <h2>FTA MLB PARK RATINGS</h2>
-        <iframe width="1800" height="600" frameborder="0" scrolling="no" src="https://onedrive.live.com/embed?resid=D685B286C09F6263%21791&authkey=%21AP3K141AEASAF9w&em=2&AllowTyping=True&ActiveCell='Ballparking Rankings'!A1&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&waccluster=PUS10"></iframe>
+        <h2>FTA MLB Park Ratings</h2>
+        <!-- Ensure the OneDrive iframe link is valid and public -->
+        <iframe 
+            src="https://onedrive.live.com/embed?resid=D685B286C09F6263%21791&authkey=%21AP3K141AEASAF9w&em=2&AllowTyping=True&ActiveCell='Ballparking Rankings'!A1&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&waccluster=PUS10" 
+            width="100%" 
+            height="600" 
+            frameborder="0" 
+            scrolling="no">
+        </iframe>
     </main>
 
     <footer>

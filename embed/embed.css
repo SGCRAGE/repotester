@@ -9,7 +9,7 @@ body {
 header {
     background-color: #333;
     color: #fff;
-    padding: 20px 0; /* Match the padding in contact.css */
+    padding: 20px 0;
     text-align: center;
     position: fixed;
     top: 0;
@@ -35,14 +35,14 @@ nav ul li a {
 }
 
 main {
-    padding: 120px 20px 20px; /* Match the top padding to contact.css */
+    padding: 120px 20px 60px; /* Adjusted bottom padding for better spacing */
     text-align: center;
 }
 
 iframe {
     border: none;
     width: 100%;
-    max-width: 1800px;
+    max-width: 1800px; /* Ensures iframe scales properly */
     height: 600px;
     margin: 0 auto;
     display: block;
