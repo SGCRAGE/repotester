@@ -11,11 +11,6 @@
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="ttmstyle.css"> <!-- Ensure this path is correct -->
 
-    <!-- Required JS Libraries -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <!-- TradingView Widget Script -->
     <script src="https://s3.tradingview.com/tv.js"></script>
 </head>
@@ -70,7 +65,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="chartModalLabel">Stock Information</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" onclick="closeModal()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -88,7 +83,7 @@
                     <div id="fundamental-data-widget-container"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
                 </div>
             </div>
         </div>
@@ -98,7 +93,11 @@
         <p>&copy; 2024 Project Floater. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript Logic -->
-    <script src="ttmscript.js"></script>
+    <!-- JavaScript Fixes -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="ttmscript.js?v=3"></script> <!-- Cache Buster -->
 </body>
 </html>

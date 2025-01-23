@@ -6,45 +6,45 @@ body {
     margin: 20px;
     background-color: #f8f9fa; 
     color: #333; 
-  }
-  
-  /* Header Styling */
-  h1 {
+}
+
+/* Header Styling */
+h1 {
     text-align: center;
     color: #444; 
     margin-bottom: 20px;
-  }
-  
-  /* Table Styling */
-  table {
+}
+
+/* Table Styling */
+table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-  }
-  
-  th, td {
+}
+
+th, td {
     padding: 10px 15px; 
     border: 1px solid #ddd;
     text-align: left;
     font-size: 14px; 
-  }
-  
-  th {
+}
+
+th {
     background-color: #007bff; 
     color: #fff; 
-  }
-  
-  tr:nth-child(even) {
+}
+
+tr:nth-child(even) {
     background-color: #f9f9f9;
-  }
-  
-  tr:hover {
+}
+
+tr:hover {
     background-color: #f1f1f1; 
-  }
-  
-  /* Button Styling */
-  button {
+}
+
+/* Button Styling */
+button {
     padding: 8px 12px;
     font-size: 14px;
     color: #fff;
@@ -53,22 +53,38 @@ body {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #0056b3; 
-  }
-  
-  button:active {
+}
+
+button:active {
     background-color: #004085; 
-  }
-  
-  /* Modal Dialog Styling */
-  .modal-dialog {
-    max-width: 90%; 
-  }
-  
-  .modal-body p {
-    margin: 10px 0;
-  }
-  
+}
+
+/* Modal Dialog Styling */
+.modal {
+    z-index: 1050;
+    display: block;
+}
+
+.modal-backdrop {
+    z-index: 1040;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.modal-backdrop.show {
+    opacity: 0.5 !important;
+}
+
+/* Ensure modal close button is visible */
+.modal-header {
+    background: #007bff;
+    color: white;
+}
+
+.modal-header .close {
+    color: white;
+    font-size: 24px;
+}
