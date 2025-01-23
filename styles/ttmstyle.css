@@ -37,3 +37,15 @@ th {
 tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+
+/* Ensure the modal is as wide as the screen */
+.full-width-modal .modal-dialog {
+    max-width: 100%;
+    margin: 0;
+}
+
+.full-width-modal .modal-content {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+}

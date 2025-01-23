@@ -42,6 +42,15 @@
             flex: 1;
             min-width: 0;
         }
+        .full-width-modal .modal-dialog {
+            max-width: 100%;
+            margin: 0;
+        }
+        .full-width-modal .modal-content {
+            width: 100vw;
+            height: 100vh;
+            border-radius: 0;
+        }
     </style>
 </head>
 <body>
@@ -90,7 +99,7 @@
     </main>
 
     <!-- Modal for Stock Details -->
-    <div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel" aria-hidden="true">
+    <div class="modal fade full-width-modal" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl"> <!-- Use the custom class for extra wide modals -->
             <div class="modal-content">
                 <div class="modal-header">
