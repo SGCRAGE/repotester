@@ -28,7 +28,10 @@
             z-index: 1050 !important;
         }
         .modal-lg {
-            max-width: 400%; /* Adjust the width as needed */
+            max-width: 90%; /* Adjust the width as needed */
+        }
+        .modal-xl {
+            max-width: 95%; /* Custom class for extra wide modals */
         }
     </style>
 </head>
@@ -79,7 +82,7 @@
 
     <!-- Modal for Stock Details -->
     <div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl"> <!-- Use the custom class for extra wide modals -->
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="chartModalLabel">Stock Information</h5>
