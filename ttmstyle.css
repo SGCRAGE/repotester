@@ -71,7 +71,7 @@ button:active {
 
 /* Ensure the modal is wider */
 .modal-dialog {
-    max-width: 90% !important; /* Matches the second set of code */
+    max-width: 90% !important;
 }
 
 .modal-content {

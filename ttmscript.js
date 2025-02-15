@@ -1,4 +1,6 @@
-// Function to fetch and display data
+// ttmscript.js
+
+// Function to fetch and display TTM Squeeze Stocks data
 async function fetchAndDisplayData() {
     const dateInput = document.getElementById('date').value;
     if (!dateInput) {
@@ -42,19 +44,30 @@ async function fetchAndDisplayData() {
     }
 }
 
-// Function to open the modal and display TradingView widgets
+// Function to fetch option analysis data from the Flask endpoint
+async function fetchOptionAnalysis(ticker, optionType = 'b') {
+    try {
+        const response = await fetch(`http://localhost:5000/api/option-analysis?ticker=${ticker}&option_type=${optionType}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error fetching option analysis:", error);
+        return { error: "Failed to fetch option analysis." };
+    }
+}
+
+// Function to open the modal and display TradingView widgets and option analysis
 function openModal(ticker, daysInSqueeze, daysOutSqueeze, inSqueeze, outSqueeze) {
     // Update modal content
     document.getElementById('modalTicker').innerText = ticker;
     document.getElementById('modalDaysInSqueeze').innerText = daysInSqueeze || 'N/A';
-    document.getElementById('modalDaysOutSqueeze').innerText = daysOutSqueeze || 'N/A';
+    document.getElementById('modalDaysOutOfSqueeze').innerText = daysOutSqueeze || 'N/A';
     document.getElementById('modalInSqueeze').innerText = inSqueeze === 'true' ? 'Yes' : 'No';
     document.getElementById('modalOutSqueeze').innerText = outSqueeze === 'true' ? 'Yes' : 'No';
 
     // Initialize TradingView Chart Widget
     const chartContainer = document.getElementById('tradingview-widget-container');
     chartContainer.innerHTML = ''; // Clear any existing widget
-
     new TradingView.widget({
         "container_id": "tradingview-widget-container",
         "symbol": ticker,
@@ -75,7 +88,6 @@ function openModal(ticker, daysInSqueeze, daysOutSqueeze, inSqueeze, outSqueeze)
     // Initialize TradingView Fundamental Data Widget
     const fundamentalContainer = document.getElementById('fundamental-data-widget-container');
     fundamentalContainer.innerHTML = ''; // Clear any existing widget
-
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js';
@@ -91,7 +103,6 @@ function openModal(ticker, daysInSqueeze, daysOutSqueeze, inSqueeze, outSqueeze)
     // Initialize TradingView Technical Analysis Widget
     const technicalAnalysisContainer = document.getElementById('tradingview-widget-container__widget');
     technicalAnalysisContainer.innerHTML = ''; // Clear any existing widget
-
     const technicalScript = document.createElement('script');
     technicalScript.type = 'text/javascript';
     technicalScript.src = 'https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js';
@@ -107,6 +118,43 @@ function openModal(ticker, daysInSqueeze, daysOutSqueeze, inSqueeze, outSqueeze)
         "colorTheme": "dark"
     });
     technicalAnalysisContainer.appendChild(technicalScript);
+
+    // Fetch option analysis data and display in the modal
+    fetchOptionAnalysis(ticker, 'b').then(data => {
+        const analysisContainer = document.getElementById('analysis-container');
+        if (data.error) {
+            analysisContainer.innerHTML = `<p>Error: ${data.error}</p>`;
+        } else {
+            let html = `<h5>Option Analysis (Expiration: ${data.expiration})</h5>`;
+            html += `<p><strong>Underlying Price:</strong> ${parseFloat(data.underlying_price).toFixed(2)}</p>`;
+            html += `<table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Type</th>
+                            <th>Strike</th>
+                            <th>Price</th>
+                            <th>Breakeven</th>
+                            <th>p</th>
+                            <th>b</th>
+                            <th>Kelly</th>
+                          </tr>
+                        </thead>
+                        <tbody>`;
+            data.results.forEach(res => {
+                html += `<tr>
+                            <td>${res.type}</td>
+                            <td>${parseFloat(res.strike).toFixed(2)}</td>
+                            <td>${parseFloat(res.option_price).toFixed(2)}</td>
+                            <td>${parseFloat(res.breakeven).toFixed(2)}</td>
+                            <td>${parseFloat(res.p).toFixed(2)}</td>
+                            <td>${parseFloat(res.b).toFixed(2)}</td>
+                            <td>${parseFloat(res.kelly).toFixed(2)}</td>
+                        </tr>`;
+            });
+            html += `</tbody></table>`;
+            analysisContainer.innerHTML = html;
+        }
+    });
 
     // Show modal
     $('#chartModal').modal('show');
