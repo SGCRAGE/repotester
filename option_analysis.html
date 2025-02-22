@@ -28,6 +28,11 @@
       height: 500px;
       margin-bottom: 20px;
     }
+    /* Fixed width container style */
+    .fixed-container {
+      width: 1200px; /* Set your fixed width here */
+      margin: 0 auto;
+    }
     /* Modal customizations */
     .modal-backdrop {
       z-index: 1040 !important;
@@ -84,8 +89,8 @@
 
   <!-- Main Content -->
   <main>
-    <!-- Using container-fluid to make the content wider -->
-    <div class="container-fluid">
+    <!-- Use fixed-container for a fixed width layout -->
+    <div class="fixed-container">
       <h2>Option Analysis with TradingView Vortex Chart</h2>
       <!-- Ticker Input Form -->
       <form id="tickerForm">
