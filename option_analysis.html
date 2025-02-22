@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Option Analysis with TradingView Vortex Chart | Project Floater</title>
+  
+  <!-- Bootstrap & Custom Styles -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="styles/ttmstyle.css">
+
+  <!-- Required JS Libraries -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- TradingView Widget Script -->
+  <script src="https://s3.tradingview.com/tv.js"></script>
+
+  <!-- Custom inline styles -->
+  <style>
+    body {
+      margin: 20px;
+    }
+    #chart-container {
+      height: 500px;
+      margin-bottom: 20px;
+    }
+    /* Modal customizations */
+    .modal-backdrop {
+      z-index: 1040 !important;
+    }
+    .modal {
+      z-index: 1050 !important;
+    }
+    .modal-lg {
+      max-width: 90%;
+    }
+    .modal-xl {
+      max-width: 95% !important;
+    }
+    .modal-body .row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+    }
+    .modal-body .col-md-6 {
+      flex: 1;
+      min-width: 0;
+    }
+    .full-width-modal .modal-dialog {
+      max-width: 100%;
+      margin: 0;
+    }
+    .full-width-modal .modal-content {
+      width: auto;
+      height: auto;
+      border-radius: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header and Navigation -->
+  <header>
+    <h1>Project Floater</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about/about.html">About</a></li>
+        <li><a href="contact/contact.html">Contact</a></li>
+        <li><a href="embed/embed.html">MLB PARK RATINGS</a></li>
+        <li><a href="embed2/embed2.html">MLB BATTING</a></li>
+        <li><a href="odds.html">Odds Data</a></li>
+        <li><a href="sportsdata.html">College Basketball Odds</a></li>
+        <li><a href="sign/sign.html">Sign</a></li>
+        <li><button id="login-google">Sign in with Google</button></li>
+        <li><button id="login-email">Sign in with Email</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="container">
+      <h2>Option Analysis with TradingView Vortex Chart</h2>
+      <!-- Ticker Input Form -->
+      <form id="tickerForm">
+        <div class="form-group">
+          <label for="ticker">Enter Ticker Symbol:</label>
+          <input type="text" id="ticker" class="form-control" placeholder="e.g., AAPL" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Get Analysis</button>
+      </form>
+      <hr>
+      <!-- TradingView Widget Container -->
+      <div id="chart-container"></div>
+      <hr>
+      <!-- Option Analysis Results -->
+      <h3>Option Analysis Results</h3>
+      <div id="optionAnalysis"></div>
+    </div>
+  </main>
+
+  <!-- Modal for Stock Details (if needed) -->
+  <div class="modal fade full-width-modal" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="chartModalLabel">Stock Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="modalContent">
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>Ticker:</strong> <span id="modalTicker"></span></p>
+              <p><strong>Days in Squeeze:</strong> <span id="modalDaysInSqueeze"></span></p>
+              <p><strong>Days Out of Squeeze:</strong> <span id="modalDaysOutOfSqueeze"></span></p>
+              <p><strong>In Squeeze:</strong> <span id="modalInSqueeze"></span></p>
+              <p><strong>Out of Squeeze:</strong> <span id="modalOutOfSqueeze"></span></p>
+            </div>
+            <div class="col-md-6">
+              <!-- TradingView Technical Analysis Widget Container -->
+              <div id="tradingview-widget-container__widget"></div>
+            </div>
+          </div>
+          <!-- TradingView Chart Widget -->
+          <div id="tradingview-widget-container" style="height: 400px; margin-bottom: 20px;"></div>
+          <!-- TradingView Fundamental Data Widget -->
+          <div id="fundamental-data-widget-container"></div>
+          <!-- Option Analysis Container inside Modal -->
+          <div id="analysis-container" style="margin-top:20px;"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 Project Floater. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript Logic for Option Analysis -->
+  <script>
+    // Listen for the form submission
+    document.getElementById("tickerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const ticker = document.getElementById("ticker").value.trim().toUpperCase();
+      if (!ticker) return;
+      
+      // Create the TradingView Advanced Chart widget with the Vortex indicator
+      new TradingView.widget({
+        "container_id": "chart-container",
+        "width": "100%",
+        "height": "500",
+        "symbol": ticker,
+        "interval": "D",
+        "timezone": "Etc/UTC",
+        "theme": "dark",
+        "style": "1",
+        "locale": "en",
+        "toolbar_bg": "#f1f3f6",
+        "enable_publishing": false,
+        "hide_side_toolbar": false,
+        "allow_symbol_change": true,
+        "studies": ["Vortex@tv-basicstudies"],
+        "withdateranges": true,
+        "hideideas": true
+      });
+  
+      // Fetch option analysis data from your Flask API endpoint
+      fetch(`http://localhost:5000/api/option-analysis?ticker=${ticker}&option_type=b`)
+        .then(response => response.json())
+        .then(data => {
+          if(data.error) {
+            document.getElementById("optionAnalysis").innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+            return;
+          }
+          let html = `<p><strong>Ticker:</strong> ${data.ticker}</p>`;
+          html += `<p><strong>Expiration:</strong> ${data.expiration}</p>`;
+          html += `<p><strong>Underlying Price:</strong> ${parseFloat(data.underlying_price).toFixed(2)}</p>`;
+          html += `<p><strong>Time to Expiration (years):</strong> ${parseFloat(data.time_to_expiration).toFixed(4)}</p>`;
+          html += `<table class="table table-striped"><thead><tr>
+                     <th>Type</th>
+                     <th>Strike</th>
+                     <th>Option Price</th>
+                     <th>Breakeven</th>
+                     <th>p</th>
+                     <th>b</th>
+                     <th>Kelly</th>
+                   </tr></thead><tbody>`;
+          data.results.forEach(result => {
+            html += `<tr>
+              <td>${result.type}</td>
+              <td>${parseFloat(result.strike).toFixed(2)}</td>
+              <td>${parseFloat(result.option_price).toFixed(2)}</td>
+              <td>${parseFloat(result.breakeven).toFixed(2)}</td>
+              <td>${parseFloat(result.p).toFixed(2)}</td>
+              <td>${parseFloat(result.b).toFixed(2)}</td>
+              <td>${parseFloat(result.kelly).toFixed(2)}</td>
+            </tr>`;
+          });
+          html += `</tbody></table>`;
+          document.getElementById("optionAnalysis").innerHTML = html;
+        })
+        .catch(error => {
+          console.error("Error fetching option analysis:", error);
+          document.getElementById("optionAnalysis").innerHTML = `<div class="alert alert-danger">Error fetching data</div>`;
+        });
+    });
+  </script>
+
+  <!-- If you have additional JavaScript in ttmscript.js, include it here -->
+  <script src="ttmscript.js"></script>
+</body>
+</html>
