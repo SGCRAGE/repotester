@@ -6,6 +6,10 @@ import math
 from scipy.stats import norm
 from datetime import datetime
 import dateutil.parser
+import requests_cache
+
+# Initialize requests-cache
+requests_cache.install_cache('yfinance_cache', expire_after=600)  # Cache expires after 10 minutes
 
 app = Flask(__name__)
 CORS(app)
