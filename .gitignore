@@ -1,0 +1,12 @@
+# Python Virtual Environment
+# This ignores the entire 'venv' folder
+/venv/
+
+# SQLite Database Files
+# This ignores any file ending in .sqlite or .sqlite3
+*.sqlite
+*.sqlite3
+
+# Python cache
+__pycache__/
+*.pyc
