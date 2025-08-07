@@ -1,0 +1,28 @@
+{
+  "name": "repotester2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "positive-ev.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SGCRAGE/repotester.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SGCRAGE/repotester/issues"
+  },
+  "homepage": "https://github.com/SGCRAGE/repotester#readme",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "node-fetch": "^3.3.2",
+    "sqlite3": "^5.1.7"
+  }
+}
